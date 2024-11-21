@@ -1,0 +1,15 @@
+{% extends "base.html" %}
+
+{% block title %}Vídeos{% endblock %}
+
+{% block content %}
+<h1>Galeria de Vídeos</h1>
+<p>Abaixo, está o vídeo sobre aula de Teorema de Bayes:</p>
+
+<video width="640" height="360" controls>
+    <source src="/static/teorema_de_bayes.mp4" type="video/mp4">
+    Seu navegador não suporta o elemento de vídeo.
+</video>
+
+<p>Mais vídeos estarão disponíveis em breve!</p>
+{% endblock %}

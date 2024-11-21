@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>{% block title %}Jonathan S. Matias{% endblock %}</title>
+    <link rel="stylesheet" href="/static/style.css">
+</head>
+<body>
+    <header class="site-header">
+        <div class="container">
+            <img src="/static/IMG-7450.jpg" alt="Jonathan S. Matias" class="profile-pic">
+            <h1>Jonathan S. Matias</h1>
+            <p>Professor | Estatística | Ciência de Dados</p>
+        </div>
+    </header>
+    <nav class="site-nav">
+        <div class="container">
+            <a href="/">Página Principal</a>
+            <a href="/about">Sobre</a>
+            <a href="/dashboard">Dashboard</a>
+            <a href="/projeto">Projeto de Pesquisa</a>
+            <a href="/codigos">Códigos</a>
+            <a href="/videos">Vídeos</a>
+            <a href="/contact">Contato</a>
+        </div>
+    </nav>
+    <main class="site-content">
+        <div class="container">
+            {% block content %}{% endblock %}
+        </div>
+    </main>
+    <footer class="site-footer">
+        <div class="container">
+            <p>© 2024 Jonathan S. Matias | Todos os direitos reservados</p>
+        </div>
+    </footer>
+</body>
+</html>
