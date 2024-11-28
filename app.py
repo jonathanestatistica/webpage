@@ -1,4 +1,4 @@
-from flask import Flask, render_template
+from flask import Flask, render_template, send_from_directory
 
 app = Flask(__name__)
 
@@ -100,6 +100,11 @@ def biomedicina_farmacia_listas():
 @app.route("/ensino/biomedicina_farmacia/exercicios_resolvidos")
 def biomedicina_farmacia_exercicios_resolvidos():
     return render_template("ensino/biomedicina_farmacia/exercicios_resolvidos.html")
+
+# Rota para servir PDFs na pasta static/pdf
+@app.route('/plano_de_ensino/pdf/<filename>')
+def plano_pdf(filename):
+    return send_from_directory('static/pdf', filename)
 
 if __name__ == "__main__":
     app.run(debug=True)
