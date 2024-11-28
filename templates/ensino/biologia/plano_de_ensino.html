@@ -1,10 +1,15 @@
-{% extends "base.html" %}
-
-{% block title %}Plano de Ensino{% endblock %}
-
-{% block content %}
-<div class="container">
-    <h1>Plano de Ensino</h1>
-    <p>Detalhes sobre o plano de ensino da disciplina.</p>
-</div>
-{% endblock %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Plano de Ensino - Biologia</title>
+</head>
+<body>
+    <h1>Plano de Ensino - Biologia</h1>
+    <p>
+        Acesse o plano de ensino no link abaixo:
+    </p>
+    <a href="{{ url_for('static', filename='pdf/plano_de_ensino_introducao_estatistica.pdf') }}" target="_blank">Baixar Plano de Ensino</a>
+</body>
+</html>
