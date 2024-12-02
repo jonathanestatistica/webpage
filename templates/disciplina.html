@@ -1,0 +1,14 @@
+{% extends "base.html" %}
+
+{% block title %}{{ disciplina|capitalize }}{% endblock %}
+
+{% block content %}
+<div class="container">
+    <h1>{{ disciplina|capitalize }}</h1>
+    <ul>
+        <li><a href="/ensino/{{ disciplina }}/plano_de_ensino/">Plano de Ensino</a></li>
+        <li><a href="/ensino/{{ disciplina }}/listas/">Listas</a></li>
+        <li><a href="/ensino/{{ disciplina }}/exercicios_resolvidos/">Exercícios Resolvidos</a></li>
+    </ul>
+</div>
+{% endblock %}

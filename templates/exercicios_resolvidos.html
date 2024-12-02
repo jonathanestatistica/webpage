@@ -1,0 +1,16 @@
+{% extends "base.html" %}
+
+{% block title %}Exercícios Resolvidos - {{ disciplina|capitalize }}{% endblock %}
+
+{% block content %}
+<div class="container">
+    <h1>Exercícios Resolvidos - {{ disciplina|capitalize }}</h1>
+    <ul>
+        {% for file in files %}
+        <li><a href="/static/ensino/{{ disciplina }}/exercicios_resolvidos/{{ file }}" target="_blank">{{ file }}</a></li>
+        {% endfor %}
+        <!-- Adiciona o link compartilhado para Suporte para a Lista 5 -->
+        <li><a href="/static/listas/suporte_lista_5.xlsx" target="_blank">Suporte para a Lista 5</a></li>
+    </ul>
+</div>
+{% endblock %}

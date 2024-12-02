@@ -1,0 +1,14 @@
+{% extends "base.html" %}
+
+{% block title %}Listas - {{ disciplina|capitalize }}{% endblock %}
+
+{% block content %}
+<div class="container">
+    <h1>Listas - {{ disciplina|capitalize }}</h1>
+    <ul>
+        {% for lista in lista_files %}
+        <li><a href="/static/listas/{{ lista }}" target="_blank">Lista {{ loop.index }}</a></li>
+        {% endfor %}
+    </ul>
+</div>
+{% endblock %}
