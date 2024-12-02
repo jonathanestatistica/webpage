@@ -1,110 +1,84 @@
 from flask import Flask, render_template, send_from_directory
+import os
 
 app = Flask(__name__)
 
 # Home route
 @app.route("/")
 def home():
-    return render_template("index.html")  # Serves templates/index.html
+    return render_template("index.html")
 
-# Dashboard route
-@app.route("/dashboard")
-def dashboard():
-    return render_template("dashboard.html")  # Serves templates/dashboard.html
-
-@app.route("/projeto")
-def projeto():
-    return render_template("projeto.html")
-
-@app.route("/codigos")
-def codigo():
-    return render_template("codigos.html")
-
-@app.route("/videos")
-def videos():
-    return render_template("videos.html")
-
-@app.route("/about")
-def about():
-    return render_template("about.html")
-
-@app.route("/contact")
-def contact():
-    return render_template("contact.html")
-
-# Ensino routes
-@app.route("/ensino")
+# Ensino main route
+@app.route("/ensino/")
 def ensino():
     return render_template("ensino.html")
 
-@app.route("/ensino/biologia")
-def biologia():
-    return render_template("ensino/biologia.html")
+# Discipline routes
+@app.route("/ensino/<disciplina>/")
+def disciplina(disciplina):
+    return render_template("disciplina.html", disciplina=disciplina)
 
-@app.route("/ensino/biologia/plano_de_ensino")
-def biologia_plano_de_ensino():
-    return render_template("ensino/biologia/plano_de_ensino.html")
+# Download Plano de Ensino
+@app.route("/ensino/<disciplina>/plano_de_ensino/")
+def download_plano_de_ensino(disciplina):
+    file_path = f"static/ensino/{disciplina}"
+    file_name = f"plano_ensino_{disciplina}.pdf"
+    try:
+        print(f"Tentando acessar o arquivo: {file_path}/{file_name}")
+        return send_from_directory(file_path, file_name, as_attachment=True)
+    except FileNotFoundError:
+        return f"Erro: Arquivo '{file_name}' não encontrado na disciplina '{disciplina}'.", 404
+    except Exception as e:
+        return f"Erro ao tentar baixar o arquivo: {e}", 500
 
-@app.route("/ensino/biologia/listas")
-def biologia_listas():
-    return render_template("ensino/biologia/listas.html")
+# Listas route
+@app.route("/ensino/<disciplina>/listas/")
+def listas(disciplina):
+    lista_files = [f"lista{i}.pdf" for i in range(1, 6)]
+    return render_template("listas.html", disciplina=disciplina, lista_files=lista_files)
 
-@app.route("/ensino/biologia/exercicios_resolvidos")
-def biologia_exercicios_resolvidos():
-    return render_template("ensino/biologia/exercicios_resolvidos.html")
+# Exercícios Resolvidos route
+@app.route("/ensino/<disciplina>/exercicios_resolvidos/")
+def exercicios_resolvidos(disciplina):
+    exercises_dir = f"static/ensino/{disciplina}/exercicios_resolvidos"
+    files = os.listdir(exercises_dir) if os.path.exists(exercises_dir) else []
+    support_file = "suporte_lista_5.xlsx"  # Arquivo compartilhado
+    return render_template("exercicios_resolvidos.html", disciplina=disciplina, files=files, support_file=support_file)
 
-@app.route("/ensino/fisioterapia")
-def fisioterapia():
-    return render_template("ensino/fisioterapia.html")
+# Serve static files for Listas
+@app.route("/static/listas/<filename>")
+def download_lista(filename):
+    return send_from_directory("static/listas", filename, as_attachment=True)
 
-@app.route("/ensino/fisioterapia/plano_de_ensino")
-def fisioterapia_plano_de_ensino():
-    return render_template("ensino/fisioterapia/plano_de_ensino.html")
+# Serve static files for Exercícios Resolvidos
+@app.route("/static/ensino/<disciplina>/exercicios_resolvidos/<filename>")
+def download_exercise(disciplina, filename):
+    return send_from_directory(f"static/ensino/{disciplina}/exercicios_resolvidos", filename, as_attachment=True)
 
-@app.route("/ensino/fisioterapia/listas")
-def fisioterapia_listas():
-    return render_template("ensino/fisioterapia/listas.html")
+# Additional Pages
+@app.route("/about/")
+def about():
+    return render_template("about.html")
 
-@app.route("/ensino/fisioterapia/exercicios_resolvidos")
-def fisioterapia_exercicios_resolvidos():
-    return render_template("ensino/fisioterapia/exercicios_resolvidos.html")
+@app.route("/dashboard/")
+def dashboard():
+    return render_template("dashboard.html")
 
-@app.route("/ensino/terapia_ocupacional")
-def terapia_ocupacional():
-    return render_template("ensino/terapia_ocupacional.html")
+@app.route("/projeto/")
+def projeto():
+    return render_template("projeto.html")
 
-@app.route("/ensino/terapia_ocupacional/plano_de_ensino")
-def terapia_ocupacional_plano_de_ensino():
-    return render_template("ensino/terapia_ocupacional/plano_de_ensino.html")
+@app.route("/codigos/")
+def codigos():
+    return render_template("codigos.html")
 
-@app.route("/ensino/terapia_ocupacional/listas")
-def terapia_ocupacional_listas():
-    return render_template("ensino/terapia_ocupacional/listas.html")
+@app.route("/videos/")
+def videos():
+    return render_template("videos.html")
 
-@app.route("/ensino/terapia_ocupacional/exercicios_resolvidos")
-def terapia_ocupacional_exercicios_resolvidos():
-    return render_template("ensino/terapia_ocupacional/exercicios_resolvidos.html")
-
-@app.route("/ensino/biomedicina_farmacia")
-def biomedicina_farmacia():
-    return render_template("ensino/biomedicina_farmacia.html")
-
-@app.route("/ensino/biomedicina_farmacia/plano_de_ensino")
-def biomedicina_farmacia_plano_de_ensino():
-    return render_template("ensino/biomedicina_farmacia/plano_de_ensino.html")
-
-@app.route("/ensino/biomedicina_farmacia/listas")
-def biomedicina_farmacia_listas():
-    return render_template("ensino/biomedicina_farmacia/listas.html")
-
-@app.route("/ensino/biomedicina_farmacia/exercicios_resolvidos")
-def biomedicina_farmacia_exercicios_resolvidos():
-    return render_template("ensino/biomedicina_farmacia/exercicios_resolvidos.html")
-
-# Rota para servir PDFs na pasta static/pdf
-@app.route('/plano_de_ensino/pdf/<filename>')
-def plano_pdf(filename):
-    return send_from_directory('static/pdf', filename)
+@app.route("/contact/")
+def contact():
+    return render_template("contact.html")
 
 if __name__ == "__main__":
     app.run(debug=True)
