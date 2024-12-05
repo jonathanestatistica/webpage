@@ -1,0 +1,99 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Image Carousel</title>
+    <style>
+        body {
+            margin: 0;
+            padding: 0;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            background-color: #f3f3f3;
+        }
+        .carousel {
+            position: relative;
+            width: 70%;
+            max-width: 800px;
+            overflow: hidden;
+            border-radius: 10px;
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
+        }
+        .carousel-images {
+            display: flex;
+            transition: transform 0.5s ease-in-out;
+        }
+        .carousel-images img {
+            width: 100%;
+            height: auto;
+            display: block;
+        }
+        .carousel-dots {
+            position: absolute;
+            bottom: 20px;
+            left: 50%;
+            transform: translateX(-50%);
+            display: flex;
+            gap: 8px;
+        }
+        .carousel-dots button {
+            width: 12px;
+            height: 12px;
+            background-color: rgba(255, 255, 255, 0.6);
+            border: none;
+            border-radius: 50%;
+            cursor: pointer;
+        }
+        .carousel-dots button.active {
+            background-color: #007bff;
+        }
+    </style>
+</head>
+<body>
+    <div class="carousel">
+        <div class="carousel-images">
+            <img src="{{ url_for('static', filename='images/image1.png') }}" alt="Image 1">
+            <img src="{{ url_for('static', filename='images/image2.png') }}" alt="Image 2">
+            <img src="{{ url_for('static', filename='images/image3.png') }}" alt="Image 3">
+        </div>
+        <div class="carousel-dots">
+            <button data-index="0" class="active"></button>
+            <button data-index="1"></button>
+            <button data-index="2"></button>
+        </div>
+    </div>
+
+    <script>
+        const carouselImages = document.querySelector('.carousel-images');
+        const dots = document.querySelectorAll('.carousel-dots button');
+        let currentIndex = 0;
+        const imageCount = dots.length;
+        const changeInterval = 5000; // 5 seconds
+
+        function updateCarousel(index) {
+            currentIndex = index;
+            const offset = -index * 100;
+            carouselImages.style.transform = `translateX(${offset}%)`;
+            dots.forEach(dot => dot.classList.remove('active'));
+            dots[index].classList.add('active');
+        }
+
+        dots.forEach(dot => {
+            dot.addEventListener('click', () => {
+                const index = parseInt(dot.getAttribute('data-index'));
+                updateCarousel(index);
+            });
+        });
+
+        function autoChangeImage() {
+            currentIndex = (currentIndex + 1) % imageCount;
+            updateCarousel(currentIndex);
+        }
+
+        setInterval(autoChangeImage, changeInterval);
+    </script>
+</body>
+</html>

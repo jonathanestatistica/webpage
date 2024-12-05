@@ -80,5 +80,13 @@ def videos():
 def contact():
     return render_template("contact.html")
 
+@app.route("/carousel/")
+def carousel():
+    return render_template("carousel.html")  # O nome do arquivo está correto
+
+@app.route("/shiny_apps/")
+def shiny_apps():
+    return render_template("shiny_apps.html")
+
 if __name__ == "__main__":
     app.run(debug=True)

@@ -1,0 +1,24 @@
+{% extends "base.html" %}
+
+{% block title %}Shiny Apps{% endblock %}
+
+{% block content %}
+<h1>Shiny Apps</h1>
+<p>Explore os aplicativos Shiny interativos desenvolvidos para análise e visualização de dados.</p>
+
+<ul>
+    <!-- Primeiro link já existente -->
+    <li>
+        <a href="http://jonathanestatistica.shinyapps.io/robust_lda_app" target="_blank">
+            Análise Discriminante Linear Robusta
+        </a>
+    </li>
+
+    <!-- Novo link adicionado -->
+    <li>
+        <a href="https://jonathanestatistica.shinyapps.io/Relacao_sinal_ruido/" target="_blank">
+            Relação Sinal Ruído (Séries Temporais e Programação Dinâmica)
+        </a>
+    </li>
+</ul>
+{% endblock %}
