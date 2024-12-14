@@ -3,6 +3,226 @@
 {% block title %}Dashboard{% endblock %}
 
 {% block content %}
-<h1>Dashboards</h1>
-<p>Em breve Dashboards serão postados aqui.</p>
+<h1>Dashboard</h1>
+
+<!-- Distribuições de Probabilidade -->
+<h2>Distribuições de Probabilidade</h2>
+<div>
+    <h3>Binomial</h3>
+    <form id="binomial-form">
+        <label for="n">Número de Retiradas (n):</label>
+        <input type="number" id="n" required><br>
+        <label for="p">Probabilidade de Sucesso (p):</label>
+        <input type="number" step="0.01" id="p" required><br>
+        <label for="k">Número de Sucessos (k):</label>
+        <input type="number" id="k" required><br>
+        <button type="button" onclick="calculateBinomial()">Calcular</button>
+    </form>
+    <p>Resultado: <span id="binomial-result"></span></p>
+    <div id="binomial-plot"></div>
+</div>
+
+<div>
+    <h3>Hipergeométrica</h3>
+    <form id="hypergeometric-form">
+        <label for="N">Total de Objetos (N):</label>
+        <input type="number" id="N" required><br>
+        <label for="n">Amostra (n):</label>
+        <input type="number" id="n_h" required><br>
+        <label for="r">Objetos com Sucesso (r):</label>
+        <input type="number" id="r" required><br>
+        <label for="k">Número de Sucessos (k):</label>
+        <input type="number" id="k_h" required><br>
+        <button type="button" onclick="calculateHypergeometric()">Calcular</button>
+    </form>
+    <p>Resultado: <span id="hypergeometric-result"></span></p>
+    <div id="hypergeometric-plot"></div>
+</div>
+
+<div>
+    <h3>Poisson</h3>
+    <form id="poisson-form">
+        <label for="lambda">Taxa (&lambda;):</label>
+        <input type="number" step="0.01" id="lambda" required><br>
+        <label for="k">Número de Ocorrências (k):</label>
+        <input type="number" id="k_p" required><br>
+        <button type="button" onclick="calculatePoisson()">Calcular</button>
+    </form>
+    <p>Resultado: <span id="poisson-result"></span></p>
+    <div id="poisson-plot"></div>
+</div>
+
+<!-- Teorema da Probabilidade Total e de Bayes -->
+<h2>Teorema da Probabilidade Total e Teorema de Bayes</h2>
+<div>
+    <form id="bayes-form">
+        <label for="num-partitions">Número de Partições (n):</label>
+        <input type="number" id="num-partitions" name="num-partitions" min="1" required><br>
+        <button type="button" onclick="generateBayesInputs()">Confirmar</button>
+    </form>
+    <div id="bayes-inputs"></div>
+    <div id="bayes-results"></div>
+</div>
+
+<div>
+    <h2>Distribuição de Frequências (Upload de Arquivo)</h2>
+    <form id="upload-form" enctype="multipart/form-data">
+        <label for="file">Selecione um arquivo CSV:</label>
+        <input type="file" id="file" name="file" accept=".csv" required><br><br>
+        <button type="button" onclick="uploadFile()">Carregar e Calcular</button>
+    </form>
+    <div id="frequency-results"></div>
+    <div id="charts"></div>
+</div>
+
+<script>
+    function calculateBinomial() {
+        const n = document.getElementById("n").value;
+        const p = document.getElementById("p").value;
+        const k = document.getElementById("k").value;
+        fetch(`/calculate/binomial?n=${n}&p=${p}&k=${k}`)
+            .then(response => response.json())
+            .then(data => {
+                document.getElementById("binomial-result").innerText = data.result;
+                document.getElementById("binomial-plot").innerHTML = `<img src="${data.plot_url}" alt="Gráfico da distribuição binomial" />`;
+            })
+            .catch(error => {
+                document.getElementById("binomial-result").innerText = "Erro ao calcular. Verifique os valores.";
+                console.error(error);
+            });
+    }
+
+    function calculateHypergeometric() {
+        const N = document.getElementById("N").value;
+        const n = document.getElementById("n_h").value;
+        const r = document.getElementById("r").value;
+        const k = document.getElementById("k_h").value;
+        fetch(`/calculate/hypergeometric?N=${N}&n=${n}&r=${r}&k=${k}`)
+            .then(response => response.json())
+            .then(data => {
+                document.getElementById("hypergeometric-result").innerText = data.result;
+                document.getElementById("hypergeometric-plot").innerHTML = `<img src="${data.plot_url}" alt="Gráfico da distribuição hipergeométrica" />`;
+            })
+            .catch(error => {
+                document.getElementById("hypergeometric-result").innerText = "Erro ao calcular. Verifique os valores.";
+                console.error(error);
+            });
+    }
+
+    function calculatePoisson() {
+        const lambda = document.getElementById("lambda").value;
+        const k = document.getElementById("k_p").value;
+        fetch(`/calculate/poisson?lambda=${lambda}&k=${k}`)
+            .then(response => response.json())
+            .then(data => {
+                document.getElementById("poisson-result").innerText = data.result;
+                document.getElementById("poisson-plot").innerHTML = `<img src="${data.plot_url}" alt="Gráfico da distribuição Poisson" />`;
+            })
+            .catch(error => {
+                document.getElementById("poisson-result").innerText = "Erro ao calcular. Verifique os valores.";
+                console.error(error);
+            });
+    }
+
+    function generateBayesInputs() {
+        const n = parseInt(document.getElementById("num-partitions").value);
+        const inputsDiv = document.getElementById("bayes-inputs");
+        inputsDiv.innerHTML = "";
+
+        for (let i = 1; i <= n; i++) {
+            inputsDiv.innerHTML += `
+                <h3>Partição A${i}</h3>
+                <label for="P(A${i})">P(A${i}):</label>
+                <input type="number" id="P(A${i})" step="0.01" min="0" max="1" required>
+                <label for="P(B|A${i})">P(B|A${i}):</label>
+                <input type="number" id="P(B|A${i})" step="0.01" min="0" max="1" required><br>
+            `;
+        }
+
+        inputsDiv.innerHTML += `
+            <button type="button" onclick="calculateBayes()">Calcular</button>
+        `;
+    }
+
+    function calculateBayes() {
+        const n = parseInt(document.getElementById("num-partitions").value);
+        const probabilities = [];
+
+        for (let i = 1; i <= n; i++) {
+            probabilities.push({
+                "P(Ai)": parseFloat(document.getElementById(`P(A${i})`).value),
+                "P(B|Ai)": parseFloat(document.getElementById(`P(B|A${i})`).value)
+            });
+        }
+
+        fetch("/calculate/bayes", {
+            method: "POST",
+            headers: {
+                "Content-Type": "application/json"
+            },
+            body: JSON.stringify({ n, probabilities })
+        })
+            .then(response => response.json())
+            .then(data => {
+                if (data.error) {
+                    document.getElementById("bayes-results").innerHTML = `<p style="color: red;">Erro: ${data.error}</p>`;
+                    return;
+                }
+
+                let resultsHtml = `<h3>Resultados do Teorema de Bayes</h3>`;
+                resultsHtml += `<p>P(B): ${data["P(B)"].toFixed(4)}</p>`;
+                data["P(Ai|B)"].forEach((item, i) => {
+                    resultsHtml += `<p>${item.details}: ${item["P(Ai|B)"].toFixed(4)}</p>`;
+                });
+                document.getElementById("bayes-results").innerHTML = resultsHtml;
+            })
+            .catch(error => {
+                document.getElementById("bayes-results").innerHTML = `<p style="color: red;">Erro ao calcular. Verifique os valores.</p>`;
+                console.error(error);
+            });
+    }
+
+    function uploadFile() {
+        const fileInput = document.getElementById("file");
+        const formData = new FormData();
+        formData.append("file", fileInput.files[0]);
+
+        fetch("/upload", {
+            method: "POST",
+            body: formData
+        })
+            .then(response => response.json())
+            .then(data => {
+                if (data.error) {
+                    document.getElementById("frequency-results").innerHTML = `<p style="color: red;">Erro: ${data.error}</p>`;
+                    return;
+                }
+
+                document.getElementById("frequency-results").innerHTML = `
+                    <h3>Tabela de Distribuição de Frequências</h3>
+                    <img src="${data.table}" alt="Tabela de Frequências">
+                    <h3>Métricas</h3>
+                    <p><b>Média:</b> ${data.metrics.mean.toFixed(2)}</p>
+                    <p><b>Média Geométrica:</b> ${data.metrics.geometric_mean.toFixed(2)}</p>
+                    <p><b>Média Harmônica:</b> ${data.metrics.harmonic_mean.toFixed(2)}</p>
+                    <p><b>Moda:</b> ${data.metrics.mode.toFixed(2)}</p>
+                    <p><b>Mediana:</b> ${data.metrics.median.toFixed(2)}</p>
+                    <p><b>Variância:</b> ${data.metrics.variance.toFixed(2)}</p>
+                    <p><b>Desvio Padrão:</b> ${data.metrics.std_dev.toFixed(2)}</p>
+                    <p><b>Desvio Médio:</b> ${data.metrics.mean_dev.toFixed(2)}</p>
+                `;
+                document.getElementById("charts").innerHTML = `
+                    <h3>Gráficos</h3>
+                    <h4>Histograma</h4>
+                    <img src="${data.histogram}" alt="Histograma">
+                    <h4>Gráfico de Pizza</h4>
+                    <img src="${data.pie_chart}" alt="Gráfico de Pizza">
+                `;
+            })
+            .catch(error => {
+                document.getElementById("frequency-results").innerHTML = `<p style="color: red;">Erro ao processar o arquivo.</p>`;
+                console.error(error);
+            });
+    }
+</script>
 {% endblock %}
