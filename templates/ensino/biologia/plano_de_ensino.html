@@ -1,25 +1,23 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Plano de Ensino - Biologia</title>
-</head>
-<body>
+{% extends "base.html" %}
+
+{% block title %}Plano de Ensino - Biologia{% endblock %}
+
+{% block content %}
+<div class="container">
     <h1>Plano de Ensino - Biologia</h1>
-    <p>Bem-vindo à página do Plano de Ensino para Introdução à Estatística no curso de Ciências Biológicas.</p>
+    <p>Bem-vindo à página do Plano de Ensino para o curso de Biologia.</p>
     <p>
         Para acessar o plano de ensino completo, clique no link abaixo:
     </p>
-    <a href="{{ url_for('static', filename='pdf/plano_de_ensino_introducao_estatistica.pdf') }}" target="_blank">
+    <a href="{{ url_for('static', filename='ensino/biologia/plano_ensino_biologia.pdf') }}" target="_blank">
         Baixar Plano de Ensino
     </a>
 
     <p>Ou veja o plano diretamente abaixo:</p>
 
     <!-- Exibe o PDF na própria página -->
-    <iframe src="{{ url_for('static', filename='pdf/plano_de_ensino_introducao_estatistica.pdf') }}" 
+    <iframe src="{{ url_for('static', filename='ensino/biologia/plano_ensino_biologia.pdf') }}" 
             width="100%" height="600px" style="border: none;">
     </iframe>
-</body>
-</html>
+</div>
+{% endblock %}

@@ -7,9 +7,9 @@
     <h1>Biologia</h1>
     <p>Bem-vindo à página da turma de Biologia. Acesse os materiais abaixo:</p>
     <ul>
-        <li><a href="/static/ensino/biologia/plano_ensino/">Plano de Ensino</a></li>
-        <li><a href="/static/ensino/biologia/listas/">Listas</a></li>
-        <li><a href="/static/ensino/biologia/exercicios_resolvidos/">Exercícios Resolvidos</a></li>
+        <li><a href="{{ url_for('plano_de_ensino_biologia') }}">Plano de Ensino</a></li>
+        <li><a href="{{ url_for('listas_biologia') }}">Listas</a></li>
+        <li><a href="{{ url_for('exercicios_resolvidos_biologia') }}">Exercícios Resolvidos</a></li>
     </ul>
 </div>
 {% endblock %}

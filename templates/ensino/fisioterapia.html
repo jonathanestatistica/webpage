@@ -7,9 +7,9 @@
     <h1>Fisioterapia</h1>
     <p>Bem-vindo à página da turma de Fisioterapia. Acesse os materiais abaixo:</p>
     <ul>
-        <li><a href="/static/ensino/fisioterapia/plano_ensino/">Plano de Ensino</a></li>
-        <li><a href="/static/ensino/fisioterapia/listas/">Listas</a></li>
-        <li><a href="/static/ensino/fisioterapia/exercicios_resolvidos/">Exercícios Resolvidos</a></li>
+        <li><a href="{{ url_for('plano_de_ensino_fisioterapia') }}">Plano de Ensino</a></li>
+        <li><a href="{{ url_for('listas_fisioterapia') }}">Listas</a></li>
+        <li><a href="{{ url_for('exercicios_resolvidos_fisioterapia') }}">Exercícios Resolvidos</a></li>
     </ul>
 </div>
 {% endblock %}

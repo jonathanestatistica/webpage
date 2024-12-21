@@ -21,6 +21,138 @@ def home():
 def dashboard():
     return render_template("dashboard.html")
 
+# Outras rotas
+@app.route("/about/")
+def about():
+    return render_template("about.html")
+
+@app.route("/contact/")
+def contact():
+    return render_template("contact.html")
+
+@app.route("/videos/")
+def videos():
+    return render_template("videos.html")
+
+@app.route("/codigos/")
+def codigos():
+    return render_template("codigos.html")
+
+@app.route("/disciplinas/")
+def disciplinas():
+    return render_template("disciplina.html")
+
+# Rota para ensino
+@app.route("/ensino/")
+def ensino():
+    return render_template("ensino.html")
+
+#######################################################
+####### TUDO RELACIONADO À BIOLOGIA #######
+#######################################################
+
+@app.route("/ensino/biologia/")
+def ensino_biologia():
+    return render_template("ensino/biologia.html")
+
+# Rota para exercícios resolvidos biologia
+@app.route("/ensino/biologia/exercicios_resolvidos/")
+def exercicios_resolvidos_biologia():
+    return render_template("ensino/biologia/exercicios_resolvidos.html")
+
+# Rota para listas biologia
+@app.route("/ensino/biologia/listas/")
+def listas_biologia():
+    return render_template("ensino/biologia/listas.html")
+
+# Rota para plano de ensino biologia
+@app.route("/ensino/biologia/plano_de_ensino/")
+def plano_de_ensino_biologia():
+    return render_template("ensino/biologia/plano_de_ensino.html")
+
+
+#######################################################
+####### TUDO RELACIONADO À FISIOTERAPIA #######
+#######################################################
+
+@app.route("/ensino/fisioterapia/")
+def ensino_fisioterapia():
+    return render_template("ensino/fisioterapia.html")
+
+# Rota para exercícios resolvidos fisioterapia
+@app.route("/ensino/fisioterapia/exercicios_resolvidos")
+def exercicios_resolvidos_fisioterapia():
+    return render_template("ensino/fisioterapia/exercicios_resolvidos.html")
+
+# Rota para listas fisioterapia
+@app.route("/ensino/fisioterapia/listas")
+def listas_fisioterapia():
+    return render_template("ensino/fisioterapia/listas.html")
+
+# Rota para plano de ensino fisioterapia
+@app.route("/ensino/fisioterapia/plano_de_ensino")
+def plano_de_ensino_fisioterapia():
+    return render_template("ensino/fisioterapia/plano_de_ensino.html")
+
+
+#######################################################
+####### TUDO RELACIONADO À TERAPIA OCUPACIONAL #######
+#######################################################
+
+@app.route("/ensino/terapia_ocupacional/")
+def ensino_terapia_ocupacional():
+    return render_template("ensino/terapia_ocupacional.html")
+
+# Rota para exercícios resolvidos terapia_ocupacional
+@app.route("/ensino/terapia_ocupacional/exercicios_resolvidos")
+def exercicios_resolvidos_terapia_ocupacional():
+    return render_template("ensino/terapia_ocupacional/exercicios_resolvidos.html")
+
+# Rota para listas terapia_ocupacional
+@app.route("/ensino/terapia_ocupacional/listas")
+def listas_terapia_ocupacional():
+    return render_template("ensino/terapia_ocupacional/listas.html")
+
+# Rota para plano de ensino terapia_ocupacional
+@app.route("/ensino/terapia_ocupacional/plano_de_ensino/")
+def plano_de_ensino_terapia_ocupacional():
+    return render_template("ensino/terapia_ocupacional/plano_de_ensino.html")
+
+
+#######################################################
+####### TUDO RELACIONADO À BIOMEDICINA/FARMÁCIA #######
+#######################################################
+
+@app.route("/ensino/biomedicina_farmacia/")
+def ensino_biomedicina_farmacia():
+    return render_template("ensino/biomedicina_farmacia.html")
+
+# Rota para exercícios resolvidos biomedicina_farmacia
+@app.route("/ensino/biomedicina_farmacia/exercicios_resolvidos")
+def exercicios_resolvidos_biomedicina_farmacia():
+    return render_template("ensino/biomedicina_farmacia/exercicios_resolvidos.html")
+
+# Rota para listas biomedicina_farmacia
+@app.route("/ensino/biomedicina_farmacia/listas")
+def listas_biomedicina_farmacia():
+    return render_template("ensino/biomedicina_farmacia/listas.html")
+
+# Rota para plano de ensino biomedicina_farmacia
+@app.route("/ensino/biomedicina_farmacia/plano_de_ensino/")
+def plano_de_ensino_biomedicina_farmacia():
+    return render_template("ensino/biomedicina_farmacia/plano_de_ensino.html")
+
+
+# Rota para projeto
+@app.route("/projeto/")
+def projeto():
+    return render_template("projeto.html")
+
+# Rota para shiny_apps
+@app.route("/shiny_apps/")
+def shiny_apps():
+    return render_template("shiny_apps.html")
+
 # Plot Distribution
 @app.route('/plot/<dist_type>')
 def plot_distribution(dist_type):
@@ -200,6 +332,6 @@ def upload_file():
         })
     except Exception as e:
         return jsonify({'error': str(e)})
-
+    
 if __name__ == "__main__":
     app.run(debug=True)
