@@ -371,29 +371,6 @@ def upload():
     else:
         return jsonify({'error': 'Apenas arquivos .csv são permitidos.'}), 400
     
-@app.route('/upload', methods=['POST'])
-def upload_file():
-    try:
-        file = request.files['file']
-        data = pd.read_csv(file, header=None).squeeze()
-
-        if data.empty:
-            return jsonify({'error': 'O arquivo está vazio.'})
-
-        # Processamento exemplo
-        n = len(data)
-        k = int(np.ceil(np.sqrt(n)))
-        amplitude_total = data.max() - data.min()
-        h = round(amplitude_total / k, 2)
-
-        return jsonify({
-            'message': 'Arquivo processado com sucesso!',
-            'Amplitude Total': amplitude_total,
-            'Tamanho da Classe': h,
-            'k': k
-        })
-    except Exception as e:
-        return jsonify({'error': str(e)})
 @app.route('/calculate/ci_mean', methods=['POST'])
 def calculate_ci_mean():
     try:
@@ -411,8 +388,33 @@ def calculate_ci_mean():
         lower_limit = sample_mean - margin_error
         upper_limit = sample_mean + margin_error
 
+        # Ajustar o intervalo do eixo x para focar na área do intervalo de confiança
+        x_min = sample_mean - 4 * (std_dev / np.sqrt(sample_size))
+        x_max = sample_mean + 4 * (std_dev / np.sqrt(sample_size))
+        x = np.linspace(x_min, x_max, 1000)
+        y = norm.pdf(x, loc=sample_mean, scale=std_dev / np.sqrt(sample_size))
+
+        plt.figure(figsize=(8, 4))
+        plt.plot(x, y, label='Distribuição Normal', color='blue')
+        plt.fill_between(x, y, where=(x >= lower_limit) & (x <= upper_limit), color='green', alpha=0.3, label='Área de Confiança (95%)')
+        plt.axvline(sample_mean, color='red', linestyle='--', label='Média Amostral')
+        plt.axvline(lower_limit, color='orange', linestyle='--', label='Limite Inferior')
+        plt.axvline(upper_limit, color='orange', linestyle='--', label='Limite Superior')
+        plt.title('Intervalo de Confiança para a Média')
+        plt.xlabel('Valores')
+        plt.ylabel('Densidade')
+        plt.legend()
+
+        # Salvar gráfico como base64
+        buf = io.BytesIO()
+        plt.savefig(buf, format='png')
+        buf.seek(0)
+        plot_data = base64.b64encode(buf.read()).decode('utf-8')
+        buf.close()
+        plt.close()
+
         result = f"Com {(1 - alpha) * 100:.1f}% de confiança, a média está entre {lower_limit:.4f} e {upper_limit:.4f}, com base na amostra."
-        return jsonify({'result': result})
+        return jsonify({'result': result, 'plot': plot_data})
     except Exception as e:
         return jsonify({'error': str(e)}), 500
 
@@ -437,8 +439,31 @@ def calculate_ci_proportion():
         lower_limit = sample_proportion - margin_error
         upper_limit = sample_proportion + margin_error
 
+        # Gerar gráfico
+        x = np.linspace(sample_proportion - 4 * np.sqrt(variance), sample_proportion + 4 * np.sqrt(variance), 500)
+        y = norm.pdf(x, loc=sample_proportion, scale=np.sqrt(variance))
+
+        plt.figure(figsize=(8, 4))
+        plt.plot(x, y, label='Distribuição Normal')
+        plt.fill_between(x, y, where=(x >= lower_limit) & (x <= upper_limit), color='blue', alpha=0.3, label='Área de Confiança')
+        plt.axvline(sample_proportion, color='red', linestyle='--', label='Proporção Amostral')
+        plt.axvline(lower_limit, color='green', linestyle='--', label='Limite Inferior')
+        plt.axvline(upper_limit, color='green', linestyle='--', label='Limite Superior')
+        plt.title('Intervalo de Confiança para a Proporção')
+        plt.xlabel('X')
+        plt.ylabel('Densidade')
+        plt.legend()
+
+        # Salvar gráfico como base64
+        buf = io.BytesIO()
+        plt.savefig(buf, format='png')
+        buf.seek(0)
+        plot_data = base64.b64encode(buf.read()).decode('utf-8')
+        buf.close()
+        plt.close()
+
         result = f"Com {(1 - alpha) * 100:.1f}% de confiança, a proporção está entre {lower_limit:.4f} e {upper_limit:.4f}, com base na amostra."
-        return jsonify({'result': result})
+        return jsonify({'result': result, 'plot': plot_data})
     except Exception as e:
         return jsonify({'error': str(e)}), 500
     
