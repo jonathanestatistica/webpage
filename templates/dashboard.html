@@ -300,4 +300,86 @@
             });
     }
 </script>
+
+<div>
+    <h3>Intervalo de Confiança para a Média</h3>
+    <form id="ci-mean-form">
+        <label for="sample-mean">Média Amostral (&#956;&#770;):</label>
+        <input type="number" step="0.01" id="sample-mean" required><br>
+        <label for="alpha-mean">Nível de Significância (&alpha;):</label>
+        <input type="number" step="0.01" id="alpha-mean" required><br>
+        <label for="std-dev">Desvio Padrão Populacional (&sigma;):</label>
+        <input type="number" step="0.01" id="std-dev" required><br>
+        <label for="sample-size-mean">Tamanho da Amostra (n):</label>
+        <input type="number" id="sample-size-mean" required><br>
+        <button type="button" onclick="calculateCIMean()">Calcular</button>
+    </form>
+    <p>Resultado: <span id="ci-mean-result"></span></p>
+</div>
+
+<div>
+    <h3>Intervalo de Confiança para a Proporção</h3>
+    <form id="ci-proportion-form">
+        <label for="sample-proportion">Proporção Amostral (&#112;&#770;):</label>
+        <input type="number" step="0.01" id="sample-proportion" required><br>
+        <label for="alpha-proportion">Nível de Significância (&alpha;):</label>
+        <input type="number" step="0.01" id="alpha-proportion" required><br>
+        <label for="population-proportion">Proporção Populacional (p):</label>
+        <input type="number" step="0.01" id="population-proportion" required><br>
+        <label for="sample-size-proportion">Tamanho da Amostra (n):</label>
+        <input type="number" id="sample-size-proportion" required><br>
+        <button type="button" onclick="calculateCIProportion()">Calcular</button>
+    </form>
+    <p>Resultado: <span id="ci-proportion-result"></span></p>
+</div>
+
+<script>
+    function calculateCIMean() {
+        const sampleMean = parseFloat(document.getElementById("sample-mean").value);
+        const alpha = parseFloat(document.getElementById("alpha-mean").value);
+        const stdDev = parseFloat(document.getElementById("std-dev").value);
+        const sampleSize = parseInt(document.getElementById("sample-size-mean").value);
+
+        const payload = { sample_mean: sampleMean, alpha: alpha, std_dev: stdDev, sample_size: sampleSize };
+
+        fetch("/calculate/ci_mean", {
+            method: "POST",
+            headers: { "Content-Type": "application/json" },
+            body: JSON.stringify(payload),
+        })
+        .then(response => response.json())
+        .then(data => {
+            if (data.error) {
+                document.getElementById("ci-mean-result").innerText = `Erro: ${data.error}`;
+            } else {
+                document.getElementById("ci-mean-result").innerText = data.result;
+            }
+        })
+        .catch(error => console.error("Erro:", error));
+    }
+
+    function calculateCIProportion() {
+        const sampleProportion = parseFloat(document.getElementById("sample-proportion").value);
+        const alpha = parseFloat(document.getElementById("alpha-proportion").value);
+        const populationProportion = parseFloat(document.getElementById("population-proportion").value);
+        const sampleSize = parseInt(document.getElementById("sample-size-proportion").value);
+
+        const payload = { sample_proportion: sampleProportion, alpha: alpha, population_proportion: populationProportion, sample_size: sampleSize };
+
+        fetch("/calculate/ci_proportion", {
+            method: "POST",
+            headers: { "Content-Type": "application/json" },
+            body: JSON.stringify(payload),
+        })
+        .then(response => response.json())
+        .then(data => {
+            if (data.error) {
+                document.getElementById("ci-proportion-result").innerText = `Erro: ${data.error}`;
+            } else {
+                document.getElementById("ci-proportion-result").innerText = data.result;
+            }
+        })
+        .catch(error => console.error("Erro:", error));
+    }
+</script>
 {% endblock %}
