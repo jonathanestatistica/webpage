@@ -394,6 +394,53 @@ def upload_file():
         })
     except Exception as e:
         return jsonify({'error': str(e)})
+@app.route('/calculate/ci_mean', methods=['POST'])
+def calculate_ci_mean():
+    try:
+        data = request.json
+        sample_mean = float(data['sample_mean'])
+        alpha = float(data['alpha'])
+        std_dev = float(data['std_dev'])
+        sample_size = int(data['sample_size'])
+
+        # Cálculo do z-score
+        z_score = norm.ppf(1 - alpha / 2)
+
+        # Cálculo do intervalo de confiança
+        margin_error = z_score * (std_dev / np.sqrt(sample_size))
+        lower_limit = sample_mean - margin_error
+        upper_limit = sample_mean + margin_error
+
+        result = f"Com {(1 - alpha) * 100:.1f}% de confiança, a média está entre {lower_limit:.4f} e {upper_limit:.4f}, com base na amostra."
+        return jsonify({'result': result})
+    except Exception as e:
+        return jsonify({'error': str(e)}), 500
+
+
+@app.route('/calculate/ci_proportion', methods=['POST'])
+def calculate_ci_proportion():
+    try:
+        data = request.json
+        sample_proportion = float(data['sample_proportion'])
+        alpha = float(data['alpha'])
+        population_proportion = float(data['population_proportion'])
+        sample_size = int(data['sample_size'])
+
+        # Cálculo do z-score
+        z_score = norm.ppf(1 - alpha / 2)
+
+        # Variância da proporção
+        variance = population_proportion * (1 - population_proportion) / sample_size
+
+        # Cálculo do intervalo de confiança
+        margin_error = z_score * np.sqrt(variance)
+        lower_limit = sample_proportion - margin_error
+        upper_limit = sample_proportion + margin_error
+
+        result = f"Com {(1 - alpha) * 100:.1f}% de confiança, a proporção está entre {lower_limit:.4f} e {upper_limit:.4f}, com base na amostra."
+        return jsonify({'result': result})
+    except Exception as e:
+        return jsonify({'error': str(e)}), 500
     
 if __name__ == "__main__":
     app.run(debug=True)
