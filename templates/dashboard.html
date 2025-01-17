@@ -52,6 +52,30 @@
     <div id="poisson-plot"></div>
 </div>
 
+<div>
+    <h3>Normal</h3>
+    <form id="normal-form">
+        <label for="mean">Média (&#956;):</label>
+        <input type="number" step="0.01" id="mean" required><br>
+        <label for="variance">Variância (&#963;<sup>2</sup>):</label>
+        <input type="number" step="0.01" id="variance" required><br>
+
+        <label for="calculation-type">Tipo de cálculo:</label>
+        <select id="calculation-type" required>
+            <option value="above">Acima de um valor</option>
+            <option value="below">Abaixo de um valor</option>
+            <option value="between">Entre dois valores</option>
+            <option value="outside">Fora de dois valores</option>
+        </select><br><br>
+
+        <div id="additional-inputs"></div>
+
+        <button type="button" onclick="calculateNormal()">Calcular</button>
+    </form>
+    <p>Resultado: <span id="normal-result"></span></p>
+    <div id="normal-plot"></div>
+</div>
+
 <!-- Teorema da Probabilidade Total e de Bayes -->
 <h2>Teorema da Probabilidade Total e Teorema de Bayes</h2>
 <div>
@@ -123,6 +147,57 @@
                 console.error(error);
             });
     }
+
+    function calculateNormal() {
+        const mean = parseFloat(document.getElementById("mean").value);
+        const variance = parseFloat(document.getElementById("variance").value);
+        const calculationType = document.getElementById("calculation-type").value;
+
+        const payload = { mean, variance, calculation_type: calculationType };
+
+        if (calculationType === "above" || calculationType === "below") {
+            payload.value = parseFloat(document.getElementById("value").value);
+        } else if (calculationType === "between" || calculationType === "outside") {
+            payload.value1 = parseFloat(document.getElementById("value1").value);
+            payload.value2 = parseFloat(document.getElementById("value2").value);
+        }
+
+        fetch("/calculate/normal", {
+            method: "POST",
+            headers: { "Content-Type": "application/json" },
+            body: JSON.stringify(payload),
+        })
+        .then(response => response.json())
+        .then(data => {
+            if (data.error) {
+                document.getElementById("normal-result").innerText = `Erro: ${data.error}`;
+            } else {
+                document.getElementById("normal-result").innerText = `Probabilidade: ${data.probability.toFixed(4)}`;
+                document.getElementById("normal-plot").innerHTML = `<img src="data:image/png;base64,${data.plot}" alt="Gráfico">`;
+            }
+        })
+        .catch(error => console.error("Erro:", error));
+    }
+
+    document.getElementById("calculation-type").addEventListener("change", function() {
+        const type = this.value;
+        const additionalInputs = document.getElementById("additional-inputs");
+        additionalInputs.innerHTML = "";
+
+        if (type === "above" || type === "below") {
+            additionalInputs.innerHTML = `
+                <label for="value">Valor:</label>
+                <input type="number" step="0.01" id="value" required><br>
+            `;
+        } else if (type === "between" || type === "outside") {
+            additionalInputs.innerHTML = `
+                <label for="value1">Valor 1:</label>
+                <input type="number" step="0.01" id="value1" required><br>
+                <label for="value2">Valor 2:</label>
+                <input type="number" step="0.01" id="value2" required><br>
+            `;
+        }
+    });
 
     function generateBayesInputs() {
         const n = parseInt(document.getElementById("num-partitions").value);
