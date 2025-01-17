@@ -8,6 +8,8 @@ import io
 import os
 from math import comb, exp, factorial, ceil, sqrt
 from werkzeug.utils import secure_filename
+from scipy.stats import norm
+import base64
 
 app = Flask(__name__)
 app.config['UPLOAD_FOLDER'] = 'uploads'
@@ -232,6 +234,66 @@ def calculate_poisson():
         return jsonify({'result': f'P(X={k})={prob:.4f}, F(X≤{k})={cdf:.4f}', 'plot_url': plot_url})
     except Exception as e:
         return jsonify({'error': f'Erro ao calcular Poisson: {str(e)}'}), 500
+
+@app.route('/calculate/normal', methods=['POST'])
+def calculate_normal():
+    try:
+        data = request.json
+        mean = float(data['mean'])
+        variance = float(data['variance'])
+        std_dev = np.sqrt(variance)
+        calculation_type = data['calculation_type']
+
+        # Calcular a probabilidade com base no tipo
+        if calculation_type == 'above':
+            value = float(data['value'])
+            probability = 1 - norm.cdf(value, loc=mean, scale=std_dev)
+        elif calculation_type == 'below':
+            value = float(data['value'])
+            probability = norm.cdf(value, loc=mean, scale=std_dev)
+        elif calculation_type == 'between':
+            value1 = float(data['value1'])
+            value2 = float(data['value2'])
+            probability = norm.cdf(value2, loc=mean, scale=std_dev) - norm.cdf(value1, loc=mean, scale=std_dev)
+        elif calculation_type == 'outside':
+            value1 = float(data['value1'])
+            value2 = float(data['value2'])
+            probability = 1 - (norm.cdf(value2, loc=mean, scale=std_dev) - norm.cdf(value1, loc=mean, scale=std_dev))
+        else:
+            return jsonify({'error': 'Tipo de cálculo inválido'}), 400
+
+        # Gerar gráfico
+        x = np.linspace(mean - 4*std_dev, mean + 4*std_dev, 500)
+        y = norm.pdf(x, loc=mean, scale=std_dev)
+
+        plt.figure(figsize=(8, 4))
+        plt.plot(x, y, label='Distribuição Normal')
+        if calculation_type == 'above':
+            plt.fill_between(x, y, where=(x > value), color='blue', alpha=0.3, label='Área')
+        elif calculation_type == 'below':
+            plt.fill_between(x, y, where=(x < value), color='blue', alpha=0.3, label='Área')
+        elif calculation_type == 'between':
+            plt.fill_between(x, y, where=(x > value1) & (x < value2), color='blue', alpha=0.3, label='Área')
+        elif calculation_type == 'outside':
+            plt.fill_between(x, y, where=(x < value1) | (x > value2), color='blue', alpha=0.3, label='Área')
+
+        plt.title('Distribuição Normal')
+        plt.xlabel('X')
+        plt.ylabel('Densidade')
+        plt.legend()
+
+        # Salvar gráfico como base64
+        buf = io.BytesIO()
+        plt.savefig(buf, format='png')
+        buf.seek(0)
+        plot_data = base64.b64encode(buf.read()).decode('utf-8')
+        buf.close()
+        plt.close()
+
+        return jsonify({'probability': probability, 'plot': plot_data})
+
+    except Exception as e:
+        return jsonify({'error': str(e)}), 500
 
 @app.route('/calculate/bayes', methods=['POST'])
 def calculate_bayes():
