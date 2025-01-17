@@ -315,6 +315,7 @@
         <button type="button" onclick="calculateCIMean()">Calcular</button>
     </form>
     <p>Resultado: <span id="ci-mean-result"></span></p>
+    <div id="ci-mean-plot"></div>
 </div>
 
 <div>
@@ -331,6 +332,7 @@
         <button type="button" onclick="calculateCIProportion()">Calcular</button>
     </form>
     <p>Resultado: <span id="ci-proportion-result"></span></p>
+    <div id="ci-proportion-plot"></div>
 </div>
 
 <script>
@@ -353,6 +355,7 @@
                 document.getElementById("ci-mean-result").innerText = `Erro: ${data.error}`;
             } else {
                 document.getElementById("ci-mean-result").innerText = data.result;
+                document.getElementById("ci-mean-plot").innerHTML = `<img src="data:image/png;base64,${data.plot}" alt="Gráfico">`;
             }
         })
         .catch(error => console.error("Erro:", error));
@@ -377,6 +380,7 @@
                 document.getElementById("ci-proportion-result").innerText = `Erro: ${data.error}`;
             } else {
                 document.getElementById("ci-proportion-result").innerText = data.result;
+                document.getElementById("ci-proportion-plot").innerHTML = `<img src="data:image/png;base64,${data.plot}" alt="Gráfico">`;
             }
         })
         .catch(error => console.error("Erro:", error));
