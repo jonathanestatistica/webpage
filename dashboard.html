@@ -1,0 +1,385 @@
+{% extends "base.html" %}
+
+{% block title %}Dashboard{% endblock %}
+
+{% block content %}
+<h1>Dashboard</h1>
+
+<!-- Distribuições de Probabilidade -->
+<h2>Distribuições de Probabilidade</h2>
+<div>
+    <h3>Binomial</h3>
+    <form id="binomial-form">
+        <label for="n">Número de Retiradas (n):</label>
+        <input type="number" id="n" required><br>
+        <label for="p">Probabilidade de Sucesso (p):</label>
+        <input type="number" step="0.01" id="p" required><br>
+        <label for="k">Número de Sucessos (k):</label>
+        <input type="number" id="k" required><br>
+        <button type="button" onclick="calculateBinomial()">Calcular</button>
+    </form>
+    <p>Resultado: <span id="binomial-result"></span></p>
+    <div id="binomial-plot"></div>
+</div>
+
+<div>
+    <h3>Hipergeométrica</h3>
+    <form id="hypergeometric-form">
+        <label for="N">Total de Objetos (N):</label>
+        <input type="number" id="N" required><br>
+        <label for="n">Amostra (n):</label>
+        <input type="number" id="n_h" required><br>
+        <label for="r">Objetos com Sucesso (r):</label>
+        <input type="number" id="r" required><br>
+        <label for="k">Número de Sucessos (k):</label>
+        <input type="number" id="k_h" required><br>
+        <button type="button" onclick="calculateHypergeometric()">Calcular</button>
+    </form>
+    <p>Resultado: <span id="hypergeometric-result"></span></p>
+    <div id="hypergeometric-plot"></div>
+</div>
+
+<div>
+    <h3>Poisson</h3>
+    <form id="poisson-form">
+        <label for="lambda">Taxa (&lambda;):</label>
+        <input type="number" step="0.01" id="lambda" required><br>
+        <label for="k">Número de Ocorrências (k):</label>
+        <input type="number" id="k_p" required><br>
+        <button type="button" onclick="calculatePoisson()">Calcular</button>
+    </form>
+    <p>Resultado: <span id="poisson-result"></span></p>
+    <div id="poisson-plot"></div>
+</div>
+
+<div>
+    <h3>Normal</h3>
+    <form id="normal-form">
+        <label for="mean">Média (&#956;):</label>
+        <input type="number" step="0.01" id="mean" required><br>
+        <label for="variance">Variância (&#963;<sup>2</sup>):</label>
+        <input type="number" step="0.01" id="variance" required><br>
+
+        <label for="calculation-type">Tipo de cálculo:</label>
+        <select id="calculation-type" required>
+            <option value="above">Acima de um valor</option>
+            <option value="below">Abaixo de um valor</option>
+            <option value="between">Entre dois valores</option>
+            <option value="outside">Fora de dois valores</option>
+        </select><br><br>
+
+        <div id="additional-inputs"></div>
+
+        <button type="button" onclick="calculateNormal()">Calcular</button>
+    </form>
+    <p>Resultado: <span id="normal-result"></span></p>
+    <div id="normal-plot"></div>
+</div>
+
+<!-- Teorema da Probabilidade Total e de Bayes -->
+<h2>Teorema da Probabilidade Total e Teorema de Bayes</h2>
+<div>
+    <form id="bayes-form">
+        <label for="num-partitions">Número de Partições (n):</label>
+        <input type="number" id="num-partitions" name="num-partitions" min="1" required><br>
+        <button type="button" onclick="generateBayesInputs()">Confirmar</button>
+    </form>
+    <div id="bayes-inputs"></div>
+    <div id="bayes-results"></div>
+</div>
+
+<div>
+    <h2>Distribuição de Frequências (Upload de Arquivo)</h2>
+    <form id="upload-form" enctype="multipart/form-data">
+        <label for="file">Selecione um arquivo CSV:</label>
+        <input type="file" id="file" name="file" accept=".csv" required><br><br>
+        <button type="button" onclick="uploadFile()">Carregar e Calcular</button>
+    </form>
+    <div id="frequency-results"></div>
+    <div id="charts"></div>
+</div>
+
+<script>
+    function calculateBinomial() {
+        const n = document.getElementById("n").value;
+        const p = document.getElementById("p").value;
+        const k = document.getElementById("k").value;
+        fetch(`/calculate/binomial?n=${n}&p=${p}&k=${k}`)
+            .then(response => response.json())
+            .then(data => {
+                document.getElementById("binomial-result").innerText = data.result;
+                document.getElementById("binomial-plot").innerHTML = `<img src="${data.plot_url}" alt="Gráfico da distribuição binomial" />`;
+            })
+            .catch(error => {
+                document.getElementById("binomial-result").innerText = "Erro ao calcular. Verifique os valores.";
+                console.error(error);
+            });
+    }
+
+    function calculateHypergeometric() {
+        const N = document.getElementById("N").value;
+        const n = document.getElementById("n_h").value;
+        const r = document.getElementById("r").value;
+        const k = document.getElementById("k_h").value;
+        fetch(`/calculate/hypergeometric?N=${N}&n=${n}&r=${r}&k=${k}`)
+            .then(response => response.json())
+            .then(data => {
+                document.getElementById("hypergeometric-result").innerText = data.result;
+                document.getElementById("hypergeometric-plot").innerHTML = `<img src="${data.plot_url}" alt="Gráfico da distribuição hipergeométrica" />`;
+            })
+            .catch(error => {
+                document.getElementById("hypergeometric-result").innerText = "Erro ao calcular. Verifique os valores.";
+                console.error(error);
+            });
+    }
+
+    function calculatePoisson() {
+        const lambda = document.getElementById("lambda").value;
+        const k = document.getElementById("k_p").value;
+        fetch(`/calculate/poisson?lambda=${lambda}&k=${k}`)
+            .then(response => response.json())
+            .then(data => {
+                document.getElementById("poisson-result").innerText = data.result;
+                document.getElementById("poisson-plot").innerHTML = `<img src="${data.plot_url}" alt="Gráfico da distribuição Poisson" />`;
+            })
+            .catch(error => {
+                document.getElementById("poisson-result").innerText = "Erro ao calcular. Verifique os valores.";
+                console.error(error);
+            });
+    }
+
+    function calculateNormal() {
+        const mean = parseFloat(document.getElementById("mean").value);
+        const variance = parseFloat(document.getElementById("variance").value);
+        const calculationType = document.getElementById("calculation-type").value;
+
+        const payload = { mean, variance, calculation_type: calculationType };
+
+        if (calculationType === "above" || calculationType === "below") {
+            payload.value = parseFloat(document.getElementById("value").value);
+        } else if (calculationType === "between" || calculationType === "outside") {
+            payload.value1 = parseFloat(document.getElementById("value1").value);
+            payload.value2 = parseFloat(document.getElementById("value2").value);
+        }
+
+        fetch("/calculate/normal", {
+            method: "POST",
+            headers: { "Content-Type": "application/json" },
+            body: JSON.stringify(payload),
+        })
+        .then(response => response.json())
+        .then(data => {
+            if (data.error) {
+                document.getElementById("normal-result").innerText = `Erro: ${data.error}`;
+            } else {
+                document.getElementById("normal-result").innerText = `Probabilidade: ${data.probability.toFixed(4)}`;
+                document.getElementById("normal-plot").innerHTML = `<img src="data:image/png;base64,${data.plot}" alt="Gráfico">`;
+            }
+        })
+        .catch(error => console.error("Erro:", error));
+    }
+
+    document.getElementById("calculation-type").addEventListener("change", function() {
+        const type = this.value;
+        const additionalInputs = document.getElementById("additional-inputs");
+        additionalInputs.innerHTML = "";
+
+        if (type === "above" || type === "below") {
+            additionalInputs.innerHTML = `
+                <label for="value">Valor:</label>
+                <input type="number" step="0.01" id="value" required><br>
+            `;
+        } else if (type === "between" || type === "outside") {
+            additionalInputs.innerHTML = `
+                <label for="value1">Valor 1:</label>
+                <input type="number" step="0.01" id="value1" required><br>
+                <label for="value2">Valor 2:</label>
+                <input type="number" step="0.01" id="value2" required><br>
+            `;
+        }
+    });
+
+    function generateBayesInputs() {
+        const n = parseInt(document.getElementById("num-partitions").value);
+        const inputsDiv = document.getElementById("bayes-inputs");
+        inputsDiv.innerHTML = "";
+
+        for (let i = 1; i <= n; i++) {
+            inputsDiv.innerHTML += `
+                <h3>Partição A${i}</h3>
+                <label for="P(A${i})">P(A${i}):</label>
+                <input type="number" id="P(A${i})" step="0.01" min="0" max="1" required>
+                <label for="P(B|A${i})">P(B|A${i}):</label>
+                <input type="number" id="P(B|A${i})" step="0.01" min="0" max="1" required><br>
+            `;
+        }
+
+        inputsDiv.innerHTML += `
+            <button type="button" onclick="calculateBayes()">Calcular</button>
+        `;
+    }
+
+    function calculateBayes() {
+        const n = parseInt(document.getElementById("num-partitions").value);
+        const probabilities = [];
+
+        for (let i = 1; i <= n; i++) {
+            probabilities.push({
+                "P(Ai)": parseFloat(document.getElementById(`P(A${i})`).value),
+                "P(B|Ai)": parseFloat(document.getElementById(`P(B|A${i})`).value)
+            });
+        }
+
+        fetch("/calculate/bayes", {
+            method: "POST",
+            headers: {
+                "Content-Type": "application/json"
+            },
+            body: JSON.stringify({ n, probabilities })
+        })
+            .then(response => response.json())
+            .then(data => {
+                if (data.error) {
+                    document.getElementById("bayes-results").innerHTML = `<p style="color: red;">Erro: ${data.error}</p>`;
+                    return;
+                }
+
+                let resultsHtml = `<h3>Resultados do Teorema de Bayes</h3>`;
+                resultsHtml += `<p>P(B): ${data["P(B)"].toFixed(4)}</p>`;
+                data["P(Ai|B)"].forEach((item, i) => {
+                    resultsHtml += `<p>${item.details}: ${item["P(Ai|B)"].toFixed(4)}</p>`;
+                });
+                document.getElementById("bayes-results").innerHTML = resultsHtml;
+            })
+            .catch(error => {
+                document.getElementById("bayes-results").innerHTML = `<p style="color: red;">Erro ao calcular. Verifique os valores.</p>`;
+                console.error(error);
+            });
+    }
+
+    function uploadFile() {
+        const fileInput = document.getElementById("file");
+        const formData = new FormData();
+        formData.append("file", fileInput.files[0]);
+
+        fetch("/upload", {
+            method: "POST",
+            body: formData
+        })
+            .then(response => response.json())
+            .then(data => {
+                if (data.error) {
+                    document.getElementById("frequency-results").innerHTML = `<p style="color: red;">Erro: ${data.error}</p>`;
+                    return;
+                }
+
+                document.getElementById("frequency-results").innerHTML = `
+                    <h3>Tabela de Distribuição de Frequências</h3>
+                    <img src="${data.table}" alt="Tabela de Frequências">
+                    <h3>Métricas</h3>
+                    <p><b>Média:</b> ${data.metrics.mean.toFixed(2)}</p>
+                    <p><b>Média Geométrica:</b> ${data.metrics.geometric_mean.toFixed(2)}</p>
+                    <p><b>Média Harmônica:</b> ${data.metrics.harmonic_mean.toFixed(2)}</p>
+                    <p><b>Moda:</b> ${data.metrics.mode.toFixed(2)}</p>
+                    <p><b>Mediana:</b> ${data.metrics.median.toFixed(2)}</p>
+                    <p><b>Variância:</b> ${data.metrics.variance.toFixed(2)}</p>
+                    <p><b>Desvio Padrão:</b> ${data.metrics.std_dev.toFixed(2)}</p>
+                    <p><b>Desvio Médio:</b> ${data.metrics.mean_dev.toFixed(2)}</p>
+                `;
+                document.getElementById("charts").innerHTML = `
+                    <h3>Gráficos</h3>
+                    <h4>Histograma</h4>
+                    <img src="${data.histogram}" alt="Histograma">
+                    <h4>Gráfico de Pizza</h4>
+                    <img src="${data.pie_chart}" alt="Gráfico de Pizza">
+                `;
+            })
+            .catch(error => {
+                document.getElementById("frequency-results").innerHTML = `<p style="color: red;">Erro ao processar o arquivo.</p>`;
+                console.error(error);
+            });
+    }
+</script>
+
+<div>
+    <h3>Intervalo de Confiança para a Média</h3>
+    <form id="ci-mean-form">
+        <label for="sample-mean">Média Amostral (&#956;&#770;):</label>
+        <input type="number" step="0.01" id="sample-mean" required><br>
+        <label for="alpha-mean">Nível de Significância (&alpha;):</label>
+        <input type="number" step="0.01" id="alpha-mean" required><br>
+        <label for="std-dev">Desvio Padrão Populacional (&sigma;):</label>
+        <input type="number" step="0.01" id="std-dev" required><br>
+        <label for="sample-size-mean">Tamanho da Amostra (n):</label>
+        <input type="number" id="sample-size-mean" required><br>
+        <button type="button" onclick="calculateCIMean()">Calcular</button>
+    </form>
+    <p>Resultado: <span id="ci-mean-result"></span></p>
+</div>
+
+<div>
+    <h3>Intervalo de Confiança para a Proporção</h3>
+    <form id="ci-proportion-form">
+        <label for="sample-proportion">Proporção Amostral (&#112;&#770;):</label>
+        <input type="number" step="0.01" id="sample-proportion" required><br>
+        <label for="alpha-proportion">Nível de Significância (&alpha;):</label>
+        <input type="number" step="0.01" id="alpha-proportion" required><br>
+        <label for="population-proportion">Proporção Populacional (p):</label>
+        <input type="number" step="0.01" id="population-proportion" required><br>
+        <label for="sample-size-proportion">Tamanho da Amostra (n):</label>
+        <input type="number" id="sample-size-proportion" required><br>
+        <button type="button" onclick="calculateCIProportion()">Calcular</button>
+    </form>
+    <p>Resultado: <span id="ci-proportion-result"></span></p>
+</div>
+
+<script>
+    function calculateCIMean() {
+        const sampleMean = parseFloat(document.getElementById("sample-mean").value);
+        const alpha = parseFloat(document.getElementById("alpha-mean").value);
+        const stdDev = parseFloat(document.getElementById("std-dev").value);
+        const sampleSize = parseInt(document.getElementById("sample-size-mean").value);
+
+        const payload = { sample_mean: sampleMean, alpha: alpha, std_dev: stdDev, sample_size: sampleSize };
+
+        fetch("/calculate/ci_mean", {
+            method: "POST",
+            headers: { "Content-Type": "application/json" },
+            body: JSON.stringify(payload),
+        })
+        .then(response => response.json())
+        .then(data => {
+            if (data.error) {
+                document.getElementById("ci-mean-result").innerText = `Erro: ${data.error}`;
+            } else {
+                document.getElementById("ci-mean-result").innerText = data.result;
+            }
+        })
+        .catch(error => console.error("Erro:", error));
+    }
+
+    function calculateCIProportion() {
+        const sampleProportion = parseFloat(document.getElementById("sample-proportion").value);
+        const alpha = parseFloat(document.getElementById("alpha-proportion").value);
+        const populationProportion = parseFloat(document.getElementById("population-proportion").value);
+        const sampleSize = parseInt(document.getElementById("sample-size-proportion").value);
+
+        const payload = { sample_proportion: sampleProportion, alpha: alpha, population_proportion: populationProportion, sample_size: sampleSize };
+
+        fetch("/calculate/ci_proportion", {
+            method: "POST",
+            headers: { "Content-Type": "application/json" },
+            body: JSON.stringify(payload),
+        })
+        .then(response => response.json())
+        .then(data => {
+            if (data.error) {
+                document.getElementById("ci-proportion-result").innerText = `Erro: ${data.error}`;
+            } else {
+                document.getElementById("ci-proportion-result").innerText = data.result;
+            }
+        })
+        .catch(error => console.error("Erro:", error));
+    }
+</script>
+{% endblock %}
