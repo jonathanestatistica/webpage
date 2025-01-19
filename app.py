@@ -9,7 +9,10 @@ import os
 from math import comb, exp, factorial, ceil, sqrt
 from werkzeug.utils import secure_filename
 from scipy.stats import norm
+from scipy.stats import t
+from scipy import stats
 import base64
+import tempfile
 
 app = Flask(__name__)
 app.config['UPLOAD_FOLDER'] = 'uploads'
@@ -550,6 +553,133 @@ def calculate_hypothesis_proportion():
 
         return jsonify({"result": result})
 
+    except Exception as e:
+        return jsonify({"error": f"Erro interno: {str(e)}"}), 500
+    
+@app.route('/calculate/hypothesis_mean_unknown_variance', methods=['POST'])
+def calculate_hypothesis_mean_unknown_variance():
+    try:
+        data = request.json
+
+        # Verificar campos obrigatórios
+        required_fields = ['test_type', 'h0', 'alpha', 'sample_size', 'sample_mean', 'sample_variance']
+        for field in required_fields:
+            if field not in data:
+                return jsonify({"error": f"O campo '{field}' é obrigatório."}), 400
+
+        # Obter os parâmetros
+        test_type = data['test_type']
+        h0 = float(data['h0'])
+        alpha = float(data['alpha'])
+        sample_size = int(data['sample_size'])
+        sample_mean = float(data['sample_mean'])
+        sample_variance = float(data['sample_variance'])
+
+        # Verificar validade de alpha
+        if not (0 < alpha < 1):
+            return jsonify({"error": "O nível de significância (alpha) deve estar entre 0 e 1."}), 400
+
+        # Calcular t-score
+        std_error = np.sqrt(sample_variance / sample_size)
+        t_score = (sample_mean - h0) / std_error
+        degrees_of_freedom = sample_size - 1
+
+        # Calcular p-valor
+        if test_type == "bilateral":
+            p_value = 2 * (1 - t.cdf(abs(t_score), df=degrees_of_freedom))
+        elif test_type == "left":
+            p_value = t.cdf(t_score, df=degrees_of_freedom)
+        else:  # "right"
+            p_value = 1 - t.cdf(t_score, df=degrees_of_freedom)
+
+        # Decisão
+        reject_h0 = p_value < alpha
+
+        # Gerar conclusão
+        conclusion = (
+            f"A probabilidade de errar é {p_value:.4f} e como ela é baixa (< {alpha}), "
+            f"rejeita-se H₀ com {100 * (1 - alpha):.2f}% de confiança."
+            if reject_h0
+            else f"A probabilidade de errar é {p_value:.4f}, que não é baixa (>= {alpha}). "
+                 f"Portanto, não se rejeita H₀ com {100 * (1 - alpha):.2f}% de confiança."
+        )
+
+        result = f"T Amostral (t̂): {t_score:.4f}, P-valor: {p_value:.4f}. {conclusion}"
+
+        return jsonify({"result": result})
+
+    except Exception as e:
+        return jsonify({"error": f"Erro interno: {str(e)}"}), 500
+
+@app.route('/calculate/difference_means', methods=['POST'])
+def calculate_difference_means():
+    try:
+        file = request.files['file']
+        test_type = request.form['test_type']
+        independent = request.form['independent'] == 'true'
+
+        df = pd.read_excel(file)
+        if len(df.columns) != 2:
+            return jsonify({"error": "O arquivo deve conter exatamente duas colunas."}), 400
+
+        col1, col2 = df.columns
+        data1 = df[col1].dropna()
+        data2 = df[col2].dropna()
+
+        if independent:
+            t_stat, p_value = stats.ttest_ind(data1, data2)
+        else:
+            t_stat, p_value = stats.ttest_rel(data1, data2)
+
+        alpha = 0.05
+        reject_h0 = False
+        if test_type == "bilateral":
+            reject_h0 = p_value < alpha
+        elif test_type == "left":
+            reject_h0 = (p_value / 2 < alpha) and (t_stat < 0)
+        elif test_type == "right":
+            reject_h0 = (p_value / 2 < alpha) and (t_stat > 0)
+
+        conclusion = (
+            "Logo, há diferença estatística entre as médias."
+            if reject_h0 else
+            "Logo, não há diferença estatística entre as médias."
+        )
+
+        # Salvar os resultados no diretório UPLOAD_FOLDER
+        result_file_path = os.path.join(app.config['UPLOAD_FOLDER'], 'difference_means_results.xlsx')
+        with pd.ExcelWriter(result_file_path, engine='openpyxl') as writer:
+            df.describe().to_excel(writer, sheet_name='Resumo')
+            pd.DataFrame({
+                "Estatística t": [t_stat],
+                "P-valor": [p_value],
+                "Conclusão": [conclusion]
+            }).to_excel(writer, sheet_name='Resultados')
+
+        return jsonify({
+            "result": f"Estatística t: {t_stat:.4f}, P-valor: {p_value:.4f}. {conclusion}",
+            "column1": col1,
+            "column2": col2
+        })
+
+    except Exception as e:
+        return jsonify({"error": f"Erro interno: {str(e)}"}), 500
+
+@app.route('/download/difference_means', methods=['GET'])
+def download_difference_means():
+    try:
+        # Verificar se o arquivo de resultado foi gerado
+        result_file_path = os.path.join(app.config['UPLOAD_FOLDER'], 'difference_means_results.xlsx')
+        if not os.path.exists(result_file_path):
+            return jsonify({"error": "Nenhum resultado encontrado para download."}), 400
+
+        # Enviar o arquivo para download
+        return send_file(
+            result_file_path,
+            mimetype='application/vnd.openxmlformats-officedocument.spreadsheetml.sheet',
+            as_attachment=True,
+            download_name='difference_means_results.xlsx'
+        )
     except Exception as e:
         return jsonify({"error": f"Erro interno: {str(e)}"}), 500
     
