@@ -467,5 +467,91 @@ def calculate_ci_proportion():
     except Exception as e:
         return jsonify({'error': str(e)}), 500
     
+@app.route('/calculate/hypothesis_mean', methods=['POST'])
+def calculate_hypothesis_mean():
+    try:
+        data = request.json
+
+        required_fields = ['test_type', 'h0', 'alpha', 'sample_size', 'sample_mean', 'std_dev']
+        for field in required_fields:
+            if field not in data:
+                return jsonify({"error": f"O campo '{field}' é obrigatório."}), 400
+
+        test_type = data['test_type']
+        h0 = float(data['h0'])
+        alpha = float(data['alpha'])
+        sample_size = int(data['sample_size'])
+        sample_mean = float(data['sample_mean'])
+        std_dev = float(data['std_dev'])
+
+        z_score = (sample_mean - h0) / (std_dev / np.sqrt(sample_size))
+
+        if test_type == "bilateral":
+            p_value = 2 * (1 - norm.cdf(abs(z_score)))
+        elif test_type == "left":
+            p_value = norm.cdf(z_score)
+        else:
+            p_value = 1 - norm.cdf(z_score)
+
+        reject_h0 = p_value < alpha
+
+        conclusion = (
+            f"A probabilidade de errar é {p_value:.4f} e como ela é baixa (< {alpha}), "
+            f"rejeita-se H₀ com {100 * (1 - alpha):.2f}% de confiança."
+            if reject_h0
+            else f"A probabilidade de errar é {p_value:.4f}, que não é baixa (>= {alpha}). "
+                 f"Portanto, não se rejeita H₀ com {100 * (1 - alpha):.2f}% de confiança."
+        )
+
+        result = f"Z Amostral (ẑ): {z_score:.4f}, P-valor: {p_value:.4f}. {conclusion}"
+
+        return jsonify({"result": result})
+
+    except Exception as e:
+        return jsonify({"error": f"Erro interno: {str(e)}"}), 500
+
+@app.route('/calculate/hypothesis_proportion', methods=['POST'])
+def calculate_hypothesis_proportion():
+    try:
+        data = request.json
+
+        required_fields = ['test_type', 'h0', 'alpha', 'sample_size', 'sample_proportion']
+        for field in required_fields:
+            if field not in data:
+                return jsonify({"error": f"O campo '{field}' é obrigatório."}), 400
+
+        test_type = data['test_type']
+        h0 = float(data['h0'])
+        alpha = float(data['alpha'])
+        sample_size = int(data['sample_size'])
+        sample_proportion = float(data['sample_proportion'])
+
+        std_error = np.sqrt(h0 * (1 - h0) / sample_size)
+        z_score = (sample_proportion - h0) / std_error
+
+        if test_type == "bilateral":
+            p_value = 2 * (1 - norm.cdf(abs(z_score)))
+        elif test_type == "left":
+            p_value = norm.cdf(z_score)
+        else:
+            p_value = 1 - norm.cdf(z_score)
+
+        reject_h0 = p_value < alpha
+
+        conclusion = (
+            f"A probabilidade de errar é {p_value:.4f} e como ela é baixa (< {alpha}), "
+            f"rejeita-se H₀ com {100 * (1 - alpha):.2f}% de confiança."
+            if reject_h0
+            else f"A probabilidade de errar é {p_value:.4f}, que não é baixa (>= {alpha}). "
+                 f"Portanto, não se rejeita H₀ com {100 * (1 - alpha):.2f}% de confiança."
+        )
+
+        result = f"Z Amostral (ẑ): {z_score:.4f}, P-valor: {p_value:.4f}. {conclusion}"
+
+        return jsonify({"result": result})
+
+    except Exception as e:
+        return jsonify({"error": f"Erro interno: {str(e)}"}), 500
+    
 if __name__ == "__main__":
     app.run(debug=True)
