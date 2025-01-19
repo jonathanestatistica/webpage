@@ -12,7 +12,7 @@ from scipy.stats import norm
 from scipy.stats import t
 from scipy import stats
 import base64
-import tempfile
+import openpyxl
 
 app = Flask(__name__)
 app.config['UPLOAD_FOLDER'] = 'uploads'
@@ -617,6 +617,7 @@ def calculate_difference_means():
         file = request.files['file']
         test_type = request.form['test_type']
         independent = request.form['independent'] == 'true'
+        alpha = float(request.form['alpha'])
 
         df = pd.read_excel(file)
         if len(df.columns) != 2:
@@ -631,36 +632,74 @@ def calculate_difference_means():
         else:
             t_stat, p_value = stats.ttest_rel(data1, data2)
 
-        alpha = 0.05
-        reject_h0 = False
-        if test_type == "bilateral":
-            reject_h0 = p_value < alpha
-        elif test_type == "left":
-            reject_h0 = (p_value / 2 < alpha) and (t_stat < 0)
-        elif test_type == "right":
-            reject_h0 = (p_value / 2 < alpha) and (t_stat > 0)
+        # Ajustar p-valor para testes unilaterais
+        if test_type == 'left':
+            p_value = p_value / 2 if t_stat < 0 else 1 - (p_value / 2)
+        elif test_type == 'right':
+            p_value = p_value / 2 if t_stat > 0 else 1 - (p_value / 2)
+
+        reject_h0 = p_value < alpha
+
+        # Definir hipóteses e conclusão
+        if test_type == 'bilateral':
+            h0 = f"H₀: μ₁ = μ₂"
+            h1 = f"H₁: μ₁ ≠ μ₂"
+            explanation_h1 = f"média de {col1} é diferente da média de {col2}"
+        elif test_type == 'left':
+            h0 = f"H₀: μ₁ - μ₂ ≥ 0"
+            h1 = f"H₁: μ₁ - μ₂ < 0"
+            explanation_h1 = f"média de {col1} é menor que a média de {col2}"
+        elif test_type == 'right':
+            h0 = f"H₀: μ₁ - μ₂ ≤ 0"
+            h1 = f"H₁: μ₁ - μ₂ > 0"
+            explanation_h1 = f"média de {col1} é maior que a média de {col2}"
 
         conclusion = (
-            "Logo, há diferença estatística entre as médias."
-            if reject_h0 else
-            "Logo, não há diferença estatística entre as médias."
+            f"Como o p-valor = {p_value:.4f}, rejeita-se H₀. Logo, há evidência para aceitar a hipótese alternativa."
+            if reject_h0
+            else f"Como o p-valor = {p_value:.4f}, não se rejeita H₀. Logo, não há evidência suficiente para aceitar a hipótese alternativa."
         )
 
-        # Salvar os resultados no diretório UPLOAD_FOLDER
-        result_file_path = os.path.join(app.config['UPLOAD_FOLDER'], 'difference_means_results.xlsx')
-        with pd.ExcelWriter(result_file_path, engine='openpyxl') as writer:
-            df.describe().to_excel(writer, sheet_name='Resumo')
-            pd.DataFrame({
-                "Estatística t": [t_stat],
-                "P-valor": [p_value],
-                "Conclusão": [conclusion]
-            }).to_excel(writer, sheet_name='Resultados')
+        result_data = {
+            "z_score": t_stat,
+            "p_value": p_value,
+            "conclusion": conclusion,
+            "col1_name": col1,
+            "col2_name": col2
+        }
 
-        return jsonify({
-            "result": f"Estatística t: {t_stat:.4f}, P-valor: {p_value:.4f}. {conclusion}",
-            "column1": col1,
-            "column2": col2
-        })
+        # Salvar resultados no Excel
+        output = io.BytesIO()
+        workbook = openpyxl.Workbook()
+        sheet = workbook.active
+        sheet.title = "Resultados"
+
+        # Escrever cabeçalho
+        sheet.append(["Teste de diferença de médias"])
+        sheet.append([])
+
+        # Z-score e p-valor
+        sheet.append(["Z-score", "p-valor"])
+        sheet.append([t_stat, p_value])
+        sheet.append([])
+
+        # Hipóteses
+        sheet.append(["Hipótese Nula", "Explicação"])
+        sheet.append([h0, f"média de {col1} é igual à média de {col2}"])
+        sheet.append([])
+        sheet.append(["Hipótese Alternativa", "Explicação"])
+        sheet.append([h1, explanation_h1])
+        sheet.append([])
+
+        # Conclusão
+        sheet.append(["Conclusão:"])
+        sheet.append([conclusion])
+
+        workbook.save(output)
+        output.seek(0)
+        app.config['last_result'] = output.read()
+
+        return jsonify({"result": result_data, "download_url": "/download/difference_means"})
 
     except Exception as e:
         return jsonify({"error": f"Erro interno: {str(e)}"}), 500
@@ -668,14 +707,12 @@ def calculate_difference_means():
 @app.route('/download/difference_means', methods=['GET'])
 def download_difference_means():
     try:
-        # Verificar se o arquivo de resultado foi gerado
-        result_file_path = os.path.join(app.config['UPLOAD_FOLDER'], 'difference_means_results.xlsx')
-        if not os.path.exists(result_file_path):
+        result_file = app.config.get('last_result')
+        if not result_file:
             return jsonify({"error": "Nenhum resultado encontrado para download."}), 400
 
-        # Enviar o arquivo para download
         return send_file(
-            result_file_path,
+            io.BytesIO(result_file),
             mimetype='application/vnd.openxmlformats-officedocument.spreadsheetml.sheet',
             as_attachment=True,
             download_name='difference_means_results.xlsx'
