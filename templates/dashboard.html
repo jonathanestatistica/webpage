@@ -486,8 +486,7 @@
         <button type="button" onclick="calculateDifferenceMeans()">Calcular</button>
     </form>
     <p>Resultado: <span id="difference-means-result"></span></p>
-    <!-- Botão para baixar os resultados -->
-    <button id="download-button" style="display: none;" onclick="downloadResults()">Baixar Resultados</button>
+    <button id="download-button" style="display:none;" onclick="downloadDifferenceMeans()">Baixar Resultados</button>
 </div>
 
 <script>
@@ -596,8 +595,6 @@
 </script>
 
 <script>
-    let downloadAvailable = false; // Variável para controlar a disponibilidade do download
-
     function calculateDifferenceMeans() {
         const form = document.getElementById('difference-means-form');
         const formData = new FormData(form);
@@ -610,30 +607,25 @@
         .then(data => {
             if (data.error) {
                 document.getElementById("difference-means-result").innerText = `Erro: ${data.error}`;
-                document.getElementById("download-button").style.display = "none"; // Esconder botão em caso de erro
-                downloadAvailable = false;
+                document.getElementById("download-button").style.display = "none";
             } else {
+                const result = data.result;
                 document.getElementById("difference-means-result").innerText = `
-                    Resultado para ${data.column1} e ${data.column2}: ${data.result}
+                    Z-score: ${result.z_score.toFixed(4)}, P-valor: ${result.p_value.toFixed(4)}.
+                    Conclusão: ${result.conclusion}
                 `;
-                document.getElementById("download-button").style.display = "block"; // Mostrar botão após sucesso
-                downloadAvailable = true;
+                document.getElementById("download-button").style.display = "block";
             }
         })
         .catch(error => {
             console.error("Erro:", error);
             document.getElementById("difference-means-result").innerText = "Erro ao processar o teste.";
-            document.getElementById("download-button").style.display = "none"; // Esconder botão em caso de erro
-            downloadAvailable = false;
+            document.getElementById("download-button").style.display = "none";
         });
     }
 
-    function downloadResults() {
-        if (downloadAvailable) {
-            window.location.href = "/download/difference_means";
-        } else {
-            alert("Nenhum resultado disponível para download.");
-        }
+    function downloadDifferenceMeans() {
+        window.location.href = "/download/difference_means";
     }
 </script>
 
