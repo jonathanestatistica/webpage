@@ -386,4 +386,196 @@
         .catch(error => console.error("Erro:", error));
     }
 </script>
+
+<div>
+    <h3>Teste de Hipóteses para Média (Variância Conhecida)</h3>
+    <form id="hypothesis-mean-form">
+        <label for="test-type-mean">Tipo de Teste:</label>
+        <select id="test-type-mean" required>
+            <option value="bilateral">Teste Bilateral</option>
+            <option value="left">Teste Unilateral à Esquerda</option>
+            <option value="right">Teste Unilateral à Direita</option>
+        </select><br><br>
+
+        <label for="h0-mean">H<sub>0</sub>: &mu; =</label>
+        <input type="number" step="0.01" id="h0-mean" required><br>
+        <label for="alpha-mean-test">Nível de Significância (&alpha;):</label>
+        <input type="number" step="0.01" id="alpha-mean-test" required><br>
+        <label for="sample-size-mean-test">Tamanho da Amostra (n):</label>
+        <input type="number" id="sample-size-mean-test" required><br>
+        <label for="sample-mean-test">Média Amostral (&#956;&#770;):</label>
+        <input type="number" step="0.01" id="sample-mean-test" required><br>
+        <label for="std-dev-mean">Desvio Padrão Populacional (&sigma;):</label>
+        <input type="number" step="0.01" id="std-dev-mean" required><br>
+        <button type="button" onclick="calculateHypothesisMean()">Calcular</button>
+    </form>
+    <p>Resultado: <span id="hypothesis-mean-result"></span></p>
+    <div id="hypothesis-mean-plot1"></div>
+    <div id="hypothesis-mean-plot2"></div>
+</div>
+
+<div>
+    <h3>Teste de Hipóteses para a Proporção</h3>
+    <form id="hypothesis-proportion-form">
+        <label for="test-type-proportion">Tipo de Teste:</label>
+        <select id="test-type-proportion" required>
+            <option value="bilateral">Teste Bilateral</option>
+            <option value="left">Teste Unilateral à Esquerda</option>
+            <option value="right">Teste Unilateral à Direita</option>
+        </select><br><br>
+
+        <label for="h0-proportion">H<sub>0</sub>: p =</label>
+        <input type="number" step="0.01" id="h0-proportion" required><br>
+        <label for="alpha-proportion-test">Nível de Significância (&alpha;):</label>
+        <input type="number" step="0.01" id="alpha-proportion-test" required><br>
+        <label for="sample-size-proportion-test">Tamanho da Amostra (n):</label>
+        <input type="number" id="sample-size-proportion-test" required><br>
+        <label for="sample-proportion-test">Proporção Amostral (&#112;&#770;):</label>
+        <input type="number" step="0.01" id="sample-proportion-test" required><br>
+        <button type="button" onclick="calculateHypothesisProportion()">Calcular</button>
+    </form>
+    <p>Resultado: <span id="hypothesis-proportion-result"></span></p>
+    <div id="hypothesis-proportion-plot1"></div>
+    <div id="hypothesis-proportion-plot2"></div>
+</div>
+
+<script>
+    function calculateHypothesisMean() {
+        const testType = document.getElementById("test-type-mean").value;
+        const h0 = parseFloat(document.getElementById("h0-mean").value);
+        const alpha = parseFloat(document.getElementById("alpha-mean-test").value);
+        const sampleSize = parseInt(document.getElementById("sample-size-mean-test").value);
+        const sampleMean = parseFloat(document.getElementById("sample-mean-test").value);
+        const stdDev = parseFloat(document.getElementById("std-dev-mean").value);
+
+        const payload = {
+            test_type: testType,
+            h0: h0,
+            alpha: alpha,
+            sample_size: sampleSize,
+            sample_mean: sampleMean,
+            std_dev: stdDev
+        };
+
+        fetch("/calculate/hypothesis_mean", {
+            method: "POST",
+            headers: { "Content-Type": "application/json" },
+            body: JSON.stringify(payload),
+        })
+        .then(response => response.json())
+        .then(data => {
+            if (data.error) {
+                document.getElementById("hypothesis-mean-result").innerText = `Erro: ${data.error}`;
+            } else {
+                document.getElementById("hypothesis-mean-result").innerText = data.result;
+                document.getElementById("hypothesis-mean-plot1").innerHTML = `<img src="data:image/png;base64,${data.plot1}" alt="Primeiro Método">`;
+                document.getElementById("hypothesis-mean-plot2").innerHTML = `<img src="data:image/png;base64,${data.plot2}" alt="Segundo Método">`;
+            }
+        })
+        .catch(error => console.error("Erro:", error));
+    }
+
+    function calculateHypothesisProportion() {
+        const testType = document.getElementById("test-type-proportion").value;
+        const h0 = parseFloat(document.getElementById("h0-proportion").value);
+        const alpha = parseFloat(document.getElementById("alpha-proportion-test").value);
+        const sampleSize = parseInt(document.getElementById("sample-size-proportion-test").value);
+        const sampleProportion = parseFloat(document.getElementById("sample-proportion-test").value);
+
+        const payload = {
+            test_type: testType,
+            h0: h0,
+            alpha: alpha,
+            sample_size: sampleSize,
+            sample_proportion: sampleProportion
+        };
+
+        fetch("/calculate/hypothesis_proportion", {
+            method: "POST",
+            headers: { "Content-Type": "application/json" },
+            body: JSON.stringify(payload),
+        })
+        .then(response => response.json())
+        .then(data => {
+            if (data.error) {
+                document.getElementById("hypothesis-proportion-result").innerText = `Erro: ${data.error}`;
+            } else {
+                document.getElementById("hypothesis-proportion-result").innerText = data.result;
+                document.getElementById("hypothesis-proportion-plot1").innerHTML = `<img src="data:image/png;base64,${data.plot1}" alt="Primeiro Método">`;
+                document.getElementById("hypothesis-proportion-plot2").innerHTML = `<img src="data:image/png;base64,${data.plot2}" alt="Segundo Método">`;
+            }
+        })
+        .catch(error => console.error("Erro:", error));
+    }
+</script>
+
 {% endblock %}
+
+{% block extra_scripts %}
+<script>
+    function calculateHypothesisMean() {
+        const testType = document.getElementById("test-type-mean").value;
+        const h0 = parseFloat(document.getElementById("h0-mean").value);
+        const alpha = parseFloat(document.getElementById("alpha-mean-test").value);
+        const sampleSize = parseInt(document.getElementById("sample-size-mean-test").value);
+        const sampleMean = parseFloat(document.getElementById("sample-mean-test").value);
+        const stdDev = parseFloat(document.getElementById("std-dev-mean").value);
+
+        const payload = {
+            test_type: testType,
+            h0: h0,
+            alpha: alpha,
+            sample_size: sampleSize,
+            sample_mean: sampleMean,
+            std_dev: stdDev,
+        };
+
+        fetch("/calculate/hypothesis_mean", {
+            method: "POST",
+            headers: { "Content-Type": "application/json" },
+            body: JSON.stringify(payload),
+        })
+        .then(response => response.json())
+        .then(data => {
+            if (data.error) {
+                document.getElementById("hypothesis-mean-result").innerText = `Erro: ${data.error}`;
+            } else {
+                document.getElementById("hypothesis-mean-result").innerText = data.result;
+            }
+        })
+        .catch(error => console.error("Erro:", error));
+    }
+
+    function calculateHypothesisProportion() {
+        const testType = document.getElementById("test-type-proportion").value;
+        const h0 = parseFloat(document.getElementById("h0-proportion").value);
+        const alpha = parseFloat(document.getElementById("alpha-proportion-test").value);
+        const sampleSize = parseInt(document.getElementById("sample-size-proportion-test").value);
+        const sampleProportion = parseFloat(document.getElementById("sample-proportion-test").value);
+
+        const payload = {
+            test_type: testType,
+            h0: h0,
+            alpha: alpha,
+            sample_size: sampleSize,
+            sample_proportion: sampleProportion,
+        };
+
+        fetch("/calculate/hypothesis_proportion", {
+            method: "POST",
+            headers: { "Content-Type": "application/json" },
+            body: JSON.stringify(payload),
+        })
+        .then(response => response.json())
+        .then(data => {
+            if (data.error) {
+                document.getElementById("hypothesis-proportion-result").innerText = `Erro: ${data.error}`;
+            } else {
+                document.getElementById("hypothesis-proportion-result").innerText = data.result;
+            }
+        })
+        .catch(error => console.error("Erro:", error));
+    }
+</script>
+{% endblock %}
+
