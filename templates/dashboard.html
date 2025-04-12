@@ -93,11 +93,47 @@
     <form id="upload-form" enctype="multipart/form-data">
         <label for="file">Selecione um arquivo CSV:</label>
         <input type="file" id="file" name="file" accept=".csv" required><br><br>
-        <button type="button" onclick="uploadFile()">Carregar e Calcular</button>
+        <button type="button" onclick="uploadFrequencyTable()">Carregar e Gerar Tabela</button>
     </form>
-    <div id="frequency-results"></div>
-    <div id="charts"></div>
+
+    <div id="frequency-table-result" style="margin-top: 20px;"></div>
 </div>
+
+<script>
+    function uploadFrequencyTable() {
+        const fileInput = document.getElementById("file");
+        const formData = new FormData();
+        formData.append("file", fileInput.files[0]);
+
+        fetch("/upload", {
+            method: "POST",
+            body: formData
+        })
+        .then(response => response.json())
+        .then(data => {
+            if (data.error) {
+                document.getElementById("frequency-table-result").innerHTML =
+                    `<p style="color: red;">Erro: ${data.error}</p>`;
+                return;
+            }
+
+            const imgUrl = data.img_url;
+            document.getElementById("frequency-table-result").innerHTML = `
+                <h3>Resultado - Tabela de Frequência</h3>
+                <img src="${imgUrl}" alt="Tabela de Frequências" style="max-width: 100%; border: 1px solid #ccc;">
+                <br><br>
+                <a href="${imgUrl}" download="tabela_frequencia.jpg">
+                    <button>Baixar Tabela (.jpg)</button>
+                </a>
+            `;
+        })
+        .catch(error => {
+            console.error("Erro:", error);
+            document.getElementById("frequency-table-result").innerHTML =
+                `<p style="color: red;">Erro ao processar o arquivo.</p>`;
+        });
+    }
+</script>
 
 <script>
     function calculateBinomial() {
@@ -266,38 +302,49 @@
             method: "POST",
             body: formData
         })
-            .then(response => response.json())
-            .then(data => {
-                if (data.error) {
-                    document.getElementById("frequency-results").innerHTML = `<p style="color: red;">Erro: ${data.error}</p>`;
-                    return;
-                }
+        .then(response => response.json())
+        .then(data => {
+            if (data.error) {
+                document.getElementById("frequency-results").innerHTML = `<p style="color: red;">Erro: ${data.error}</p>`;
+                return;
+            }
 
-                document.getElementById("frequency-results").innerHTML = `
-                    <h3>Tabela de Distribuição de Frequências</h3>
-                    <img src="${data.table}" alt="Tabela de Frequências">
-                    <h3>Métricas</h3>
-                    <p><b>Média:</b> ${data.metrics.mean.toFixed(2)}</p>
-                    <p><b>Média Geométrica:</b> ${data.metrics.geometric_mean.toFixed(2)}</p>
-                    <p><b>Média Harmônica:</b> ${data.metrics.harmonic_mean.toFixed(2)}</p>
-                    <p><b>Moda:</b> ${data.metrics.mode.toFixed(2)}</p>
-                    <p><b>Mediana:</b> ${data.metrics.median.toFixed(2)}</p>
-                    <p><b>Variância:</b> ${data.metrics.variance.toFixed(2)}</p>
-                    <p><b>Desvio Padrão:</b> ${data.metrics.std_dev.toFixed(2)}</p>
-                    <p><b>Desvio Médio:</b> ${data.metrics.mean_dev.toFixed(2)}</p>
-                `;
-                document.getElementById("charts").innerHTML = `
-                    <h3>Gráficos</h3>
-                    <h4>Histograma</h4>
-                    <img src="${data.histogram}" alt="Histograma">
-                    <h4>Gráfico de Pizza</h4>
-                    <img src="${data.pie_chart}" alt="Gráfico de Pizza">
-                `;
-            })
-            .catch(error => {
-                document.getElementById("frequency-results").innerHTML = `<p style="color: red;">Erro ao processar o arquivo.</p>`;
-                console.error(error);
-            });
+            document.getElementById("frequency-results").innerHTML = `
+                <h3>Tabela de Distribuição de Frequências</h3>
+                <table border="1" cellpadding="5" cellspacing="0">
+                    <tr><th>Intervalo</th><th>fi</th><th>fr (%)</th><th>FAC</th><th>FAD</th></tr>
+                    ${data.table.Intervalo.map((intervalo, i) => `
+                        <tr>
+                            <td>${intervalo}</td>
+                            <td>${data.table.fi[i]}</td>
+                            <td>${(data.table.fr[i] * 100).toFixed(2)}</td>
+                            <td>${data.table.FAC[i]}</td>
+                            <td>${data.table.FAD[i]}</td>
+                        </tr>`).join("")}
+                </table>
+                <h3>Métricas</h3>
+                <p><b>Média:</b> ${data.metrics.mean.toFixed(2)}</p>
+                <p><b>Média Geométrica:</b> ${data.metrics.geometric_mean.toFixed(2)}</p>
+                <p><b>Média Harmônica:</b> ${data.metrics.harmonic_mean.toFixed(2)}</p>
+                <p><b>Moda:</b> ${data.metrics.mode.toFixed(2)}</p>
+                <p><b>Mediana:</b> ${data.metrics.median.toFixed(2)}</p>
+                <p><b>Variância:</b> ${data.metrics.variance.toFixed(2)}</p>
+                <p><b>Desvio Padrão:</b> ${data.metrics.std_dev.toFixed(2)}</p>
+                <p><b>Desvio Médio:</b> ${data.metrics.mean_dev.toFixed(2)}</p>
+            `;
+
+            document.getElementById("charts").innerHTML = `
+                <h3>Gráficos</h3>
+                <h4>Histograma</h4>
+                <img src="${data.histogram}" alt="Histograma">
+                <h4>Gráfico de Pizza</h4>
+                <img src="${data.pie_chart}" alt="Gráfico de Pizza">
+            `;
+        })
+        .catch(error => {
+            document.getElementById("frequency-results").innerHTML = `<p style="color: red;">Erro ao processar o arquivo.</p>`;
+            console.error(error);
+        });
     }
 </script>
 
