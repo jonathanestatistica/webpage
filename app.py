@@ -13,6 +13,7 @@ from scipy.stats import t
 from scipy import stats
 import base64
 import openpyxl
+from matplotlib import font_manager
 
 app = Flask(__name__)
 app.config['UPLOAD_FOLDER'] = 'uploads'
@@ -323,7 +324,6 @@ def calculate_bayes():
     except Exception as e:
         return jsonify({'error': str(e)})
 
-# Upload and Process File for Frequency Distribution
 @app.route("/upload", methods=["POST"])
 def upload():
     if 'file' not in request.files:
@@ -343,36 +343,95 @@ def upload():
             if data.empty or not np.issubdtype(data.dtype, np.number):
                 return jsonify({'error': 'O arquivo deve conter apenas dados numéricos em uma coluna.'}), 400
 
-            # Cálculos de distribuição de frequências
             n = len(data)
             k = ceil(sqrt(n))
             a_t = data.max() - data.min()
-            h = round(a_t / k, len(str(data.iloc[0]).split('.')[-1]))
+
+            decimal_places = max(len(str(x).split('.')[-1]) if '.' in str(x) else 0 for x in data)
+            h = round(a_t / k, decimal_places)
+
             bins = np.arange(data.min(), data.max() + h, h)
+            if bins[-1] < data.max():
+                bins = np.append(bins, bins[-1] + h)
+
             freq, intervals = np.histogram(data, bins=bins)
-
-            intervals = [(round(intervals[i], 2), round(intervals[i + 1], 2)) for i in range(len(intervals) - 1)]
+            intervals = [(round(intervals[i], decimal_places), round(intervals[i + 1], decimal_places)) for i in range(len(intervals) - 1)]
             midpoints = [(interval[0] + interval[1]) / 2 for interval in intervals]
-
             relative_freq = freq / n
-            fac = np.cumsum(freq)
-            fad = np.cumsum(freq[::-1])[::-1]
+            fac_vals = np.cumsum(relative_freq)
+            fad_vals = np.cumsum(relative_freq[::-1])[::-1]
 
-            # Criar tabela como JSON
-            table = {
-                "Intervalo": [f"{interval[0]} - {interval[1]}" for interval in intervals],
-                "fi": freq.tolist(),
-                "fr": relative_freq.tolist(),
-                "FAC": fac.tolist(),
-                "FAD": fad.tolist(),
-            }
+            fr_decimal = [f"{r:.4f}" for r in relative_freq]
+            fac = [f"{v:.4f}" for v in fac_vals]
+            fad = [f"{v:.4f}" for v in fad_vals]
 
-            return jsonify({"table": table})
+            xmi_times_fr = [round(m * r, 4) for m, r in zip(midpoints, relative_freq)]
+            mean = sum(xmi_times_fr)  # soma(xmi * fr) é a média
+
+            mid_rounded = [round(m, 2) for m in midpoints]
+            fr_div_xmi = [round(r / m, 4) if m != 0 else 0 for m, r in zip(midpoints, relative_freq)]
+            xmi_pow_fr = [round(m ** r, 4) if m > 0 else 0 for m, r in zip(midpoints, relative_freq)]
+            variance_terms = [round(((m - mean) ** 2) * f, 4) for m, f in zip(midpoints, freq)]
+            mean_dev_terms = [round(abs(m - mean) * f, 4) for m, f in zip(midpoints, freq)]
+
+            total_fi = sum(freq)
+            total_fr = f"{sum(relative_freq):.4f}"
+            total_xmi_times_fr = round(sum(xmi_times_fr), 4)
+            total_fr_div_xmi = round(sum(fr_div_xmi), 4)
+            prod_xmi_pow_fr = round(np.prod(xmi_pow_fr), 4)
+            total_var_term = round(sum(variance_terms), 4)
+            total_dev_term = round(sum(mean_dev_terms), 4)
+
+            data_rows = list(zip(
+                [f"{i[0]} - {i[1]}" for i in intervals], freq, fr_decimal, fac, fad,
+                mid_rounded, xmi_times_fr, fr_div_xmi, xmi_pow_fr, variance_terms, mean_dev_terms
+            ))
+
+            data_rows.append([
+                "Total", total_fi, total_fr, "-", "-", "-", total_xmi_times_fr, total_fr_div_xmi,
+                prod_xmi_pow_fr, total_var_term, total_dev_term
+            ])
+
+            columns = [
+                "Intervalo", "$f_i$", "$fr_i$", "$FAC(fr)$", "$FAD(fr)$",
+                "$\\overline{x}_{M_i}$", "$\\overline{x}_{M_i} \\cdot fr_i$",
+                "$fr_i / \\overline{x}_{M_i}$", "$\\overline{x}_{M_i}^{fr_i}$",
+                "$((\\overline{x}_{M_i} - \\overline{x})^2) \\cdot f_i$",
+                "$|\\overline{x}_{M_i} - \\overline{x}| \\cdot f_i$"
+            ]
+
+            df = pd.DataFrame(data_rows, columns=columns)
+
+            fig, ax = plt.subplots(figsize=(18, 5))
+            ax.axis('off')
+            table = ax.table(cellText=df.values, colLabels=df.columns, cellLoc='center', loc='center')
+            table.auto_set_font_size(False)
+            table.set_fontsize(8)
+            table.scale(1, 1.6)
+
+            for (row, col), cell in table.get_celld().items():
+                if row == 0:
+                    cell.get_text().set_weight('bold')
+                if col == 0 or col == len(columns) - 1:
+                    cell.visible_edges = 'horizontal'
+
+            plt.subplots_adjust(bottom=0.15)
+            plt.figtext(0.125, 0.02, "Fonte: elaborado pelo autor usando https://jonathanestatistica.com.br",
+                        wrap=True, horizontalalignment='left', fontsize=10)
+
+            img_path = os.path.join("static", "uploads", 'tabela_frequencia.jpg')
+            os.makedirs(os.path.dirname(img_path), exist_ok=True)
+            plt.savefig(img_path, dpi=300, bbox_inches='tight')
+            plt.close()
+
+            return jsonify({"img_url": f"/{img_path}"})
+
         except Exception as e:
             return jsonify({'error': f'Erro ao processar o arquivo: {str(e)}'}), 500
 
     else:
         return jsonify({'error': 'Apenas arquivos .csv são permitidos.'}), 400
+
     
 @app.route('/calculate/ci_mean', methods=['POST'])
 def calculate_ci_mean():
@@ -718,7 +777,9 @@ def download_difference_means():
             download_name='difference_means_results.xlsx'
         )
     except Exception as e:
-        return jsonify({"error": f"Erro interno: {str(e)}"}), 500
+        import traceback
+        traceback.print_exc()
+        return jsonify({'error': f'Erro ao processar o arquivo: {str(e)}'}), 500
     
 if __name__ == "__main__":
     app.run(debug=True)
