@@ -1,0 +1,39 @@
+{% extends "base.html" %}
+{% block title %}Estatísticas do Futebol{% endblock %}
+
+{% block content %}
+<div class="container" style="margin-top: 50px; margin-bottom: 50px;">
+    <h1 class="text-center mb-5" style="color: #ffffff;">Estatísticas do Futebol - 2025</h1>
+    
+    <div class="row justify-content-center" style="gap: 30px; display: flex; flex-wrap: wrap;">
+
+        <!-- Cartão Estatísticas 2025 -->
+        <div style="flex: 1 1 280px; max-width: 350px;">
+            <div onclick="window.location.href='{{ url_for('estatisticas_2025') }}'" 
+                 style="background-color: #007bff; color: white; border-radius: 12px; padding: 30px; box-shadow: 0 4px 8px rgba(0,0,0,0.3); cursor: pointer; text-align: center;">
+                <h3>📊 Estatísticas 2025</h3>
+                <p>Desempenho geral do Brasileirão e campeonatos.</p>
+            </div>
+        </div>
+
+        <!-- Cartão Mercado de Jogadores -->
+        <div style="flex: 1 1 280px; max-width: 350px;">
+            <div onclick="window.location.href='{{ url_for('mercado_jogadores') }}'" 
+                 style="background-color: #28a745; color: white; border-radius: 12px; padding: 30px; box-shadow: 0 4px 8px rgba(0,0,0,0.3); cursor: pointer; text-align: center;">
+                <h3>💰 Mercado de Jogadores</h3>
+                <p>Transferências e destaques do mercado.</p>
+            </div>
+        </div>
+
+        <!-- Cartão Análise da Base Sub-20 -->
+        <div style="flex: 1 1 280px; max-width: 350px;">
+            <div onclick="window.location.href='{{ url_for('analise_base') }}'" 
+                 style="background-color: #ffc107; color: black; border-radius: 12px; padding: 30px; box-shadow: 0 4px 8px rgba(0,0,0,0.3); cursor: pointer; text-align: center;">
+                <h3>🧒 Análise da Base Sub-20</h3>
+                <p>Talentos jovens e performance na base.</p>
+            </div>
+        </div>
+
+    </div>
+</div>
+{% endblock %}

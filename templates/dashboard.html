@@ -562,6 +562,116 @@
     <button id="download-button" style="display:none;" onclick="downloadDifferenceMeans()">Baixar Resultados</button>
 </div>
 
+<hr style="border: 3px solid #3CDACF; margin: 40px 0;">
+
+<div>
+    <h3>Teste de Hipóteses para Diferença entre Proporções</h3>
+    <form id="difference-proportions-form">
+        <label for="p1-hat">Proporção Amostral 1 (𝑝̂₁):</label>
+        <input type="number" step="0.0001" id="p1-hat" required><br>
+        <label for="n1">Tamanho da Amostra 1 (n₁):</label>
+        <input type="number" id="n1" required><br><br>
+
+        <label for="p2-hat">Proporção Amostral 2 (𝑝̂₂):</label>
+        <input type="number" step="0.0001" id="p2-hat" required><br>
+        <label for="n2">Tamanho da Amostra 2 (n₂):</label>
+        <input type="number" id="n2" required><br><br>
+
+        <label for="alpha-diff-prop">Nível de Significância (&alpha;):</label>
+        <input type="number" step="0.01" id="alpha-diff-prop" value="0.05" required><br><br>
+
+        <label for="test-type-diff-prop">Tipo de Teste:</label>
+        <select id="test-type-diff-prop" required>
+            <option value="bilateral">Bilateral</option>
+            <option value="left">Unilateral à Esquerda (p₁ < p₂)</option>
+            <option value="right">Unilateral à Direita (p₁ > p₂)</option>
+        </select><br><br>
+
+        <button type="button" onclick="calculateDifferenceProportions()">Calcular</button>
+    </form>
+
+    <p><strong>Resultado:</strong> <span id="difference-proportions-result"></span></p>
+    <div id="difference-proportions-plot"></div>
+</div>
+
+<hr style="border: 3px solid #3CDACF; margin: 40px 0;">
+
+
+<h3>Regressão Linear (Upload de CSV)</h3>
+
+<form id="form-regressao" enctype="multipart/form-data" method="post">
+    <label for="arquivo">Selecione um arquivo CSV:</label>
+    <input type="file" name="arquivo" id="arquivo" accept=".csv" required>
+    <button type="submit">Executar Regressão</button>
+</form>
+
+<div id="resultado-regressao" style="margin-top: 20px; color: #e0d9c8;"></div>
+
+<script>
+document.getElementById("form-regressao").addEventListener("submit", function(e) {
+    e.preventDefault();
+    const formData = new FormData(this);
+
+    fetch("/calculate/regressao", {
+        method: "POST",
+        body: formData
+    })
+    .then(response => response.json())
+    .then(data => {
+        const divResultado = document.getElementById("resultado-regressao");
+        if (data.erro) {
+            divResultado.innerHTML = `<p style="color:red;">Erro: ${data.erro}</p>`;
+        } else {
+            divResultado.innerHTML = `
+                <p><strong>Regressão realizada com sucesso!</strong></p>
+                <p><a href="${data.summary_jpg}" download>Baixar Resumo (.jpg)</a></p>
+                <p><a href="${data.result_xlsx}" download>Baixar Resultados (.xlsx)</a></p>
+                <img src="${data.summary_jpg}" style="max-width:100%; margin-top: 10px;" alt="Resumo da Regressão">
+            `;
+        }
+    })
+    .catch(error => {
+        document.getElementById("resultado-regressao").innerHTML = `<p style="color:red;">Erro ao processar: ${error}</p>`;
+    });
+});
+</script>
+
+<script>
+    function calculateDifferenceProportions() {
+        const p1_hat = parseFloat(document.getElementById("p1-hat").value);
+        const n1 = parseInt(document.getElementById("n1").value);
+        const p2_hat = parseFloat(document.getElementById("p2-hat").value);
+        const n2 = parseInt(document.getElementById("n2").value);
+        const alpha = parseFloat(document.getElementById("alpha-diff-prop").value);
+        const testType = document.getElementById("test-type-diff-prop").value;
+
+        const payload = { p1_hat, n1, p2_hat, n2, alpha, test_type: testType };
+
+        fetch("/calculate/difference_proportions", {
+            method: "POST",
+            headers: { "Content-Type": "application/json" },
+            body: JSON.stringify(payload),
+        })
+        .then(response => response.json())
+        .then(data => {
+            if (data.error) {
+                document.getElementById("difference-proportions-result").innerText = `Erro: ${data.error}`;
+            } else {
+                document.getElementById("difference-proportions-result").innerText =
+                    `Z = ${data.z_score.toFixed(4)}, p-valor = ${data.p_value.toFixed(4)}. Conclusão: ${data.conclusion}`;
+                document.getElementById("difference-proportions-plot").innerHTML =
+                    `<img src="data:image/png;base64,${data.plot}" style="max-width:100%;" alt="Gráfico da Região Crítica">`;
+            }
+        })
+        .catch(error => {
+            document.getElementById("difference-proportions-result").innerText = "Erro ao processar o teste.";
+            console.error(error);
+        });
+    }
+</script>   
+    
+
+
 <script>
     function calculateHypothesisMean() {
         const testType = document.getElementById("test-type-mean").value;
@@ -770,5 +880,10 @@
         .catch(error => console.error("Erro:", error));
     }
 </script>
+
+
 {% endblock %}
+
+
+
 

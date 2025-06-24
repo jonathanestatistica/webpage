@@ -1,0 +1,274 @@
+{% extends "base.html" %}
+{% block title %}Estatísticas do Brasileirão 2025{% endblock %}
+
+{% block content %}
+
+<div class="container mt-5">
+    <h1 class="text-center mb-5 text-light">Estatísticas do Brasileirão Série A - 2025</h1>
+
+    <div class="text-end mb-3">
+        <button class="btn btn-warning" id="btnAtualizarDados">🔄 Atualizar Dados (Webscraping)</button>
+        <div id="infoAtualizacao" class="mt-2 text-light" style="display: none;">Atualizando... Isso pode levar alguns minutos.</div>
+        <div class="progress mt-2" id="barraProgresso" style="height: 20px; display: none;">
+            <div id="progressoInterno" class="progress-bar progress-bar-striped progress-bar-animated" role="progressbar" style="width: 0%">0%</div>
+        </div>
+    </div>
+
+    <!-- BLOCO 1 - Estatísticas Gerais por Campeonato -->
+    <div class="card mb-5 p-4 shadow" style="background-color: #1a1a1a;">
+        <h2 class="text-light">🧱 Bloco 1: Estatísticas Gerais do Campeonato</h2>
+
+        <div class="form-group mt-3">
+            <label class="text-light" for="filtroCampeonato">Selecione o Campeonato:</label>
+            <select class="form-select" id="filtroCampeonato">
+                <option value="">Todos</option>
+                {% for c in campeonatos %}
+                    <option value="{{ c }}">{{ c }}</option>
+                {% endfor %}
+            </select>
+        </div>
+
+        <div id="tabelaResumoCampeonato" class="mt-4 text-light"></div>
+        <div class="text-end mt-2">
+            <button class="btn btn-success me-2" onclick="exportarTabela('tabelaResumoCampeonato','excel')">📥 Exportar Excel</button>
+            <button class="btn btn-danger" onclick="exportarTabela('tabelaResumoCampeonato','pdf')">📥 Exportar PDF</button>
+        </div>
+        <div id="graficoGolsCampeonato" class="mt-5"></div>
+        <div id="graficoResultadosCampeonato" class="mt-5"></div>
+    </div>
+
+    <!-- BLOCO 2 - Estatísticas por Time Específico -->
+    <div class="card p-4 shadow" style="background-color: #1a1a1a;">
+        <h2 class="text-light">🔹 Bloco 2: Estatísticas por Time Específico</h2>
+
+        <div class="form-group mt-3">
+            <label class="text-light" for="filtroTime">Selecione o Time:</label>
+            <select class="form-select" id="filtroTime">
+                <option value="">Todos</option>
+                {% for t in times %}
+                    <option value="{{ t }}">{{ t }}</option>
+                {% endfor %}
+            </select>
+        </div>
+
+        <div id="graficoDesempenhoTime" class="mt-4"></div>
+        <div id="tabelaResumoTime" class="mt-4 text-light"></div>
+        <div class="text-end mt-2">
+            <button class="btn btn-success me-2" onclick="exportarTabela('tabelaResumoTime','excel')">📥 Exportar Excel</button>
+            <button class="btn btn-danger" onclick="exportarTabela('tabelaResumoTime','pdf')">📥 Exportar PDF</button>
+        </div>
+    </div>
+</div>
+
+<!-- Plotly CDN -->
+<script src="https://cdn.plot.ly/plotly-latest.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/xlsx/0.18.5/xlsx.full.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/html2pdf.js/0.9.3/html2pdf.bundle.min.js"></script>
+
+<script>
+    const dados = {{ dados_jogos | tojson }};
+</script>
+
+<script>
+    const graficoGols = document.getElementById('graficoGolsCampeonato');
+    const graficoResultados = document.getElementById('graficoResultadosCampeonato');
+    const selectCamp = document.getElementById('filtroCampeonato');
+
+    function atualizarGraficoCampeonato() {
+        const campeonatoSelecionado = selectCamp.value;
+        const filtrados = campeonatoSelecionado ? dados.filter(j => j["Campeonato"] === campeonatoSelecionado) : dados;
+
+        const desempenho = {};
+        filtrados.forEach(jogo => {
+            const time = jogo["Time Referência"];
+            const resultado = jogo["Resultado"];
+            const golsFeitos = jogo["Gols Casa"];
+            const golsSofridos = jogo["Gols Visitante"];
+
+            if (!desempenho[time]) {
+                desempenho[time] = {
+                    jogos: 0, vitorias: 0, empates: 0, derrotas: 0,
+                    golsPro: 0, golsContra: 0
+                };
+            }
+
+            desempenho[time].jogos++;
+            desempenho[time].golsPro += golsFeitos;
+            desempenho[time].golsContra += golsSofridos;
+
+            if (resultado === "Vitória") desempenho[time].vitorias++;
+            else if (resultado === "Empate") desempenho[time].empates++;
+            else if (resultado === "Derrota") desempenho[time].derrotas++;
+        });
+
+        let htmlTabela = '<table class="table table-dark table-striped">';
+        htmlTabela += `
+            <thead><tr>
+                <th>Time</th><th>J</th><th>V</th><th>E</th><th>D</th>
+                <th>GP</th><th>GC</th><th>SG</th><th>Aproveitamento (%)</th>
+            </tr></thead><tbody>`;
+
+        const times = Object.keys(desempenho);
+        const golsProArr = [], golsContraArr = [];
+        const vArr = [], eArr = [], dArr = [];
+
+        times.forEach(time => {
+            const d = desempenho[time];
+            const sg = d.golsPro - d.golsContra;
+            const pontos = d.vitorias * 3 + d.empates;
+            const aproveitamento = ((pontos / (d.jogos * 3)) * 100).toFixed(1);
+
+            htmlTabela += `<tr>
+                <td>${time}</td>
+                <td>${d.jogos}</td>
+                <td>${d.vitorias}</td>
+                <td>${d.empates}</td>
+                <td>${d.derrotas}</td>
+                <td>${d.golsPro}</td>
+                <td>${d.golsContra}</td>
+                <td>${sg}</td>
+                <td>${aproveitamento}</td>
+            </tr>`;
+
+            golsProArr.push(d.golsPro);
+            golsContraArr.push(d.golsContra);
+            vArr.push(d.vitorias);
+            eArr.push(d.empates);
+            dArr.push(d.derrotas);
+        });
+
+        htmlTabela += '</tbody></table>';
+        document.getElementById('tabelaResumoCampeonato').innerHTML = htmlTabela;
+
+        Plotly.newPlot(graficoGols, [
+            { x: times, y: golsProArr, name: 'Gols Pró', type: 'bar' },
+            { x: times, y: golsContraArr, name: 'Gols Sofridos', type: 'bar' }
+        ], {
+            barmode: 'group',
+            title: `Gols Pró vs Gols Sofridos - ${campeonatoSelecionado || 'Todos os Campeonatos'}`,
+            paper_bgcolor: '#222',
+            plot_bgcolor: '#222',
+            font: { color: '#fff' },
+            xaxis: { tickangle: -45 }
+        });
+
+        Plotly.newPlot(graficoResultados, [
+            { x: times, y: vArr, name: 'Vitórias', type: 'bar' },
+            { x: times, y: eArr, name: 'Empates', type: 'bar' },
+            { x: times, y: dArr, name: 'Derrotas', type: 'bar' }
+        ], {
+            barmode: 'group',
+            title: `Vitórias / Empates / Derrotas - ${campeonatoSelecionado || 'Todos os Campeonatos'}`,
+            paper_bgcolor: '#222',
+            plot_bgcolor: '#222',
+            font: { color: '#fff' },
+            xaxis: { tickangle: -45 }
+        });
+    }
+
+    selectCamp.addEventListener('change', atualizarGraficoCampeonato);
+    atualizarGraficoCampeonato();
+</script>
+
+<script>
+    const graficoTime = document.getElementById('graficoDesempenhoTime');
+    const selectTime = document.getElementById('filtroTime');
+
+    function atualizarGraficoTime() {
+        const timeSelecionado = selectTime.value;
+        if (!timeSelecionado) {
+            graficoTime.innerHTML = "";
+            return;
+        }
+
+        const filtrados = dados.filter(j => j["Time Referência"] === timeSelecionado);
+        const resultadoContagem = { "Vitória": 0, "Empate": 0, "Derrota": 0 };
+
+        filtrados.forEach(jogo => {
+            const resultado = jogo["Resultado"];
+            resultadoContagem[resultado]++;
+        });
+
+        Plotly.newPlot(graficoTime, [{
+            labels: ["Vitória", "Empate", "Derrota"],
+            values: [
+                resultadoContagem["Vitória"],
+                resultadoContagem["Empate"],
+                resultadoContagem["Derrota"]
+            ],
+            type: 'pie',
+            marker: {
+                colors: ['#2ecc71', '#f1c40f', '#e74c3c']
+            }
+        }], {
+            title: `Distribuição de Resultados - ${timeSelecionado}`,
+            paper_bgcolor: '#222',
+            plot_bgcolor: '#222',
+            font: { color: '#fff' }
+        });
+    }
+
+    selectTime.addEventListener('change', atualizarGraficoTime);
+</script>
+
+<script>
+function exportarTabela(idTabela, tipo) {
+    const el = document.getElementById(idTabela);
+    if (!el) return alert("Tabela não encontrada.");
+
+    if (tipo === 'excel') {
+        const wb = XLSX.utils.book_new();
+        const ws = XLSX.utils.table_to_sheet(el.querySelector("table"));
+        XLSX.utils.book_append_sheet(wb, ws, "Estatísticas");
+        XLSX.writeFile(wb, `estatisticas_${idTabela}.xlsx`);
+    } else if (tipo === 'pdf') {
+        const opt = {
+            margin:       0.5,
+            filename:     `estatisticas_${idTabela}.pdf`,
+            image:        { type: 'jpeg', quality: 0.98 },
+            html2canvas:  { scale: 2 },
+            jsPDF:        { unit: 'in', format: 'letter', orientation: 'landscape' }
+        };
+        html2pdf().from(el).set(opt).save();
+    }
+}
+</script>
+
+<script>
+    document.addEventListener("DOMContentLoaded", function () {
+        const btn = document.getElementById("btnAtualizarDados");
+        const barra = document.getElementById("barraProgresso");
+        const info = document.getElementById("infoAtualizacao");
+        const progressoBarra = document.getElementById("progressoInterno");
+    
+        if (btn) {
+            btn.addEventListener("click", function () {
+                fetch("/atualizar-dados", { method: "POST" });
+    
+                barra.style.display = "block";
+                info.style.display = "block";
+                progressoBarra.style.width = "0%";
+                progressoBarra.innerText = "0%";
+    
+                const interval = setInterval(() => {
+                    fetch("/progresso")
+                        .then(response => response.json())
+                        .then(data => {
+                            const valor = data.progresso;
+                            progressoBarra.style.width = valor + "%";
+                            progressoBarra.innerText = valor + "%";
+    
+                            if (valor >= 100) {
+                                clearInterval(interval);
+                                info.innerText = "Atualização concluída!";
+                                setTimeout(() => location.reload(), 2000);
+                            }
+                        });
+                }, 500);
+            });
+        }
+    });
+    </script>
+    
+
+{% endblock %}
