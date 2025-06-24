@@ -1,19 +1,32 @@
+# Backend não interativo para Matplotlib
 import matplotlib
-matplotlib.use('Agg')  # Backend não interativo para gráficos
+matplotlib.use('Agg')
+
+# Bibliotecas Flask
 from flask import Flask, render_template, request, jsonify, send_file
-import matplotlib.pyplot as plt
+
+from werkzeug.utils import secure_filename
+
+# Bibliotecas padrão
+import os
+import io
+import base64
+from math import comb, exp, factorial, ceil, sqrt
+
+# Bibliotecas de manipulação de dados e estatísticas
 import pandas as pd
 import numpy as np
-import io
-import os
-from math import comb, exp, factorial, ceil, sqrt
-from werkzeug.utils import secure_filename
-from scipy.stats import norm
-from scipy.stats import t
 from scipy import stats
-import base64
+from scipy.stats import norm, t
+import statsmodels.api as sm
 import openpyxl
-from matplotlib import font_manager
+
+# Plotting
+import matplotlib.pyplot as plt
+
+import threading
+import scraper_brasileirao_2025 as scraper
+
 
 app = Flask(__name__)
 app.config['UPLOAD_FOLDER'] = 'uploads'
@@ -780,6 +793,260 @@ def download_difference_means():
         import traceback
         traceback.print_exc()
         return jsonify({'error': f'Erro ao processar o arquivo: {str(e)}'}), 500
-    
-if __name__ == "__main__":
+
+##################################################
+# ================================
+# 🔁 Carregamento e Processamento
+# ================================
+df_path = os.path.join("data", "brasileirao_serieA_2025_completo.csv")
+
+# Verifica e baixa os dados automaticamente se necessário
+if not os.path.exists(df_path):
+    print("🔁 Arquivo CSV da Série A não encontrado. Baixando...")
+    try:
+        from scraper_brasileirao_2025 import baixar_dados_brasileirao
+        baixar_dados_brasileirao()
+        print("✅ Dados da Série A baixados com sucesso.")
+    except Exception as e:
+        raise FileNotFoundError("❌ Falha ao baixar os dados automaticamente: " + str(e))
+
+# Carregamento seguro dos dados
+df = pd.read_csv(df_path)
+
+# Converte a coluna de data
+if "Data e Hora" in df.columns and not np.issubdtype(df["Data e Hora"].dtype, np.datetime64):
+    df["Data e Hora"] = pd.to_datetime(df["Data e Hora"])
+
+# Cria coluna 'Time' a partir de jogos em casa e fora (modelo multilinha)
+df_casa = df.copy()
+if "Home Team" in df_casa.columns:
+    df_casa["Time"] = df_casa["Home Team"]
+else:
+    df_casa["Time"] = df_casa["Time Casa"]
+
+df_fora = df.copy()
+if "Away Team" in df_fora.columns:
+    df_fora["Time"] = df_fora["Away Team"]
+else:
+    df_fora["Time"] = df_fora["Time Visitante"]
+
+df = pd.concat([df_casa, df_fora], ignore_index=True)
+
+# Classifica resultado por time principal
+def classificar_resultado(row, time):
+    if row["Time Casa"] == time:
+        saldo = row["Gols Casa"] - row["Gols Visitante"]
+    elif row["Time Visitante"] == time:
+        saldo = row["Gols Visitante"] - row["Gols Casa"]
+    else:
+        return "Outro"
+    if saldo > 0:
+        return "Vitória"
+    elif saldo < 0:
+        return "Derrota"
+    else:
+        return "Empate"
+
+# Adiciona função para calcular gols sofridos
+def calcular_gols_sofridos(row, time):
+    if row["Time Casa"] == time:
+        return row["Gols Visitante"]
+    elif row["Time Visitante"] == time:
+        return row["Gols Casa"]
+    else:
+        return 0
+
+# 🔁 Geração de colunas auxiliares e resumo por time (será usada nos gráficos)
+# ➤ Essa lógica pode ser usada em callbacks para atualizar os gráficos
+# ➤ Exemplos de visualizações a gerar:
+# - Frequência de Vitórias, Empates, Derrotas
+# - Gols marcados e sofridos por jogo
+# - Cartões amarelos e vermelhos por partida
+
+# Armazena o DataFrame original para uso em callbacks
+df_original = df.copy()
+
+@app.route('/calculate/regressao', methods=['POST'])
+def calcular_regressao():
+    if 'arquivo' not in request.files or request.files['arquivo'].filename == '':
+        return jsonify({'erro': 'Nenhum arquivo enviado.'})
+
+    arquivo = request.files['arquivo']
+    df = pd.read_csv(arquivo)
+    y = df.iloc[:, 0]
+    X = df.iloc[:, 1:]
+    X = sm.add_constant(X)
+    model = sm.OLS(y, X).fit()
+
+    resumo = model.summary().as_text()
+
+    # Salvar como imagem
+    fig, ax = plt.subplots(figsize=(10, 6))
+    ax.text(0, 1, resumo, fontsize=8, va='top', family='monospace')
+    ax.axis('off')
+    jpg_path = os.path.join('static', 'regressao_summary.jpg')
+    fig.savefig(jpg_path, bbox_inches='tight')
+    plt.close(fig)
+
+    # Salvar como Excel
+    xlsx_path = os.path.join('static', 'regressao_resultados.xlsx')
+    with pd.ExcelWriter(xlsx_path, engine='openpyxl') as writer:
+        df.to_excel(writer, index=False, sheet_name='Dados')
+        pd.DataFrame({'Resumo': [resumo]}).to_excel(writer, index=False, sheet_name='Resumo')
+
+    return jsonify({
+        'summary_jpg': '/' + jpg_path,
+        'result_xlsx': '/' + xlsx_path
+    })
+
+@app.route("/calculate/difference_proportions", methods=["POST"])
+def calculate_difference_proportions():
+    try:
+        from scipy.stats import norm
+        import matplotlib.pyplot as plt
+        import numpy as np
+        import io
+        import base64
+
+        data = request.get_json()
+        p1_hat = data["p1_hat"]
+        p2_hat = data["p2_hat"]
+        n1 = data["n1"]
+        n2 = data["n2"]
+        alpha = data["alpha"]
+        test_type = data["test_type"]
+
+        # Proporção combinada sob H0
+        p_pool = ((p1_hat * n1) + (p2_hat * n2)) / (n1 + n2)
+        q_pool = 1 - p_pool
+
+        # Estatística de teste Z
+        se = (p_pool * q_pool * (1/n1 + 1/n2)) ** 0.5
+        z_score = (p1_hat - p2_hat) / se
+
+        # P-valor
+        if test_type == "bilateral":
+            p_value = 2 * (1 - norm.cdf(abs(z_score)))
+        elif test_type == "left":
+            p_value = norm.cdf(z_score)
+        else:  # "right"
+            p_value = 1 - norm.cdf(z_score)
+
+        # Conclusão
+        if p_value < alpha:
+            conclusion = "Rejeita-se H₀: há evidência de diferença entre as proporções."
+        else:
+            conclusion = "Não se rejeita H₀: não há evidência de diferença entre as proporções."
+
+        # Geração do gráfico com região crítica adaptada
+        x = np.linspace(-4, 4, 1000)
+        y = norm.pdf(x)
+        fig, ax = plt.subplots()
+        ax.plot(x, y, label='Distribuição N(0,1)')
+
+        # Linha do valor observado de Z
+        ax.axvline(z_score, color='red', linestyle='--', label=f'Z = {z_score:.2f}')
+
+        # Região crítica e linhas limiares
+        if test_type == "bilateral":
+            z_alpha = norm.ppf(1 - alpha / 2)
+            ax.fill_between(x, y, where=(x < -z_alpha) | (x > z_alpha), color='orange', alpha=0.3)
+            ax.axvline(-z_alpha, color='orange', linestyle='--', label=f'-Zα/2 = {-z_alpha:.2f}')
+            ax.axvline(z_alpha, color='orange', linestyle='--', label=f'Zα/2 = {z_alpha:.2f}')
+        elif test_type == "left":
+            z_alpha = norm.ppf(alpha)
+            ax.fill_between(x, y, where=(x < z_alpha), color='orange', alpha=0.3)
+            ax.axvline(z_alpha, color='orange', linestyle='--', label=f'Zα = {z_alpha:.2f}')
+        elif test_type == "right":
+            z_alpha = norm.ppf(1 - alpha)
+            ax.fill_between(x, y, where=(x > z_alpha), color='orange', alpha=0.3)
+            ax.axvline(z_alpha, color='orange', linestyle='--', label=f'Zα = {z_alpha:.2f}')
+
+        ax.set_title("Distribuição N(0,1) com Região Crítica")
+        ax.legend()
+        ax.grid(True)
+
+
+        buf = io.BytesIO()
+        plt.savefig(buf, format="png", bbox_inches="tight")
+        plt.close()
+        buf.seek(0)
+        plot_base64 = base64.b64encode(buf.read()).decode('utf-8')
+
+        return jsonify({
+            "z_score": z_score,
+            "p_value": p_value,
+            "conclusion": conclusion,
+            "plot": plot_base64
+        })
+
+    except Exception as e:
+        return jsonify({"error": str(e)})
+
+
+# ROTA: Página com os 3 cards principais (Estatísticas do Futebol)
+@app.route("/estatisticasdofutebol")
+def estatisticas_futebol_home():
+    return render_template("ciga.html")
+
+@app.route("/estatisticas2025")
+def estatisticas_2025():
+    df = pd.read_csv("data/brasileirao_serieA_2025_completo.csv")
+
+    # Criar coluna 'Resultado' com base no time referência
+    def classificar_resultado(row):
+        if row["Time Referência"] == row["Time Casa"]:
+            if row["Gols Casa"] > row["Gols Visitante"]:
+                return "Vitória"
+            elif row["Gols Casa"] < row["Gols Visitante"]:
+                return "Derrota"
+            else:
+                return "Empate"
+        elif row["Time Referência"] == row["Time Visitante"]:
+            if row["Gols Visitante"] > row["Gols Casa"]:
+                return "Vitória"
+            elif row["Gols Visitante"] < row["Gols Casa"]:
+                return "Derrota"
+            else:
+                return "Empate"
+        else:
+            return "Indefinido"
+
+    df["Resultado"] = df.apply(classificar_resultado, axis=1)
+
+    campeonatos = sorted(df["Campeonato"].dropna().unique())
+    times = sorted(df["Time Referência"].dropna().unique())
+
+    return render_template(
+        "estatisticas_2025.html",
+        campeonatos=campeonatos,
+        times=times,
+        dados_jogos=df.to_dict(orient='records')
+    )
+
+
+# ROTA: Página Mercado de Jogadores
+@app.route("/mercadojogadores")
+def mercado_jogadores():
+    return render_template("mercado_jogadores.html")
+
+# ROTA: Página Análise da Base Sub-20
+@app.route("/analisabase")
+def analise_base():
+    return render_template("analise_base.html")
+
+# ROTA: Inicia o scraping com barra de progresso
+@app.route("/atualizar-dados", methods=["POST"])
+def atualizar_dados():
+    thread = threading.Thread(target=scraper.rodar_scraper_com_progresso)
+    thread.start()
+    return jsonify({"mensagem": "⏳ Scraping iniciado. Isso pode levar alguns minutos. Acompanhe a barra de progresso abaixo."})
+
+# ROTA: Retorna progresso atual
+@app.route("/progresso", methods=["GET"])
+def progresso_status():
+    return jsonify({"progresso": scraper.progresso_atual})
+
+
+if __name__ == '__main__':
     app.run(debug=True)
