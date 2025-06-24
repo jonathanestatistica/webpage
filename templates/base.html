@@ -4,19 +4,22 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>{% block title %}Jonathan S. Matias{% endblock %}</title>
-    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+    <link rel="stylesheet" href="/static/style.css">
+    <!-- Favicon -->
     <link rel="icon" href="{{ url_for('static', filename='images/icon6.png') }}" type="image/png">
     
     <style>
+        /* Estilo geral */
         body {
             font-family: 'Arial', sans-serif;
             margin: 0;
             padding: 0;
-            background-color: #0d1b2a;
-            color: #e0d9c8;
-            line-height: 1.6;
+            background-color: #0d1b2a; /* Fundo escuro */
+            color: #e0d9c8; /* Texto em bege claro */
+            line-height: 1.6; /* Melhor espaçamento de linha */
         }
 
+        /* Cabeçalho */
         .site-header {
             background: linear-gradient(90deg, #14213d, #0d1b2a);
             padding: 20px 0;
@@ -44,15 +47,16 @@
             margin: 10px 0;
             font-size: 36px;
             font-weight: bold;
-            color: #ffffff;
+            color: #ffffff; /* Título em branco */
         }
 
         .site-header p {
             font-size: 18px;
             margin: 5px 0;
-            color: #e0e0e0;
+            color: #e0e0e0; /* Texto claro no cabeçalho */
         }
 
+        /* Navegação */
         .site-nav {
             background-color: #14213d;
             padding: 10px 0;
@@ -60,27 +64,29 @@
 
         .site-nav .container {
             display: flex;
-            justify-content: center;
-            gap: 10px;
-            flex-wrap: nowrap;
+            justify-content: center; /* Centraliza as abas */
+            gap: 10px; /* Espaço entre os itens */
+            flex-wrap: nowrap; /* Impede quebras de linha */
         }
 
         .site-nav a {
-            color: #e0d9c8;
+            color: #e0d9c8; /* Texto em bege claro */
             text-decoration: none;
-            font-size: 14px;
-            padding: 8px 12px;
-            white-space: nowrap;
-            transition: color 0.3s ease, text-shadow 0.3s ease;
+            font-size: 14px; /* Fonte original */
+            padding: 8px 12px; /* Espaçamento interno */
+            white-space: nowrap; /* Impede quebra de linha */
+            transition: color 0.3s ease, text-shadow 0.3s ease; /* Suaviza o efeito */
         }
 
         .site-nav a:hover {
-            color: #ffffff;
-            text-shadow: 0 0 5px rgba(255, 255, 255, 0.6);
+            color: #ffffff; /* Texto mais claro ao passar o mouse */
+            text-shadow: 0 0 5px rgba(255, 255, 255, 0.6); /* Sombra discreta no texto */
+            background-color: transparent; /* Remove qualquer fundo ao passar o mouse */
         }
 
+        /* Conteúdo principal */
         .site-content {
-            background-color: #0d1b2a;
+            background-color: #0d1b2a; /* Fundo escuro */
             padding: 20px 0;
         }
 
@@ -88,19 +94,25 @@
             max-width: 1200px;
             margin: 30px auto;
             padding: 0 15px;
-            color: #e0d9c8;
+            color: #e0d9c8; /* Texto em bege claro */
         }
 
         .site-content h1, .site-content h2, .site-content h3 {
-            font-size: 24px;
-            color: #ffffff;
+            font-size: 24px; /* Tamanhos de títulos restaurados */
+            color: #ffffff; /* Títulos em branco */
             margin-top: 15px;
         }
 
         .site-content p {
-            font-size: 16px;
+            font-size: 16px; /* Texto no corpo restaurado */
+            color: #e0d9c8;
         }
 
+        .site-content ul li {
+            font-size: 16px; /* Texto de listas restaurado */
+        }
+
+        /* Rodapé */
         .site-footer {
             background-color: #14213d;
             text-align: center;
@@ -110,20 +122,19 @@
 
         .site-footer p {
             margin: 0;
-            font-size: 14px;
-            color: #e0d9c8;
+            font-size: 14px; /* Texto original no rodapé */
+            color: #e0d9c8; /* Texto do rodapé em bege claro */
         }
     </style>
 </head>
 <body>
     <header class="site-header">
         <div class="container">
-            <img src="{{ url_for('static', filename='IMG-7450.jpg') }}" alt="Jonathan S. Matias" class="profile-pic">
+            <img src="/static/IMG-7450.jpg" alt="Jonathan S. Matias" class="profile-pic">
             <h1>Jonathan S. Matias</h1>
             <p>Professor | Economia | Estatística | Ciência de Dados</p>
         </div>
     </header>
-
     <nav class="site-nav">
         <div class="container">
             <a href="/">Página Principal</a>
@@ -135,24 +146,21 @@
             <a href="/ensino">Ensino</a>
             <a href="/shiny_apps">Shiny Apps</a>
             <a href="/contact">Contato</a>
-            <a href="{{ url_for('estatisticas_futebol_home') }}"><strong>Estatísticas do Futebol</strong></a>
         </div>
     </nav>
-
     <main class="site-content">
         <div class="container">
             {% block content %}
             {% endblock %}
         </div>
     </main>
-
     <footer class="site-footer">
         <div class="container">
             <p>© 2024 Jonathan S. Matias | Todos os direitos reservados</p>
         </div>
     </footer>
-
     {% block extra_scripts %}
+    <!-- Espaço para scripts específicos de páginas -->
     {% endblock %}
 </body>
 </html>
