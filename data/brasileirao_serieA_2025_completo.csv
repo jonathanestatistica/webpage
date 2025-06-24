@@ -1,0 +1,601 @@
+﻿event_id,Campeonato,Time Casa,Time Visitante,Gols Casa,Gols Visitante,Status,Data e Hora,Time Referência,Num Gols,Cartões Amarelos,Cartões Vermelhos
+13193958,Paulista Série A1,Palmeiras,São Paulo,0.0,0.0,Ended,2025-02-16 21:30:00,Palmeiras,0,0,0
+13193967,Paulista Série A1,Palmeiras,Botafogo-SP,3.0,1.0,Ended,2025-02-20 22:30:00,Palmeiras,4,0,0
+13193974,Paulista Série A1,Mirassol,Palmeiras,2.0,3.0,Ended,2025-02-23 21:30:00,Palmeiras,5,0,0
+13529163,Paulista Série A1 - Playoffs,São Bernardo,Palmeiras,0.0,3.0,Ended,2025-03-01 23:30:00,Palmeiras,3,0,0
+13566692,Paulista Série A1 - Playoffs,Palmeiras,São Paulo,1.0,0.0,Ended,2025-03-11 00:35:00,Palmeiras,1,0,0
+13592553,Paulista Série A1 - Playoffs,Palmeiras,Corinthians,0.0,1.0,Ended,2025-03-16 21:30:00,Palmeiras,1,0,0
+13592556,Paulista Série A1 - Playoffs,Corinthians,Palmeiras,0.0,0.0,Ended,2025-03-28 00:35:00,Palmeiras,0,0,0
+13473340,Brasileirão Betano,Palmeiras,Botafogo,0.0,0.0,Ended,2025-03-30 19:00:00,Palmeiras,0,0,0
+13640293,"CONMEBOL Libertadores, Group G",Club Sporting Cristal,Palmeiras,2.0,3.0,Ended,2025-04-03 22:00:00,Palmeiras,5,0,0
+13473357,Brasileirão Betano,Sport Recife,Palmeiras,1.0,2.0,Ended,2025-04-06 21:30:00,Palmeiras,3,0,0
+13640306,"CONMEBOL Libertadores, Group G",Palmeiras,Cerro Porteño,1.0,0.0,Ended,2025-04-10 00:30:00,Palmeiras,1,0,0
+13473360,Brasileirão Betano,Palmeiras,Corinthians,2.0,0.0,Ended,2025-04-12 21:30:00,Palmeiras,2,0,0
+13473374,Brasileirão Betano,Internacional,Palmeiras,0.0,1.0,Ended,2025-04-16 22:30:00,Palmeiras,1,0,0
+13473386,Brasileirão Betano,Fortaleza,Palmeiras,1.0,2.0,Ended,2025-04-20 21:30:00,Palmeiras,3,0,0
+13640324,"CONMEBOL Libertadores, Group G",Bolívar,Palmeiras,2.0,3.0,Ended,2025-04-24 22:00:00,Palmeiras,5,0,0
+13473390,Brasileirão Betano,Palmeiras,Bahia,0.0,1.0,Ended,2025-04-27 21:30:00,Palmeiras,1,0,0
+13742584,Copa Betano do Brasil,Ceará,Palmeiras,0.0,1.0,Ended,2025-04-30 22:30:00,Palmeiras,1,0,0
+13473399,Brasileirão Betano,Vasco da Gama,Palmeiras,0.0,1.0,Ended,2025-05-04 19:00:00,Palmeiras,1,0,0
+13640338,"CONMEBOL Libertadores, Group G",Cerro Porteño,Palmeiras,0.0,2.0,Ended,2025-05-08 00:30:00,Palmeiras,2,0,0
+13473410,Brasileirão Betano,Palmeiras,São Paulo,1.0,0.0,Ended,2025-05-11 20:30:00,Palmeiras,1,0,0
+13640358,"CONMEBOL Libertadores, Group G",Palmeiras,Bolívar,2.0,0.0,Ended,2025-05-15 22:00:00,Palmeiras,2,0,0
+13473422,Brasileirão Betano,Red Bull Bragantino,Palmeiras,1.0,2.0,Ended,2025-05-18 21:30:00,Palmeiras,3,0,0
+13742594,Copa Betano do Brasil,Palmeiras,Ceará,3.0,0.0,Ended,2025-05-22 22:30:00,Palmeiras,3,0,0
+13473430,Brasileirão Betano,Palmeiras,Flamengo,0.0,2.0,Ended,2025-05-25 19:00:00,Palmeiras,2,0,0
+13640373,"CONMEBOL Libertadores, Group G",Palmeiras,Club Sporting Cristal,6.0,0.0,Ended,2025-05-29 00:30:00,Palmeiras,6,0,0
+13472696,Brasileirão Betano,Cruzeiro,Palmeiras,2.0,1.0,Ended,2025-06-01 22:30:00,Palmeiras,3,0,0
+13472725,Brasileirão Betano,Palmeiras,Juventude,,,Postponed,2025-06-11 18:00:00,Palmeiras,0,0,0
+13200213,"FIFA Club World Cup, Group A",Palmeiras,FC Porto,0.0,0.0,Ended,2025-06-15 22:00:00,Palmeiras,0,0,0
+13200240,"FIFA Club World Cup, Group A",Palmeiras,Al Ahly FC,2.0,0.0,Ended,2025-06-19 16:00:00,Palmeiras,2,0,0
+13200220,"FIFA Club World Cup, Group A",Inter Miami CF,Palmeiras,2.0,1.0,2nd half,2025-06-24 01:00:00,Palmeiras,3,0,0
+13252403,Gaúcho,EC São José,Internacional,0.0,2.0,Ended,2025-01-29 00:30:00,Internacional,2,0,0
+13252411,Gaúcho,Internacional,EC Avenida,1.0,0.0,Ended,2025-02-02 23:30:00,Internacional,1,0,0
+13252413,Gaúcho,Internacional,Grêmio Esportivo Brasil,3.0,0.0,Ended,2025-02-05 23:00:00,Internacional,3,0,0
+13252418,Gaúcho,Grêmio,Internacional,1.0,1.0,Ended,2025-02-09 00:00:00,Internacional,2,0,0
+13252427,Gaúcho,São Luiz,Internacional,1.0,3.0,Ended,2025-02-13 01:00:00,Internacional,4,0,0
+13252431,Gaúcho,Internacional,Monsoon,2.0,0.0,Ended,2025-02-15 19:30:00,Internacional,2,0,0
+13484846,Gaúcho - Mata-mata,Caxias,Internacional,0.0,2.0,Ended,2025-02-22 19:30:00,Internacional,2,0,0
+13484848,Gaúcho - Mata-mata,Internacional,Caxias,3.0,1.0,Ended,2025-03-02 00:30:00,Internacional,4,0,0
+13557006,Gaúcho - Mata-mata,Grêmio,Internacional,0.0,2.0,Ended,2025-03-08 20:45:00,Internacional,2,0,0
+13578030,Gaúcho - Mata-mata,Internacional,Grêmio,1.0,1.0,Ended,2025-03-16 19:00:00,Internacional,2,0,0
+13473338,Brasileirão Betano,Flamengo,Internacional,1.0,1.0,Ended,2025-03-30 00:00:00,Internacional,2,0,0
+13640292,"CONMEBOL Libertadores, Group F",Bahia,Internacional,1.0,1.0,Ended,2025-04-03 22:00:00,Internacional,2,0,0
+13473354,Brasileirão Betano,Internacional,Cruzeiro,3.0,0.0,Ended,2025-04-06 21:30:00,Internacional,3,0,0
+13640309,"CONMEBOL Libertadores, Group F",Internacional,Atlético Nacional,3.0,0.0,Ended,2025-04-10 22:00:00,Internacional,3,0,0
+13473366,Brasileirão Betano,Fortaleza,Internacional,0.0,0.0,Ended,2025-04-13 23:00:00,Internacional,0,0,0
+13473374,Brasileirão Betano,Internacional,Palmeiras,0.0,1.0,Ended,2025-04-16 22:30:00,Internacional,1,0,0
+13473384,Brasileirão Betano,Grêmio,Internacional,1.0,1.0,Ended,2025-04-20 00:00:00,Internacional,2,0,0
+13640316,"CONMEBOL Libertadores, Group F",Internacional,Nacional,3.0,3.0,Ended,2025-04-23 00:30:00,Internacional,6,0,0
+13473394,Brasileirão Betano,Internacional,Juventude,3.0,1.0,Ended,2025-04-26 19:00:00,Internacional,4,0,0
+13742590,Copa Betano do Brasil,Internacional,Maracanã,1.0,0.0,Ended,2025-04-29 22:00:00,Internacional,1,0,0
+13473400,Brasileirão Betano,Corinthians,Internacional,4.0,2.0,Ended,2025-05-03 21:30:00,Internacional,6,0,0
+13640342,"CONMEBOL Libertadores, Group F",Atlético Nacional,Internacional,3.0,1.0,Ended,2025-05-09 00:30:00,Internacional,4,0,0
+13473409,Brasileirão Betano,Botafogo,Internacional,4.0,0.0,Ended,2025-05-11 23:00:00,Internacional,4,0,0
+13640357,"CONMEBOL Libertadores, Group F",Nacional,Internacional,0.0,2.0,Ended,2025-05-15 22:00:00,Internacional,2,0,0
+13473424,Brasileirão Betano,Internacional,Mirassol,1.0,1.0,Ended,2025-05-18 23:30:00,Internacional,2,0,0
+13742606,Copa Betano do Brasil,Maracanã,Internacional,0.0,3.0,Ended,2025-05-22 22:00:00,Internacional,3,0,0
+13473438,Brasileirão Betano,Sport Recife,Internacional,1.0,1.0,Ended,2025-05-25 19:00:00,Internacional,2,0,0
+13640370,"CONMEBOL Libertadores, Group F",Internacional,Bahia,2.0,1.0,Ended,2025-05-28 22:00:00,Internacional,3,0,0
+13472700,Brasileirão Betano,Internacional,Fluminense,0.0,2.0,Ended,2025-06-01 23:30:00,Internacional,2,0,0
+13472737,Brasileirão Betano,Atlético Mineiro,Internacional,2.0,0.0,Ended,2025-06-13 00:30:00,Internacional,2,0,0
+13193924,Paulista Série A1,Santos,São Paulo,3.0,1.0,Ended,2025-02-01 23:30:00,São Paulo,4,0,0
+13193929,Paulista Série A1,São Paulo,Mirassol,4.0,1.0,Ended,2025-02-05 22:30:00,São Paulo,5,0,0
+13193943,Paulista Série A1,Red Bull Bragantino,São Paulo,1.0,0.0,Ended,2025-02-08 21:30:00,São Paulo,1,0,0
+13284323,Paulista Série A1,São Paulo,Inter de Limeira,0.0,0.0,Ended,2025-02-11 00:30:00,São Paulo,0,0,0
+13193947,Paulista Série A1,São Paulo,AE Velo Clube,3.0,3.0,Ended,2025-02-14 00:30:00,São Paulo,6,0,0
+13193958,Paulista Série A1,Palmeiras,São Paulo,0.0,0.0,Ended,2025-02-16 21:30:00,São Paulo,0,0,0
+13193961,Paulista Série A1,São Paulo,Ponte Preta,1.0,2.0,Ended,2025-02-19 22:30:00,São Paulo,3,0,0
+13193976,Paulista Série A1,São Bernardo,São Paulo,1.0,3.0,Ended,2025-02-23 21:30:00,São Paulo,4,0,0
+13529169,Paulista Série A1 - Playoffs,São Paulo,Novorizontino,1.0,0.0,Ended,2025-03-03 23:00:00,São Paulo,1,0,0
+13566692,Paulista Série A1 - Playoffs,Palmeiras,São Paulo,1.0,0.0,Ended,2025-03-11 00:35:00,São Paulo,1,0,0
+13473341,Brasileirão Betano,São Paulo,Sport Recife,0.0,0.0,Ended,2025-03-29 21:30:00,São Paulo,0,0,0
+13640290,"CONMEBOL Libertadores, Group D",Talleres,São Paulo,0.0,1.0,Ended,2025-04-03 00:30:00,São Paulo,1,0,0
+13473353,Brasileirão Betano,Atlético Mineiro,São Paulo,0.0,0.0,Ended,2025-04-06 19:00:00,São Paulo,0,0,0
+13640310,"CONMEBOL Libertadores, Group D",São Paulo,Alianza Lima,2.0,2.0,Ended,2025-04-11 00:30:00,São Paulo,4,0,0
+13473361,Brasileirão Betano,São Paulo,Cruzeiro,1.0,1.0,Ended,2025-04-13 20:30:00,São Paulo,2,0,0
+13473369,Brasileirão Betano,Botafogo,São Paulo,2.0,2.0,Ended,2025-04-16 21:30:00,São Paulo,4,0,0
+13473381,Brasileirão Betano,São Paulo,Santos,2.0,1.0,Ended,2025-04-20 19:00:00,São Paulo,3,0,0
+13640321,"CONMEBOL Libertadores, Group D",Libertad,São Paulo,0.0,2.0,Ended,2025-04-24 00:30:00,São Paulo,2,0,0
+13473396,Brasileirão Betano,Ceará,São Paulo,1.0,1.0,Ended,2025-04-26 21:30:00,São Paulo,2,0,0
+13742598,Copa Betano do Brasil,São Paulo,Náutico,2.0,1.0,Ended,2025-04-30 00:30:00,São Paulo,3,0,0
+13473401,Brasileirão Betano,São Paulo,Fortaleza,0.0,0.0,Ended,2025-05-03 00:30:00,São Paulo,0,0,0
+13640329,"CONMEBOL Libertadores, Group D",Alianza Lima,São Paulo,0.0,2.0,Ended,2025-05-06 22:00:00,São Paulo,2,0,0
+13473410,Brasileirão Betano,Palmeiras,São Paulo,1.0,0.0,Ended,2025-05-11 20:30:00,São Paulo,1,0,0
+13640353,"CONMEBOL Libertadores, Group D",São Paulo,Libertad,1.0,1.0,Ended,2025-05-15 00:30:00,São Paulo,2,0,0
+13473421,Brasileirão Betano,São Paulo,Grêmio,2.0,1.0,Ended,2025-05-18 00:00:00,São Paulo,3,0,0
+13742607,Copa Betano do Brasil,Náutico,São Paulo,1.0,2.0,Ended,2025-05-21 00:30:00,São Paulo,3,0,0
+13473431,Brasileirão Betano,São Paulo,Mirassol,0.0,2.0,Ended,2025-05-24 21:30:00,São Paulo,2,0,0
+13640361,"CONMEBOL Libertadores, Group D",São Paulo,Talleres,2.0,1.0,Ended,2025-05-27 22:00:00,São Paulo,3,0,0
+13472704,Brasileirão Betano,Bahia,São Paulo,2.0,1.0,Ended,2025-05-31 21:30:00,São Paulo,3,0,0
+13472729,Brasileirão Betano,São Paulo,Vasco da Gama,1.0,3.0,Ended,2025-06-13 00:30:00,São Paulo,4,0,0
+13284329,Paulista Série A1,Santos,Mirassol,2.0,1.0,Ended,2025-01-17 00:30:00,Santos,3,0,0
+13193891,Paulista Série A1,Ponte Preta,Santos,1.0,1.0,Ended,2025-01-19 23:30:00,Santos,2,0,0
+13193902,Paulista Série A1,Santos,Palmeiras,1.0,2.0,Ended,2025-01-23 00:35:00,Santos,3,0,0
+13193907,Paulista Série A1,AE Velo Clube,Santos,2.0,1.0,Ended,2025-01-25 21:30:00,Santos,3,0,0
+13193920,Paulista Série A1,São Bernardo,Santos,3.0,1.0,Ended,2025-01-29 21:30:00,Santos,4,0,0
+13193924,Paulista Série A1,Santos,São Paulo,3.0,1.0,Ended,2025-02-01 23:30:00,Santos,4,0,0
+13193936,Paulista Série A1,Santos,Botafogo-SP,1.0,1.0,Ended,2025-02-06 00:35:00,Santos,2,0,0
+13193940,Paulista Série A1,Novorizontino,Santos,0.0,0.0,Ended,2025-02-09 19:00:00,Santos,0,0,0
+13193952,Paulista Série A1,Corinthians,Santos,2.0,1.0,Ended,2025-02-13 00:35:00,Santos,3,0,0
+13193956,Paulista Série A1,Santos,Água Santa,3.0,1.0,Ended,2025-02-16 23:30:00,Santos,4,0,0
+13193963,Paulista Série A1,Santos,EC Noroeste,3.0,0.0,Ended,2025-02-19 22:15:00,Santos,3,0,0
+13193973,Paulista Série A1,Inter de Limeira,Santos,0.0,3.0,Ended,2025-02-23 21:30:00,Santos,3,0,0
+13529171,Paulista Série A1 - Playoffs,Santos,Red Bull Bragantino,2.0,0.0,Ended,2025-03-02 23:45:00,Santos,2,0,0
+13566693,Paulista Série A1 - Playoffs,Corinthians,Santos,2.0,1.0,Ended,2025-03-09 21:30:00,Santos,3,0,0
+13614056,Club Friendly Games,Coritiba,Santos,1.0,4.0,Ended,2025-03-16 21:00:00,Santos,5,0,0
+13473339,Brasileirão Betano,Vasco da Gama,Santos,2.0,1.0,Ended,2025-03-30 21:30:00,Santos,3,0,0
+13473351,Brasileirão Betano,Santos,Bahia,2.0,2.0,Ended,2025-04-06 23:30:00,Santos,4,0,0
+13473358,Brasileirão Betano,Fluminense,Santos,1.0,0.0,Ended,2025-04-13 22:30:00,Santos,1,0,0
+13473371,Brasileirão Betano,Santos,Atlético Mineiro,2.0,0.0,Ended,2025-04-17 00:30:00,Santos,2,0,0
+13473381,Brasileirão Betano,São Paulo,Santos,2.0,1.0,Ended,2025-04-20 19:00:00,Santos,3,0,0
+13473391,Brasileirão Betano,Santos,Red Bull Bragantino,1.0,2.0,Ended,2025-04-27 23:30:00,Santos,3,0,0
+13742602,Copa Betano do Brasil,Santos,CRB,1.0,1.0,Ended,2025-05-01 21:00:00,Santos,2,0,0
+13473404,Brasileirão Betano,Grêmio,Santos,1.0,0.0,Ended,2025-05-04 19:00:00,Santos,1,0,0
+13473411,Brasileirão Betano,Santos,Ceará,0.0,0.0,Ended,2025-05-12 23:00:00,Santos,0,0,0
+13473420,Brasileirão Betano,Corinthians,Santos,1.0,0.0,Ended,2025-05-18 19:00:00,Santos,1,0,0
+13742614,Copa Betano do Brasil,CRB,Santos,5.0,4.0,AP,2025-05-23 00:30:00,Santos,0,0,0
+13473436,Brasileirão Betano,Vitória,Santos,0.0,1.0,Ended,2025-05-25 21:30:00,Santos,1,0,0
+13939930,Club Friendly Games,Santos,RB Leipzig,1.0,3.0,Ended,2025-05-28 22:00:00,Santos,4,0,0
+13472688,Brasileirão Betano,Santos,Botafogo,0.0,1.0,Ended,2025-06-01 19:00:00,Santos,1,0,0
+13472750,Brasileirão Betano,Fortaleza,Santos,2.0,3.0,Ended,2025-06-12 22:30:00,Santos,5,0,0
+13198200,Carioca Série A – Taça Guanabara,Maricá FC,Vasco da Gama,0.0,1.0,Ended,2025-01-29 22:00:00,Vasco da Gama,1,0,0
+13198203,Carioca Série A – Taça Guanabara,Vasco da Gama,Volta Redonda,2.0,2.0,Ended,2025-02-01 19:30:00,Vasco da Gama,4,0,0
+13198207,Carioca Série A – Taça Guanabara,Vasco da Gama,Fluminense,1.0,2.0,Ended,2025-02-06 00:30:00,Vasco da Gama,3,0,0
+13198214,Carioca Série A – Taça Guanabara,Sampaio Corrêa-RJ,Vasco da Gama,0.0,0.0,Ended,2025-02-10 23:00:00,Vasco da Gama,0,0,0
+13198220,Carioca Série A – Taça Guanabara,Flamengo,Vasco da Gama,2.0,0.0,Ended,2025-02-16 00:45:00,Vasco da Gama,2,0,0
+13458043,Copa Betano do Brasil,União Rondonópolis,Vasco da Gama,0.0,3.0,Ended,2025-02-19 00:30:00,Vasco da Gama,3,0,0
+13198226,Carioca Série A – Taça Guanabara,Vasco da Gama,Botafogo,1.0,0.0,Ended,2025-02-23 21:30:00,Vasco da Gama,1,0,0
+13525558,Carioca Série A – Mata-mata,Vasco da Gama,Flamengo,0.0,1.0,Ended,2025-03-01 20:45:00,Vasco da Gama,1,0,0
+13541809,Copa Betano do Brasil,Nova Iguaçu,Vasco da Gama,0.0,3.0,Ended,2025-03-06 00:30:00,Vasco da Gama,3,0,0
+13525561,Carioca Série A – Mata-mata,Flamengo,Vasco da Gama,2.0,1.0,Ended,2025-03-08 20:45:00,Vasco da Gama,3,0,0
+13473339,Brasileirão Betano,Vasco da Gama,Santos,2.0,1.0,Ended,2025-03-30 21:30:00,Vasco da Gama,3,0,0
+13640393,"CONMEBOL Sudamericana, Group G",Melgar,Vasco da Gama,3.0,3.0,Ended,2025-04-02 22:00:00,Vasco da Gama,6,0,0
+13473350,Brasileirão Betano,Corinthians,Vasco da Gama,3.0,0.0,Ended,2025-04-05 21:30:00,Vasco da Gama,3,0,0
+13640410,"CONMEBOL Sudamericana, Group G",Vasco da Gama,Academia Puerto Cabello,1.0,0.0,Ended,2025-04-09 00:30:00,Vasco da Gama,1,0,0
+13473359,Brasileirão Betano,Vasco da Gama,Sport Recife,3.0,1.0,Ended,2025-04-13 00:00:00,Vasco da Gama,4,0,0
+13473376,Brasileirão Betano,Ceará,Vasco da Gama,2.0,1.0,Ended,2025-04-16 00:30:00,Vasco da Gama,3,0,0
+13473379,Brasileirão Betano,Vasco da Gama,Flamengo,0.0,0.0,Ended,2025-04-19 21:30:00,Vasco da Gama,0,0,0
+13640421,"CONMEBOL Sudamericana, Group G",Vasco da Gama,Lanús,0.0,0.0,Ended,2025-04-23 00:30:00,Vasco da Gama,0,0,0
+13473393,Brasileirão Betano,Cruzeiro,Vasco da Gama,1.0,0.0,Ended,2025-04-27 21:30:00,Vasco da Gama,1,0,0
+13742586,Copa Betano do Brasil,Operário-PR,Vasco da Gama,1.0,1.0,Ended,2025-05-01 19:00:00,Vasco da Gama,2,0,0
+13473399,Brasileirão Betano,Vasco da Gama,Palmeiras,0.0,1.0,Ended,2025-05-04 19:00:00,Vasco da Gama,1,0,0
+13640443,"CONMEBOL Sudamericana, Group G",Academia Puerto Cabello,Vasco da Gama,4.0,1.0,Ended,2025-05-07 22:00:00,Vasco da Gama,5,0,0
+13473415,Brasileirão Betano,Vitória,Vasco da Gama,2.0,1.0,Ended,2025-05-10 21:30:00,Vasco da Gama,3,0,0
+13640455,"CONMEBOL Sudamericana, Group G",Lanús,Vasco da Gama,1.0,0.0,Ended,2025-05-14 00:30:00,Vasco da Gama,1,0,0
+13473419,Brasileirão Betano,Vasco da Gama,Fortaleza,3.0,0.0,Ended,2025-05-17 21:30:00,Vasco da Gama,3,0,0
+13742605,Copa Betano do Brasil,Vasco da Gama,Operário-PR,8.0,7.0,AP,2025-05-20 22:00:00,Vasco da Gama,2,0,0
+13473428,Brasileirão Betano,Fluminense,Vasco da Gama,2.0,1.0,Ended,2025-05-24 21:30:00,Vasco da Gama,3,0,0
+13640469,"CONMEBOL Sudamericana, Group G",Vasco da Gama,Melgar,3.0,0.0,Ended,2025-05-27 22:00:00,Vasco da Gama,3,0,0
+13472680,Brasileirão Betano,Vasco da Gama,Red Bull Bragantino,0.0,2.0,Ended,2025-06-01 00:00:00,Vasco da Gama,2,0,0
+13472729,Brasileirão Betano,São Paulo,Vasco da Gama,1.0,3.0,Ended,2025-06-13 00:30:00,Vasco da Gama,4,0,0
+13241302,Mineiro Módulo I ,Villa Nova AC,Atlético Mineiro,0.0,1.0,Ended,2025-02-01 19:30:00,Atlético Mineiro,1,0,0
+13317739,Mineiro Módulo I ,Atlético Mineiro,Athletic Club,1.0,0.0,Ended,2025-02-05 00:30:00,Atlético Mineiro,1,0,0
+13241270,Mineiro Módulo I ,Cruzeiro,Atlético Mineiro,0.0,2.0,Ended,2025-02-09 19:00:00,Atlético Mineiro,2,0,0
+13241273,Mineiro Módulo I ,Atlético Mineiro,Itabirito FC,3.0,0.0,Ended,2025-02-12 22:45:00,Atlético Mineiro,3,0,0
+13473672,Mineiro Módulo I - Playoffs,Atlético Mineiro,Tombense,2.0,0.0,Ended,2025-02-15 19:30:00,Atlético Mineiro,2,0,0
+13458042,Copa Betano do Brasil,Tocantinópolis,Atlético Mineiro,0.0,2.0,Ended,2025-02-18 21:00:00,Atlético Mineiro,2,0,0
+13473674,Mineiro Módulo I - Playoffs,Tombense,Atlético Mineiro,0.0,2.0,Ended,2025-02-22 22:00:00,Atlético Mineiro,2,0,0
+13540607,Copa Betano do Brasil,Atlético Mineiro,Manaus,4.0,1.0,Ended,2025-03-05 22:30:00,Atlético Mineiro,5,0,0
+13521130,Mineiro Módulo I - Playoffs,Atlético Mineiro,América Mineiro,4.0,0.0,Ended,2025-03-08 19:30:00,Atlético Mineiro,4,0,0
+13521133,Mineiro Módulo I - Playoffs,América Mineiro,Atlético Mineiro,1.0,0.0,Ended,2025-03-15 19:30:00,Atlético Mineiro,1,0,0
+13473344,Brasileirão Betano,Grêmio,Atlético Mineiro,2.0,1.0,Ended,2025-03-29 21:30:00,Atlético Mineiro,3,0,0
+13640389,"CONMEBOL Sudamericana, Group H",Cienciano,Atlético Mineiro,0.0,0.0,Ended,2025-04-02 00:30:00,Atlético Mineiro,0,0,0
+13473353,Brasileirão Betano,Atlético Mineiro,São Paulo,0.0,0.0,Ended,2025-04-06 19:00:00,Atlético Mineiro,0,0,0
+13640415,"CONMEBOL Sudamericana, Group H",Atlético Mineiro,Deportes Iquique,4.0,0.0,Ended,2025-04-11 00:30:00,Atlético Mineiro,4,0,0
+13473363,Brasileirão Betano,Atlético Mineiro,Vitória,2.0,2.0,Ended,2025-04-13 23:30:00,Atlético Mineiro,4,0,0
+13473371,Brasileirão Betano,Santos,Atlético Mineiro,2.0,0.0,Ended,2025-04-17 00:30:00,Atlético Mineiro,2,0,0
+13473383,Brasileirão Betano,Atlético Mineiro,Botafogo,1.0,0.0,Ended,2025-04-20 19:00:00,Atlético Mineiro,1,0,0
+13640427,"CONMEBOL Sudamericana, Group H",Caracas F.C.,Atlético Mineiro,1.0,1.0,Ended,2025-04-24 00:30:00,Atlético Mineiro,2,0,0
+13473392,Brasileirão Betano,Mirassol,Atlético Mineiro,2.0,2.0,Ended,2025-04-26 21:30:00,Atlético Mineiro,4,0,0
+13742593,Copa Betano do Brasil,Maringá FC,Atlético Mineiro,2.0,2.0,Ended,2025-04-29 22:30:00,Atlético Mineiro,4,0,0
+13473407,Brasileirão Betano,Juventude,Atlético Mineiro,0.0,1.0,Ended,2025-05-05 23:00:00,Atlético Mineiro,1,0,0
+13640447,"CONMEBOL Sudamericana, Group H",Deportes Iquique,Atlético Mineiro,3.0,2.0,Ended,2025-05-08 22:00:00,Atlético Mineiro,5,0,0
+13473413,Brasileirão Betano,Atlético Mineiro,Fluminense,3.0,2.0,Ended,2025-05-11 20:30:00,Atlético Mineiro,5,0,0
+13640465,"CONMEBOL Sudamericana, Group H",Atlético Mineiro,Caracas F.C.,3.0,1.0,Ended,2025-05-16 00:30:00,Atlético Mineiro,4,0,0
+13473423,Brasileirão Betano,Cruzeiro,Atlético Mineiro,0.0,0.0,Ended,2025-05-18 23:30:00,Atlético Mineiro,0,0,0
+13742608,Copa Betano do Brasil,Atlético Mineiro,Maringá FC,4.0,0.0,Ended,2025-05-22 00:30:00,Atlético Mineiro,4,0,0
+13473434,Brasileirão Betano,Atlético Mineiro,Corinthians,0.0,0.0,Ended,2025-05-25 00:00:00,Atlético Mineiro,0,0,0
+13640480,"CONMEBOL Sudamericana, Group H",Atlético Mineiro,Cienciano,1.0,1.0,Ended,2025-05-30 00:30:00,Atlético Mineiro,2,0,0
+13472708,Brasileirão Betano,Ceará,Atlético Mineiro,0.0,1.0,Ended,2025-06-01 21:30:00,Atlético Mineiro,1,0,0
+13472737,Brasileirão Betano,Atlético Mineiro,Internacional,2.0,0.0,Ended,2025-06-13 00:30:00,Atlético Mineiro,2,0,0
+13198222,Carioca Série A – Taça Guanabara,Fluminense,Nova Iguaçu,2.0,0.0,Ended,2025-02-16 19:00:00,Fluminense,2,0,0
+13198227,Carioca Série A – Taça Guanabara,Fluminense,Bangu Atlético Clube,3.0,2.0,Ended,2025-02-23 21:30:00,Fluminense,5,0,0
+13458057,Copa Betano do Brasil,Águia de Marabá FC,Fluminense,0.0,8.0,Ended,2025-02-26 22:30:00,Fluminense,8,0,0
+13525559,Carioca Série A – Mata-mata,Fluminense,Volta Redonda,4.0,0.0,Ended,2025-03-02 21:00:00,Fluminense,4,0,0
+13541965,Copa Betano do Brasil,Caxias,Fluminense,1.0,2.0,Ended,2025-03-05 22:00:00,Fluminense,3,0,0
+13525562,Carioca Série A – Mata-mata,Volta Redonda,Fluminense,0.0,0.0,Ended,2025-03-09 21:00:00,Fluminense,0,0,0
+13586982,Carioca Série A – Mata-mata,Fluminense,Flamengo,1.0,2.0,Ended,2025-03-13 00:30:00,Fluminense,3,0,0
+13592141,Carioca Série A – Mata-mata,Flamengo,Fluminense,0.0,0.0,Ended,2025-03-16 19:00:00,Fluminense,0,0,0
+13473346,Brasileirão Betano,Fortaleza,Fluminense,2.0,0.0,Ended,2025-03-29 21:30:00,Fluminense,2,0,0
+13640391,"CONMEBOL Sudamericana, Group F",Once Caldas,Fluminense,0.0,1.0,Ended,2025-04-02 00:30:00,Fluminense,1,0,0
+13473348,Brasileirão Betano,Fluminense,Red Bull Bragantino,2.0,1.0,Ended,2025-04-06 19:00:00,Fluminense,3,0,0
+13640416,"CONMEBOL Sudamericana, Group F",Fluminense,GV San José,5.0,0.0,Ended,2025-04-11 00:30:00,Fluminense,5,0,0
+13473358,Brasileirão Betano,Fluminense,Santos,1.0,0.0,Ended,2025-04-13 22:30:00,Fluminense,1,0,0
+13473370,Brasileirão Betano,Corinthians,Fluminense,0.0,2.0,Ended,2025-04-16 22:30:00,Fluminense,2,0,0
+13473378,Brasileirão Betano,Fluminense,Vitória,1.0,1.0,Ended,2025-04-20 21:30:00,Fluminense,2,0,0
+13640422,"CONMEBOL Sudamericana, Group F",Unión Española,Fluminense,1.0,1.0,Ended,2025-04-23 22:00:00,Fluminense,2,0,0
+13473389,Brasileirão Betano,Botafogo,Fluminense,2.0,0.0,Ended,2025-04-27 00:00:00,Fluminense,2,0,0
+13742583,Copa Betano do Brasil,Fluminense,AA Aparecidense,1.0,0.0,Ended,2025-04-30 00:30:00,Fluminense,1,0,0
+13473398,Brasileirão Betano,Fluminense,Sport Recife,2.0,1.0,Ended,2025-05-03 21:30:00,Fluminense,3,0,0
+13640448,"CONMEBOL Sudamericana, Group F",GV San José,Fluminense,1.0,0.0,Ended,2025-05-09 00:30:00,Fluminense,1,0,0
+13473413,Brasileirão Betano,Atlético Mineiro,Fluminense,3.0,2.0,Ended,2025-05-11 20:30:00,Fluminense,5,0,0
+13640458,"CONMEBOL Sudamericana, Group F",Fluminense,Unión Española,2.0,0.0,Ended,2025-05-14 22:00:00,Fluminense,2,0,0
+13473427,Brasileirão Betano,Juventude,Fluminense,1.0,1.0,Ended,2025-05-18 19:00:00,Fluminense,2,0,0
+13742609,Copa Betano do Brasil,AA Aparecidense,Fluminense,1.0,4.0,Ended,2025-05-21 22:30:00,Fluminense,5,0,0
+13473428,Brasileirão Betano,Fluminense,Vasco da Gama,2.0,1.0,Ended,2025-05-24 21:30:00,Fluminense,3,0,0
+13640482,"CONMEBOL Sudamericana, Group F",Fluminense,Once Caldas,2.0,0.0,Ended,2025-05-30 00:30:00,Fluminense,2,0,0
+13472700,Brasileirão Betano,Internacional,Fluminense,0.0,2.0,Ended,2025-06-01 23:30:00,Fluminense,2,0,0
+13472716,Brasileirão Betano,Fluminense,Ceará,,,Postponed,2025-06-11 18:00:00,Fluminense,0,0,0
+13200230,"FIFA Club World Cup, Group F",Fluminense,Borussia Dortmund,0.0,0.0,Ended,2025-06-17 16:00:00,Fluminense,0,0,0
+13200261,"FIFA Club World Cup, Group F",Fluminense,Ulsan HD,4.0,2.0,Ended,2025-06-21 22:00:00,Fluminense,6,0,0
+13252412,Gaúcho,Juventude,Grêmio,2.0,0.0,Ended,2025-02-06 01:00:00,Grêmio,2,0,0
+13252418,Gaúcho,Grêmio,Internacional,1.0,1.0,Ended,2025-02-09 00:00:00,Grêmio,2,0,0
+13252425,Gaúcho,Grêmio,EC Pelotas,5.0,0.0,Ended,2025-02-12 00:30:00,Grêmio,5,0,0
+13252433,Gaúcho,Ypiranga FC,Grêmio,0.0,1.0,Ended,2025-02-15 19:30:00,Grêmio,1,0,0
+13458045,Copa Betano do Brasil,São Raimundo-RR,Grêmio,2.0,5.0,AP,2025-02-19 22:30:00,Grêmio,2,0,0
+13484847,Gaúcho - Mata-mata,Grêmio,Juventude,2.0,1.0,Ended,2025-02-23 00:30:00,Grêmio,3,0,0
+13484849,Gaúcho - Mata-mata,Juventude,Grêmio,4.0,4.0,AP,2025-03-01 19:30:00,Grêmio,3,0,0
+13557006,Gaúcho - Mata-mata,Grêmio,Internacional,0.0,2.0,Ended,2025-03-08 20:45:00,Grêmio,2,0,0
+13540608,Copa Betano do Brasil,Athletic Club,Grêmio,10.0,11.0,AP,2025-03-12 22:30:00,Grêmio,6,0,0
+13578030,Gaúcho - Mata-mata,Internacional,Grêmio,1.0,1.0,Ended,2025-03-16 19:00:00,Grêmio,2,0,0
+13473344,Brasileirão Betano,Grêmio,Atlético Mineiro,2.0,1.0,Ended,2025-03-29 21:30:00,Grêmio,3,0,0
+13640396,"CONMEBOL Sudamericana, Group D",Sportivo Luqueño,Grêmio,1.0,2.0,Ended,2025-04-03 00:30:00,Grêmio,3,0,0
+13473356,Brasileirão Betano,Ceará,Grêmio,2.0,0.0,Ended,2025-04-05 21:30:00,Grêmio,2,0,0
+13640403,"CONMEBOL Sudamericana, Group D",Grêmio,Club Atlético Grau,2.0,0.0,Ended,2025-04-08 22:00:00,Grêmio,2,0,0
+13473364,Brasileirão Betano,Grêmio,Flamengo,0.0,2.0,Ended,2025-04-13 20:30:00,Grêmio,2,0,0
+13473372,Brasileirão Betano,Mirassol,Grêmio,4.0,1.0,Ended,2025-04-16 22:00:00,Grêmio,5,0,0
+13473384,Brasileirão Betano,Grêmio,Internacional,1.0,1.0,Ended,2025-04-20 00:00:00,Grêmio,2,0,0
+13640431,"CONMEBOL Sudamericana, Group D",Godoy Cruz,Grêmio,2.0,2.0,Ended,2025-04-24 22:00:00,Grêmio,4,0,0
+13473395,Brasileirão Betano,Vitória,Grêmio,1.0,1.0,Ended,2025-04-27 21:30:00,Grêmio,2,0,0
+13742591,Copa Betano do Brasil,CSA,Grêmio,3.0,2.0,Ended,2025-05-01 00:30:00,Grêmio,5,0,0
+13473404,Brasileirão Betano,Grêmio,Santos,1.0,0.0,Ended,2025-05-04 19:00:00,Grêmio,1,0,0
+13640444,"CONMEBOL Sudamericana, Group D",Club Atlético Grau,Grêmio,0.0,0.0,Ended,2025-05-08 00:30:00,Grêmio,0,0,0
+13473414,Brasileirão Betano,Grêmio,Red Bull Bragantino,1.0,1.0,Ended,2025-05-10 21:30:00,Grêmio,2,0,0
+13640452,"CONMEBOL Sudamericana, Group D",Grêmio,Godoy Cruz,1.0,1.0,Ended,2025-05-13 22:00:00,Grêmio,2,0,0
+13473421,Brasileirão Betano,São Paulo,Grêmio,2.0,1.0,Ended,2025-05-18 00:00:00,Grêmio,3,0,0
+13742599,Copa Betano do Brasil,Grêmio,CSA,0.0,0.0,Ended,2025-05-21 00:30:00,Grêmio,0,0,0
+13473435,Brasileirão Betano,Grêmio,Bahia,1.0,0.0,Ended,2025-05-25 14:00:00,Grêmio,1,0,0
+13640478,"CONMEBOL Sudamericana, Group D",Grêmio,Sportivo Luqueño,1.0,0.0,Ended,2025-05-29 22:00:00,Grêmio,1,0,0
+13472712,Brasileirão Betano,Juventude,Grêmio,0.0,2.0,Ended,2025-06-01 19:00:00,Grêmio,2,0,0
+13472741,Brasileirão Betano,Grêmio,Corinthians,1.0,1.0,Ended,2025-06-12 23:00:00,Grêmio,2,0,0
+13350523,"Copa do Nordeste, Group A",AA Altos,Fortaleza,2.0,1.0,Ended,2025-02-12 00:30:00,Fortaleza,3,0,0
+13350521,"Copa do Nordeste, Group A",Fortaleza,Vitória,1.0,2.0,Ended,2025-02-20 00:30:00,Fortaleza,3,0,0
+13525449,"Cearense, Serie A, Playoffs",Ferroviário,Fortaleza,0.0,0.0,Ended,2025-03-01 19:30:00,Fortaleza,0,0,0
+13350518,"Copa do Nordeste, Group A",Fortaleza,Ferroviário,4.0,0.0,Ended,2025-03-05 22:00:00,Fortaleza,4,0,0
+13525452,"Cearense, Serie A, Playoffs",Fortaleza,Ferroviário,1.0,0.0,Ended,2025-03-08 19:30:00,Fortaleza,1,0,0
+13589192,"Cearense, Serie A, Playoffs",Fortaleza,Ceará,0.0,1.0,Ended,2025-03-15 19:30:00,Fortaleza,1,0,0
+13350511,"Copa do Nordeste, Group A",Sousa EC,Fortaleza,2.0,1.0,Ended,2025-03-20 00:30:00,Fortaleza,3,0,0
+13589208,"Cearense, Serie A, Playoffs",Ceará,Fortaleza,1.0,1.0,Ended,2025-03-22 19:30:00,Fortaleza,2,0,0
+13350505,"Copa do Nordeste, Group A",Fortaleza,CRB,,,Postponed,2025-03-23 21:00:00,Fortaleza,0,0,0
+13647254,"Copa do Nordeste, Group A",Fortaleza,CRB,0.0,1.0,Ended,2025-03-27 00:30:00,Fortaleza,1,0,0
+13473346,Brasileirão Betano,Fortaleza,Fluminense,2.0,0.0,Ended,2025-03-29 21:30:00,Fortaleza,2,0,0
+13640281,"CONMEBOL Libertadores, Group E",Fortaleza,Racing Club,0.0,3.0,Ended,2025-04-02 00:30:00,Fortaleza,3,0,0
+13473352,Brasileirão Betano,Mirassol,Fortaleza,1.0,1.0,Ended,2025-04-06 21:30:00,Fortaleza,2,0,0
+13640311,"CONMEBOL Libertadores, Group E",Colo Colo,Fortaleza,0.0,0.0,Abandoned,2025-04-11 00:00:00,Fortaleza,0,0,0
+13473366,Brasileirão Betano,Fortaleza,Internacional,0.0,0.0,Ended,2025-04-13 23:00:00,Fortaleza,0,0,0
+13473375,Brasileirão Betano,Vitória,Fortaleza,2.0,1.0,Ended,2025-04-17 00:30:00,Fortaleza,3,0,0
+13473386,Brasileirão Betano,Fortaleza,Palmeiras,1.0,2.0,Ended,2025-04-20 21:30:00,Fortaleza,3,0,0
+13640322,"CONMEBOL Libertadores, Group E",Atlético Bucaramanga,Fortaleza,1.0,1.0,Ended,2025-04-24 02:00:00,Fortaleza,2,0,0
+13473397,Brasileirão Betano,Sport Recife,Fortaleza,0.0,0.0,Ended,2025-04-26 23:00:00,Fortaleza,0,0,0
+13742585,Copa Betano do Brasil,Retrô,Fortaleza,1.0,1.0,Ended,2025-04-29 22:00:00,Fortaleza,2,0,0
+13473401,Brasileirão Betano,São Paulo,Fortaleza,0.0,0.0,Ended,2025-05-03 00:30:00,Fortaleza,0,0,0
+13640331,"CONMEBOL Libertadores, Group E",Fortaleza,Colo Colo,4.0,0.0,Ended,2025-05-07 00:30:00,Fortaleza,4,0,0
+13473416,Brasileirão Betano,Fortaleza,Juventude,5.0,0.0,Ended,2025-05-10 19:00:00,Fortaleza,5,0,0
+13640347,"CONMEBOL Libertadores, Group E",Fortaleza,Atlético Bucaramanga,0.0,0.0,Ended,2025-05-14 00:30:00,Fortaleza,0,0,0
+13473419,Brasileirão Betano,Vasco da Gama,Fortaleza,3.0,0.0,Ended,2025-05-17 21:30:00,Fortaleza,3,0,0
+13742601,Copa Betano do Brasil,Fortaleza,Retrô,2.0,5.0,AP,2025-05-21 22:00:00,Fortaleza,2,0,0
+13473437,Brasileirão Betano,Fortaleza,Cruzeiro,0.0,2.0,Ended,2025-05-25 23:30:00,Fortaleza,2,0,0
+13640377,"CONMEBOL Libertadores, Group E",Racing Club,Fortaleza,1.0,0.0,Ended,2025-05-30 00:30:00,Fortaleza,1,0,0
+13472675,Brasileirão Betano,Flamengo,Fortaleza,5.0,0.0,Ended,2025-06-01 21:30:00,Fortaleza,5,0,0
+13472750,Brasileirão Betano,Fortaleza,Santos,2.0,3.0,Ended,2025-06-12 22:30:00,Fortaleza,5,0,0
+13325242,"Baiano, Série A",Vitória,AD Jequié,2.0,0.0,Ended,2025-02-16 19:00:00,Vitória,2,0,0
+13350521,"Copa do Nordeste, Group A",Fortaleza,Vitória,1.0,2.0,Ended,2025-02-20 00:30:00,Vitória,3,0,0
+13325243,"Baiano, Série A",Atlético Alagoinhas,Vitória,0.0,1.0,Ended,2025-02-22 21:30:00,Vitória,1,0,0
+13458060,Copa Betano do Brasil,Maranhão AC,Vitória,0.0,1.0,Ended,2025-02-25 22:00:00,Vitória,1,0,0
+13525577,"Baiano, Série A – Mata-mata",Atlético Alagoinhas,Vitória,0.0,4.0,Ended,2025-03-01 21:30:00,Vitória,4,0,0
+13350514,"Copa do Nordeste, Group A",Vitória,AA Altos,1.0,1.0,Ended,2025-03-06 00:30:00,Vitória,2,0,0
+13545361,"Baiano, Série A – Mata-mata",Vitória,Atlético Alagoinhas,3.0,0.0,Ended,2025-03-08 21:00:00,Vitória,3,0,0
+13540605,Copa Betano do Brasil,Vitória,Náutico,0.0,2.0,Ended,2025-03-12 22:00:00,Vitória,2,0,0
+13591129,"Baiano, Série A – Mata-mata",Bahia,Vitória,2.0,0.0,Ended,2025-03-16 21:00:00,Vitória,2,0,0
+13350526,"Copa do Nordeste, Group A",Vitória,Sport Recife,1.0,0.0,Ended,2025-03-20 00:30:00,Vitória,1,0,0
+13591131,"Baiano, Série A – Mata-mata",Vitória,Bahia,1.0,1.0,Ended,2025-03-23 19:00:00,Vitória,2,0,0
+13350515,"Copa do Nordeste, Group A",Moto Club,Vitória,1.0,1.0,Ended,2025-03-27 00:30:00,Vitória,2,0,0
+13473347,Brasileirão Betano,Juventude,Vitória,2.0,0.0,Ended,2025-03-29 21:30:00,Vitória,2,0,0
+13640394,"CONMEBOL Sudamericana, Group B",Vitória,Universidad Católica del Ecuador,1.0,1.0,Ended,2025-04-03 00:30:00,Vitória,2,0,0
+13473355,Brasileirão Betano,Vitória,Flamengo,1.0,2.0,Ended,2025-04-06 21:30:00,Vitória,3,0,0
+13640413,"CONMEBOL Sudamericana, Group B",Defensa y Justicia,Vitória,0.0,0.0,Ended,2025-04-10 22:00:00,Vitória,0,0,0
+13473363,Brasileirão Betano,Atlético Mineiro,Vitória,2.0,2.0,Ended,2025-04-13 23:30:00,Vitória,4,0,0
+13473375,Brasileirão Betano,Vitória,Fortaleza,2.0,1.0,Ended,2025-04-17 00:30:00,Vitória,3,0,0
+13473378,Brasileirão Betano,Fluminense,Vitória,1.0,1.0,Ended,2025-04-20 21:30:00,Vitória,2,0,0
+13640426,"CONMEBOL Sudamericana, Group B",Vitória,Cerro Largo,0.0,1.0,Ended,2025-04-24 00:30:00,Vitória,1,0,0
+13473395,Brasileirão Betano,Vitória,Grêmio,1.0,1.0,Ended,2025-04-27 21:30:00,Vitória,2,0,0
+13473406,Brasileirão Betano,Ceará,Vitória,1.0,0.0,Ended,2025-05-03 21:30:00,Vitória,1,0,0
+13640436,"CONMEBOL Sudamericana, Group B",Vitória,Defensa y Justicia,1.0,1.0,Ended,2025-05-06 22:00:00,Vitória,2,0,0
+13473415,Brasileirão Betano,Vitória,Vasco da Gama,2.0,1.0,Ended,2025-05-10 21:30:00,Vitória,3,0,0
+13640459,"CONMEBOL Sudamericana, Group B",Cerro Largo,Vitória,0.0,1.0,Ended,2025-05-15 00:30:00,Vitória,1,0,0
+13473425,Brasileirão Betano,Bahia,Vitória,2.0,1.0,Ended,2025-05-18 19:00:00,Vitória,3,0,0
+13473436,Brasileirão Betano,Vitória,Santos,0.0,1.0,Ended,2025-05-25 21:30:00,Vitória,1,0,0
+13640475,"CONMEBOL Sudamericana, Group B",Universidad Católica del Ecuador,Vitória,1.0,0.0,Ended,2025-05-29 00:30:00,Vitória,1,0,0
+13472684,Brasileirão Betano,Corinthians,Vitória,0.0,0.0,Ended,2025-06-01 21:30:00,Vitória,0,0,0
+13472746,Brasileirão Betano,Vitória,Cruzeiro,0.0,0.0,Ended,2025-06-12 22:00:00,Vitória,0,0,0
+12117303,Brasileirão Betano,Juventude,Bahia,2.0,1.0,Ended,2024-11-09 22:00:00,Juventude,3,0,0
+12117304,Brasileirão Betano,Grêmio,Juventude,2.0,2.0,Ended,2024-11-20 22:00:00,Juventude,4,0,0
+12117324,Brasileirão Betano,Juventude,Cuiabá,1.0,1.0,Ended,2024-11-23 22:30:00,Juventude,2,0,0
+12117326,Brasileirão Betano,Atlético Mineiro,Juventude,2.0,3.0,Ended,2024-11-27 00:30:00,Juventude,5,0,0
+12117341,Brasileirão Betano,São Paulo,Juventude,1.0,2.0,Ended,2024-12-04 23:00:00,Juventude,3,0,0
+12117355,Brasileirão Betano,Juventude,Cruzeiro,0.0,1.0,Ended,2024-12-08 19:00:00,Juventude,1,0,0
+13309795,Club Friendly Games,Boca Juniors,Juventude,2.0,0.0,Ended,2025-01-15 23:00:00,Juventude,2,0,0
+13252389,Gaúcho,Juventude,Ypiranga FC,2.0,0.0,Ended,2025-01-22 22:00:00,Juventude,2,0,0
+13252395,Gaúcho,Internacional,Juventude,2.0,0.0,Ended,2025-01-25 19:30:00,Juventude,2,0,0
+13252400,Gaúcho,Juventude,Guarany de Bagé,1.0,0.0,Ended,2025-01-28 22:00:00,Juventude,1,0,0
+13252409,Gaúcho,Caxias,Juventude,0.0,2.0,Ended,2025-02-01 23:30:00,Juventude,2,0,0
+13252412,Gaúcho,Juventude,Grêmio,2.0,0.0,Ended,2025-02-06 01:00:00,Juventude,2,0,0
+13252422,Gaúcho,Juventude,EC São José,3.0,1.0,Ended,2025-02-09 22:00:00,Juventude,4,0,0
+13252424,Gaúcho,EC Avenida,Juventude,1.0,1.0,Ended,2025-02-12 22:30:00,Juventude,2,0,0
+13252432,Gaúcho,EC Pelotas,Juventude,2.0,3.0,Ended,2025-02-15 19:30:00,Juventude,5,0,0
+13484847,Gaúcho - Mata-mata,Grêmio,Juventude,2.0,1.0,Ended,2025-02-23 00:30:00,Juventude,3,0,0
+13458061,Copa Betano do Brasil,Maringá FC,Juventude,1.0,0.0,Ended,2025-02-25 22:30:00,Juventude,1,0,0
+13484849,Gaúcho - Mata-mata,Juventude,Grêmio,4.0,4.0,AP,2025-03-01 19:30:00,Juventude,3,0,0
+13473347,Brasileirão Betano,Juventude,Vitória,2.0,0.0,Ended,2025-03-29 21:30:00,Juventude,2,0,0
+13473349,Brasileirão Betano,Botafogo,Juventude,2.0,0.0,Ended,2025-04-06 00:00:00,Juventude,2,0,0
+13473367,Brasileirão Betano,Juventude,Ceará,2.0,1.0,Ended,2025-04-12 19:00:00,Juventude,3,0,0
+13473368,Brasileirão Betano,Flamengo,Juventude,6.0,0.0,Ended,2025-04-17 00:30:00,Juventude,6,0,0
+13473387,Brasileirão Betano,Juventude,Mirassol,2.0,2.0,Ended,2025-04-20 14:00:00,Juventude,4,0,0
+13473394,Brasileirão Betano,Internacional,Juventude,3.0,1.0,Ended,2025-04-26 19:00:00,Juventude,4,0,0
+13473407,Brasileirão Betano,Juventude,Atlético Mineiro,0.0,1.0,Ended,2025-05-05 23:00:00,Juventude,1,0,0
+13473416,Brasileirão Betano,Fortaleza,Juventude,5.0,0.0,Ended,2025-05-10 19:00:00,Juventude,5,0,0
+13473427,Brasileirão Betano,Juventude,Fluminense,1.0,1.0,Ended,2025-05-18 19:00:00,Juventude,2,0,0
+13473432,Brasileirão Betano,Red Bull Bragantino,Juventude,1.0,0.0,Ended,2025-05-26 23:00:00,Juventude,1,0,0
+13472712,Brasileirão Betano,Juventude,Grêmio,0.0,2.0,Ended,2025-06-01 19:00:00,Juventude,2,0,0
+13472725,Brasileirão Betano,Palmeiras,Juventude,,,Postponed,2025-06-11 18:00:00,Juventude,0,0,0
+13350529,"Copa do Nordeste, Group B",Ceará,CSA,1.0,0.0,Ended,2025-02-06 00:30:00,Ceará,1,0,0
+13197548,"Cearense, Série A",Fortaleza,Ceará,1.0,2.0,Ended,2025-02-08 19:30:00,Ceará,3,0,0
+13350531,"Copa do Nordeste, Group B",Ceará,Confiança,1.0,1.0,Ended,2025-02-12 22:00:00,Ceará,2,0,0
+13350538,"Copa do Nordeste, Group B",Bahia,Ceará,,,Postponed,2025-02-19 21:00:00,Ceará,0,0,0
+13458034,Copa Betano do Brasil,Sergipe,Ceará,0.0,2.0,Ended,2025-02-19 23:00:00,Ceará,2,0,0
+13525450,"Cearense, Serie A, Playoffs",Maracanã,Ceará,0.0,3.0,Ended,2025-03-02 20:00:00,Ceará,3,0,0
+13350541,"Copa do Nordeste, Group B",Ceará,América-RN,1.0,0.0,Ended,2025-03-06 22:00:00,Ceará,1,0,0
+13525451,"Cearense, Serie A, Playoffs",Ceará,Maracanã,4.0,0.0,Ended,2025-03-09 20:00:00,Ceará,4,0,0
+13541810,Copa Betano do Brasil,Ceará,Confiança,5.0,2.0,AP,2025-03-13 00:30:00,Ceará,4,0,0
+13589192,"Cearense, Serie A, Playoffs",Fortaleza,Ceará,0.0,1.0,Ended,2025-03-15 19:30:00,Ceará,1,0,0
+13350547,"Copa do Nordeste, Group B",Ceará,Juazeirense,2.0,0.0,Ended,2025-03-19 22:00:00,Ceará,2,0,0
+13589208,"Cearense, Serie A, Playoffs",Ceará,Fortaleza,1.0,1.0,Ended,2025-03-22 19:30:00,Ceará,2,0,0
+13350504,"Copa do Nordeste, Group B",Sampaio Corrêa,Ceará,,,Postponed,2025-03-23 21:00:00,Ceará,0,0,0
+13646077,"Copa do Nordeste, Group B",Bahia,Ceará,3.0,2.0,Ended,2025-03-26 22:00:00,Ceará,5,0,0
+13473342,Brasileirão Betano,Red Bull Bragantino,Ceará,2.0,2.0,Ended,2025-03-31 23:00:00,Ceará,4,0,0
+13473356,Brasileirão Betano,Ceará,Grêmio,2.0,0.0,Ended,2025-04-05 21:30:00,Ceará,2,0,0
+13473367,Brasileirão Betano,Juventude,Ceará,2.0,1.0,Ended,2025-04-12 19:00:00,Ceará,3,0,0
+13473376,Brasileirão Betano,Ceará,Vasco da Gama,2.0,1.0,Ended,2025-04-16 00:30:00,Ceará,3,0,0
+13473385,Brasileirão Betano,Bahia,Ceará,1.0,0.0,Ended,2025-04-21 23:00:00,Ceará,1,0,0
+13473396,Brasileirão Betano,Ceará,São Paulo,1.0,1.0,Ended,2025-04-26 21:30:00,Ceará,2,0,0
+13742584,Copa Betano do Brasil,Ceará,Palmeiras,0.0,1.0,Ended,2025-04-30 22:30:00,Ceará,1,0,0
+13473406,Brasileirão Betano,Ceará,Vitória,1.0,0.0,Ended,2025-05-03 21:30:00,Ceará,1,0,0
+13473411,Brasileirão Betano,Santos,Ceará,0.0,0.0,Ended,2025-05-12 23:00:00,Ceará,0,0,0
+13473426,Brasileirão Betano,Ceará,Sport Recife,2.0,0.0,Ended,2025-05-17 19:00:00,Ceará,2,0,0
+13742594,Copa Betano do Brasil,Palmeiras,Ceará,3.0,0.0,Ended,2025-05-22 22:30:00,Ceará,3,0,0
+13473429,Brasileirão Betano,Botafogo,Ceará,,,Postponed,2025-05-24 19:00:00,Ceará,0,0,0
+13472708,Brasileirão Betano,Ceará,Atlético Mineiro,0.0,1.0,Ended,2025-06-01 21:30:00,Ceará,1,0,0
+13788130,Brasileirão Betano,Botafogo,Ceará,3.0,2.0,Ended,2025-06-04 23:00:00,Ceará,5,0,0
+13858011,"Copa do Nordeste, Group B",Sampaio Corrêa,Ceará,1.0,2.0,Ended,2025-06-07 20:30:00,Ceará,3,0,0
+13472716,Brasileirão Betano,Fluminense,Ceará,,,Postponed,2025-06-11 18:00:00,Ceará,0,0,0
+12146522,Brasileirão Série B,Mirassol,Ponte Preta,3.0,0.0,Ended,2024-10-26 20:00:00,Mirassol,3,0,0
+12146534,Brasileirão Série B,Mirassol,Coritiba,4.0,1.0,Ended,2024-11-06 00:30:00,Mirassol,5,0,0
+12146543,Brasileirão Série B,Avaí,Mirassol,0.0,0.0,Ended,2024-11-10 22:00:00,Mirassol,0,0,0
+12146562,Brasileirão Série B,Operário-PR,Mirassol,1.0,1.0,Ended,2024-11-15 19:00:00,Mirassol,2,0,0
+12146568,Brasileirão Série B,Mirassol,Chapecoense,1.0,0.0,Ended,2024-11-24 21:30:00,Mirassol,1,0,0
+13284329,Paulista Série A1,Santos,Mirassol,2.0,1.0,Ended,2025-01-17 00:30:00,Mirassol,3,0,0
+13193892,Paulista Série A1,Mirassol,Água Santa,6.0,0.0,Ended,2025-01-19 19:00:00,Mirassol,6,0,0
+13193903,Paulista Série A1,São Bernardo,Mirassol,1.0,2.0,Ended,2025-01-23 21:30:00,Mirassol,3,0,0
+13193905,Paulista Série A1,Mirassol,Portuguesa,2.0,1.0,Ended,2025-01-26 19:00:00,Mirassol,3,0,0
+13193915,Paulista Série A1,Mirassol,Guarani,3.0,2.0,Ended,2025-01-29 21:30:00,Mirassol,5,0,0
+13193923,Paulista Série A1,AE Velo Clube,Mirassol,0.0,1.0,Ended,2025-02-01 23:30:00,Mirassol,1,0,0
+13193929,Paulista Série A1,São Paulo,Mirassol,4.0,1.0,Ended,2025-02-05 22:30:00,Mirassol,5,0,0
+13193939,Paulista Série A1,Mirassol,EC Noroeste,1.0,1.0,Ended,2025-02-08 19:00:00,Mirassol,2,0,0
+13193948,Paulista Série A1,Mirassol,Ponte Preta,1.0,2.0,Ended,2025-02-12 22:30:00,Mirassol,3,0,0
+13193959,Paulista Série A1,Novorizontino,Mirassol,2.0,1.0,Ended,2025-02-17 23:00:00,Mirassol,3,0,0
+13193964,Paulista Série A1,Red Bull Bragantino,Mirassol,3.0,0.0,Ended,2025-02-20 21:30:00,Mirassol,3,0,0
+13193974,Paulista Série A1,Mirassol,Palmeiras,2.0,3.0,Ended,2025-02-23 21:30:00,Mirassol,5,0,0
+13529165,Paulista Série A1 - Playoffs,Corinthians,Mirassol,2.0,0.0,Ended,2025-03-02 21:30:00,Mirassol,2,0,0
+13473343,Brasileirão Betano,Cruzeiro,Mirassol,2.0,1.0,Ended,2025-03-29 21:30:00,Mirassol,3,0,0
+13473352,Brasileirão Betano,Mirassol,Fortaleza,1.0,1.0,Ended,2025-04-06 21:30:00,Mirassol,2,0,0
+13473365,Brasileirão Betano,Bahia,Mirassol,1.0,1.0,Ended,2025-04-13 19:00:00,Mirassol,2,0,0
+13473372,Brasileirão Betano,Mirassol,Grêmio,4.0,1.0,Ended,2025-04-16 22:00:00,Mirassol,5,0,0
+13473387,Brasileirão Betano,Juventude,Mirassol,2.0,2.0,Ended,2025-04-20 14:00:00,Mirassol,4,0,0
+13473392,Brasileirão Betano,Mirassol,Atlético Mineiro,2.0,2.0,Ended,2025-04-26 21:30:00,Mirassol,4,0,0
+13473402,Brasileirão Betano,Red Bull Bragantino,Mirassol,1.0,0.0,Ended,2025-05-05 22:00:00,Mirassol,1,0,0
+13473412,Brasileirão Betano,Mirassol,Corinthians,2.0,1.0,Ended,2025-05-10 21:30:00,Mirassol,3,0,0
+13473424,Brasileirão Betano,Internacional,Mirassol,1.0,1.0,Ended,2025-05-18 23:30:00,Mirassol,2,0,0
+13473431,Brasileirão Betano,São Paulo,Mirassol,0.0,2.0,Ended,2025-05-24 21:30:00,Mirassol,2,0,0
+13472692,Brasileirão Betano,Mirassol,Sport Recife,1.0,0.0,Ended,2025-06-01 14:00:00,Mirassol,1,0,0
+13472720,Brasileirão Betano,Botafogo,Mirassol,,,Postponed,2025-06-11 18:00:00,Mirassol,0,0,0
+13198219,Carioca Série A – Taça Guanabara,Fluminense,Flamengo,0.0,0.0,Ended,2025-02-08 19:30:00,Flamengo,0,0,0
+13198201,Carioca Série A – Taça Guanabara,Flamengo,Botafogo,1.0,0.0,Ended,2025-02-13 00:30:00,Flamengo,1,0,0
+13198220,Carioca Série A – Taça Guanabara,Flamengo,Vasco da Gama,2.0,0.0,Ended,2025-02-16 00:45:00,Flamengo,2,0,0
+13198228,Carioca Série A – Taça Guanabara,Flamengo,Maricá FC,5.0,0.0,Ended,2025-02-22 22:00:00,Flamengo,5,0,0
+13525558,Carioca Série A – Mata-mata,Vasco da Gama,Flamengo,0.0,1.0,Ended,2025-03-01 20:45:00,Flamengo,1,0,0
+13525561,Carioca Série A – Mata-mata,Flamengo,Vasco da Gama,2.0,1.0,Ended,2025-03-08 20:45:00,Flamengo,3,0,0
+13586982,Carioca Série A – Mata-mata,Fluminense,Flamengo,1.0,2.0,Ended,2025-03-13 00:30:00,Flamengo,3,0,0
+13592141,Carioca Série A – Mata-mata,Flamengo,Fluminense,0.0,0.0,Ended,2025-03-16 19:00:00,Flamengo,0,0,0
+13473338,Brasileirão Betano,Flamengo,Internacional,1.0,1.0,Ended,2025-03-30 00:00:00,Flamengo,2,0,0
+13640294,"CONMEBOL Libertadores, Group C",Deportivo Táchira,Flamengo,0.0,1.0,Ended,2025-04-04 00:30:00,Flamengo,1,0,0
+13473355,Brasileirão Betano,Vitória,Flamengo,1.0,2.0,Ended,2025-04-06 21:30:00,Flamengo,3,0,0
+13640304,"CONMEBOL Libertadores, Group C",Flamengo,Central Córdoba,1.0,2.0,Ended,2025-04-10 00:30:00,Flamengo,3,0,0
+13473364,Brasileirão Betano,Grêmio,Flamengo,0.0,2.0,Ended,2025-04-13 20:30:00,Flamengo,2,0,0
+13473368,Brasileirão Betano,Flamengo,Juventude,6.0,0.0,Ended,2025-04-17 00:30:00,Flamengo,6,0,0
+13473379,Brasileirão Betano,Vasco da Gama,Flamengo,0.0,0.0,Ended,2025-04-19 21:30:00,Flamengo,0,0,0
+13640313,"CONMEBOL Libertadores, Group C",LDU,Flamengo,0.0,0.0,Ended,2025-04-22 22:00:00,Flamengo,0,0,0
+13473388,Brasileirão Betano,Flamengo,Corinthians,4.0,0.0,Ended,2025-04-27 19:00:00,Flamengo,4,0,0
+13742596,Copa Betano do Brasil,Botafogo-PB,Flamengo,0.0,1.0,Ended,2025-05-01 23:00:00,Flamengo,1,0,0
+13473403,Brasileirão Betano,Cruzeiro,Flamengo,2.0,1.0,Ended,2025-05-04 21:30:00,Flamengo,3,0,0
+13640337,"CONMEBOL Libertadores, Group C",Central Córdoba,Flamengo,1.0,1.0,Ended,2025-05-08 00:30:00,Flamengo,2,0,0
+13473408,Brasileirão Betano,Flamengo,Bahia,1.0,0.0,Ended,2025-05-11 00:00:00,Flamengo,1,0,0
+13640360,"CONMEBOL Libertadores, Group C",Flamengo,LDU,2.0,0.0,Ended,2025-05-16 00:30:00,Flamengo,2,0,0
+13473418,Brasileirão Betano,Flamengo,Botafogo,0.0,0.0,Ended,2025-05-18 21:30:00,Flamengo,0,0,0
+13742612,Copa Betano do Brasil,Flamengo,Botafogo-PB,4.0,2.0,Ended,2025-05-22 00:30:00,Flamengo,6,0,0
+13473430,Brasileirão Betano,Palmeiras,Flamengo,0.0,2.0,Ended,2025-05-25 19:00:00,Flamengo,2,0,0
+13640371,"CONMEBOL Libertadores, Group C",Flamengo,Deportivo Táchira,1.0,0.0,Ended,2025-05-29 00:30:00,Flamengo,1,0,0
+13472675,Brasileirão Betano,Flamengo,Fortaleza,5.0,0.0,Ended,2025-06-01 21:30:00,Flamengo,5,0,0
+13472754,Brasileirão Betano,Sport Recife,Flamengo,,,Postponed,2025-06-11 18:00:00,Flamengo,0,0,0
+13200282,"FIFA Club World Cup, Group D",Flamengo,Espérance Tunis,2.0,0.0,Ended,2025-06-17 01:00:00,Flamengo,2,0,0
+13200225,"FIFA Club World Cup, Group D",Flamengo,Chelsea,3.0,1.0,Ended,2025-06-20 18:00:00,Flamengo,4,0,0
+13193885,Paulista Série A1,Red Bull Bragantino,Corinthians,1.0,2.0,Ended,2025-01-16 22:30:00,Red Bull Bragantino,3,0,0
+13193889,Paulista Série A1,São Bernardo,Red Bull Bragantino,3.0,2.0,Ended,2025-01-19 19:00:00,Red Bull Bragantino,5,0,0
+13193901,Paulista Série A1,Red Bull Bragantino,AE Velo Clube,1.0,0.0,Ended,2025-01-22 21:30:00,Red Bull Bragantino,1,0,0
+13193906,Paulista Série A1,Água Santa,Red Bull Bragantino,3.0,0.0,Ended,2025-01-25 19:00:00,Red Bull Bragantino,3,0,0
+13193917,Paulista Série A1,Palmeiras,Red Bull Bragantino,0.0,0.0,Ended,2025-01-28 22:30:00,Red Bull Bragantino,0,0,0
+13193925,Paulista Série A1,Red Bull Bragantino,Novorizontino,1.0,2.0,Ended,2025-01-31 22:30:00,Red Bull Bragantino,3,0,0
+13193934,Paulista Série A1,Inter de Limeira,Red Bull Bragantino,1.0,1.0,Ended,2025-02-04 23:30:00,Red Bull Bragantino,2,0,0
+13193943,Paulista Série A1,Red Bull Bragantino,São Paulo,1.0,0.0,Ended,2025-02-08 21:30:00,Red Bull Bragantino,1,0,0
+13193945,Paulista Série A1,Botafogo-SP,Red Bull Bragantino,1.0,0.0,Ended,2025-02-11 23:00:00,Red Bull Bragantino,1,0,0
+13193960,Paulista Série A1,Red Bull Bragantino,EC Noroeste,2.0,1.0,Ended,2025-02-15 23:30:00,Red Bull Bragantino,3,0,0
+13193964,Paulista Série A1,Red Bull Bragantino,Mirassol,3.0,0.0,Ended,2025-02-20 21:30:00,Red Bull Bragantino,3,0,0
+13193975,Paulista Série A1,Ponte Preta,Red Bull Bragantino,0.0,2.0,Ended,2025-02-23 21:30:00,Red Bull Bragantino,2,0,0
+13458069,Copa Betano do Brasil,Sousa EC,Red Bull Bragantino,5.0,6.0,AP,2025-02-27 22:00:00,Red Bull Bragantino,2,0,0
+13529171,Paulista Série A1 - Playoffs,Santos,Red Bull Bragantino,2.0,0.0,Ended,2025-03-02 23:45:00,Red Bull Bragantino,2,0,0
+13547354,Copa Betano do Brasil,Red Bull Bragantino,EC São José,5.0,3.0,AP,2025-03-12 00:30:00,Red Bull Bragantino,2,0,0
+13633331,Club Friendly Games,Red Bull Bragantino,Cruzeiro,1.0,1.0,Ended,2025-03-22 21:30:00,Red Bull Bragantino,2,0,0
+13473342,Brasileirão Betano,Red Bull Bragantino,Ceará,2.0,2.0,Ended,2025-03-31 23:00:00,Red Bull Bragantino,4,0,0
+13473348,Brasileirão Betano,Fluminense,Red Bull Bragantino,2.0,1.0,Ended,2025-04-06 19:00:00,Red Bull Bragantino,3,0,0
+13473362,Brasileirão Betano,Red Bull Bragantino,Botafogo,1.0,0.0,Ended,2025-04-12 19:00:00,Red Bull Bragantino,1,0,0
+13473377,Brasileirão Betano,Sport Recife,Red Bull Bragantino,0.0,1.0,Ended,2025-04-16 22:00:00,Red Bull Bragantino,1,0,0
+13473382,Brasileirão Betano,Red Bull Bragantino,Cruzeiro,1.0,0.0,Ended,2025-04-20 23:30:00,Red Bull Bragantino,1,0,0
+13473391,Brasileirão Betano,Santos,Red Bull Bragantino,1.0,2.0,Ended,2025-04-27 23:30:00,Red Bull Bragantino,3,0,0
+13742588,Copa Betano do Brasil,Criciúma,Red Bull Bragantino,1.0,0.0,Ended,2025-05-01 21:30:00,Red Bull Bragantino,1,0,0
+13473402,Brasileirão Betano,Red Bull Bragantino,Mirassol,1.0,0.0,Ended,2025-05-05 22:00:00,Red Bull Bragantino,1,0,0
+13473414,Brasileirão Betano,Grêmio,Red Bull Bragantino,1.0,1.0,Ended,2025-05-10 21:30:00,Red Bull Bragantino,2,0,0
+13473422,Brasileirão Betano,Red Bull Bragantino,Palmeiras,1.0,2.0,Ended,2025-05-18 21:30:00,Red Bull Bragantino,3,0,0
+13742595,Copa Betano do Brasil,Red Bull Bragantino,Criciúma,6.0,0.0,Ended,2025-05-23 00:30:00,Red Bull Bragantino,6,0,0
+13473432,Brasileirão Betano,Red Bull Bragantino,Juventude,1.0,0.0,Ended,2025-05-26 23:00:00,Red Bull Bragantino,1,0,0
+13472680,Brasileirão Betano,Vasco da Gama,Red Bull Bragantino,0.0,2.0,Ended,2025-06-01 00:00:00,Red Bull Bragantino,2,0,0
+13472733,Brasileirão Betano,Red Bull Bragantino,Bahia,0.0,3.0,Ended,2025-06-12 22:00:00,Red Bull Bragantino,3,0,0
+13542434,"CONMEBOL Libertadores, Qualification",Boston River,Bahia,0.0,0.0,Ended,2025-03-07 00:30:00,Bahia,0,0,0
+13545362,"Baiano, Série A – Mata-mata",Jacuipense,Bahia,0.0,5.0,Ended,2025-03-09 21:00:00,Bahia,5,0,0
+13542439,"CONMEBOL Libertadores, Qualification",Bahia,Boston River,1.0,0.0,Ended,2025-03-14 00:30:00,Bahia,1,0,0
+13591129,"Baiano, Série A – Mata-mata",Bahia,Vitória,2.0,0.0,Ended,2025-03-16 21:00:00,Bahia,2,0,0
+13350545,"Copa do Nordeste, Group B",CSA,Bahia,1.0,2.0,Ended,2025-03-19 22:00:00,Bahia,3,0,0
+13591131,"Baiano, Série A – Mata-mata",Vitória,Bahia,1.0,1.0,Ended,2025-03-23 19:00:00,Bahia,2,0,0
+13350510,"Copa do Nordeste, Group B",Bahia,Náutico,,,Postponed,2025-03-24 21:00:00,Bahia,0,0,0
+13646077,"Copa do Nordeste, Group B",Bahia,Ceará,3.0,2.0,Ended,2025-03-26 22:00:00,Bahia,5,0,0
+13473345,Brasileirão Betano,Bahia,Corinthians,1.0,1.0,Ended,2025-03-30 23:00:00,Bahia,2,0,0
+13640292,"CONMEBOL Libertadores, Group F",Bahia,Internacional,1.0,1.0,Ended,2025-04-03 22:00:00,Bahia,2,0,0
+13473351,Brasileirão Betano,Santos,Bahia,2.0,2.0,Ended,2025-04-06 23:30:00,Bahia,4,0,0
+13640301,"CONMEBOL Libertadores, Group F",Nacional,Bahia,0.0,1.0,Ended,2025-04-09 22:00:00,Bahia,1,0,0
+13473365,Brasileirão Betano,Bahia,Mirassol,1.0,1.0,Ended,2025-04-13 19:00:00,Bahia,2,0,0
+13473373,Brasileirão Betano,Cruzeiro,Bahia,3.0,0.0,Ended,2025-04-18 00:30:00,Bahia,3,0,0
+13473385,Brasileirão Betano,Bahia,Ceará,1.0,0.0,Ended,2025-04-21 23:00:00,Bahia,1,0,0
+13640326,"CONMEBOL Libertadores, Group F",Bahia,Atlético Nacional,1.0,0.0,Ended,2025-04-25 00:00:00,Bahia,1,0,0
+13473390,Brasileirão Betano,Palmeiras,Bahia,0.0,1.0,Ended,2025-04-27 21:30:00,Bahia,1,0,0
+13742587,Copa Betano do Brasil,Paysandu SC,Bahia,0.0,1.0,Ended,2025-05-01 00:30:00,Bahia,1,0,0
+13473405,Brasileirão Betano,Bahia,Botafogo,1.0,0.0,Ended,2025-05-04 00:00:00,Bahia,1,0,0
+13640335,"CONMEBOL Libertadores, Group F",Bahia,Nacional,1.0,3.0,Ended,2025-05-07 22:00:00,Bahia,4,0,0
+13473408,Brasileirão Betano,Flamengo,Bahia,1.0,0.0,Ended,2025-05-11 00:00:00,Bahia,1,0,0
+13640349,"CONMEBOL Libertadores, Group F",Atlético Nacional,Bahia,1.0,0.0,Ended,2025-05-14 22:00:00,Bahia,1,0,0
+13473425,Brasileirão Betano,Bahia,Vitória,2.0,1.0,Ended,2025-05-18 19:00:00,Bahia,3,0,0
+13742600,Copa Betano do Brasil,Bahia,Paysandu SC,4.0,0.0,Ended,2025-05-21 22:30:00,Bahia,4,0,0
+13473435,Brasileirão Betano,Grêmio,Bahia,1.0,0.0,Ended,2025-05-25 14:00:00,Bahia,1,0,0
+13640370,"CONMEBOL Libertadores, Group F",Internacional,Bahia,2.0,1.0,Ended,2025-05-28 22:00:00,Bahia,3,0,0
+13472704,Brasileirão Betano,Bahia,São Paulo,2.0,1.0,Ended,2025-05-31 21:30:00,Bahia,3,0,0
+13961674,"Copa do Nordeste, Group B",Confiança,Bahia,2.0,0.0,Ended,2025-06-04 22:00:00,Bahia,2,0,0
+13858015,"Copa do Nordeste, Group B",Bahia,Náutico,3.0,1.0,Ended,2025-06-07 20:30:00,Bahia,4,0,0
+13472733,Brasileirão Betano,Red Bull Bragantino,Bahia,0.0,3.0,Ended,2025-06-12 22:00:00,Bahia,3,0,0
+13193957,Paulista Série A1,Portuguesa,Corinthians,2.0,2.0,Ended,2025-02-15 21:30:00,Corinthians,4,0,0
+13253316,"CONMEBOL Libertadores, Qualification",Universidad Central,Corinthians,1.0,1.0,Ended,2025-02-20 00:30:00,Corinthians,2,0,0
+13193971,Paulista Série A1,Corinthians,Guarani,2.0,2.0,Ended,2025-02-23 21:30:00,Corinthians,4,0,0
+13253317,"CONMEBOL Libertadores, Qualification",Corinthians,Universidad Central,3.0,2.0,Ended,2025-02-27 00:30:00,Corinthians,5,0,0
+13529165,Paulista Série A1 - Playoffs,Corinthians,Mirassol,2.0,0.0,Ended,2025-03-02 21:30:00,Corinthians,2,0,0
+13542438,"CONMEBOL Libertadores, Qualification",Barcelona SC,Corinthians,3.0,0.0,Ended,2025-03-06 00:30:00,Corinthians,3,0,0
+13566693,Paulista Série A1 - Playoffs,Corinthians,Santos,2.0,1.0,Ended,2025-03-09 21:30:00,Corinthians,3,0,0
+13542528,"CONMEBOL Libertadores, Qualification",Corinthians,Barcelona SC,2.0,0.0,Ended,2025-03-13 00:30:00,Corinthians,2,0,0
+13592553,Paulista Série A1 - Playoffs,Palmeiras,Corinthians,0.0,1.0,Ended,2025-03-16 21:30:00,Corinthians,1,0,0
+13592556,Paulista Série A1 - Playoffs,Corinthians,Palmeiras,0.0,0.0,Ended,2025-03-28 00:35:00,Corinthians,0,0,0
+13473345,Brasileirão Betano,Bahia,Corinthians,1.0,1.0,Ended,2025-03-30 23:00:00,Corinthians,2,0,0
+13640392,"CONMEBOL Sudamericana, Group C",Corinthians,Huracán,1.0,2.0,Ended,2025-04-02 22:00:00,Corinthians,3,0,0
+13473350,Brasileirão Betano,Corinthians,Vasco da Gama,3.0,0.0,Ended,2025-04-05 21:30:00,Corinthians,3,0,0
+13640405,"CONMEBOL Sudamericana, Group C",América de Cali,Corinthians,1.0,1.0,Ended,2025-04-09 00:30:00,Corinthians,2,0,0
+13473360,Brasileirão Betano,Palmeiras,Corinthians,2.0,0.0,Ended,2025-04-12 21:30:00,Corinthians,2,0,0
+13473370,Brasileirão Betano,Corinthians,Fluminense,0.0,2.0,Ended,2025-04-16 22:30:00,Corinthians,2,0,0
+13473380,Brasileirão Betano,Corinthians,Sport Recife,2.0,1.0,Ended,2025-04-19 19:00:00,Corinthians,3,0,0
+13640430,"CONMEBOL Sudamericana, Group C",Corinthians,Racing de Montevideo,1.0,0.0,Ended,2025-04-24 22:00:00,Corinthians,1,0,0
+13473388,Brasileirão Betano,Flamengo,Corinthians,4.0,0.0,Ended,2025-04-27 19:00:00,Corinthians,4,0,0
+13742604,Copa Betano do Brasil,Novorizontino,Corinthians,0.0,1.0,Ended,2025-05-01 00:30:00,Corinthians,1,0,0
+13473400,Brasileirão Betano,Corinthians,Internacional,4.0,2.0,Ended,2025-05-03 21:30:00,Corinthians,6,0,0
+13640439,"CONMEBOL Sudamericana, Group C",Corinthians,América de Cali,1.0,1.0,Ended,2025-05-07 00:30:00,Corinthians,2,0,0
+13473412,Brasileirão Betano,Mirassol,Corinthians,2.0,1.0,Ended,2025-05-10 21:30:00,Corinthians,3,0,0
+13640463,"CONMEBOL Sudamericana, Group C",Racing de Montevideo,Corinthians,0.0,1.0,Ended,2025-05-15 22:00:00,Corinthians,1,0,0
+13473420,Brasileirão Betano,Corinthians,Santos,1.0,0.0,Ended,2025-05-18 19:00:00,Corinthians,1,0,0
+13742613,Copa Betano do Brasil,Corinthians,Novorizontino,1.0,0.0,Ended,2025-05-22 00:30:00,Corinthians,1,0,0
+13473434,Brasileirão Betano,Atlético Mineiro,Corinthians,0.0,0.0,Ended,2025-05-25 00:00:00,Corinthians,0,0,0
+13640471,"CONMEBOL Sudamericana, Group C",Huracán,Corinthians,1.0,0.0,Ended,2025-05-28 00:30:00,Corinthians,1,0,0
+13472684,Brasileirão Betano,Corinthians,Vitória,0.0,0.0,Ended,2025-06-01 21:30:00,Corinthians,0,0,0
+13472741,Brasileirão Betano,Grêmio,Corinthians,1.0,1.0,Ended,2025-06-12 23:00:00,Corinthians,2,0,0
+13198201,Carioca Série A – Taça Guanabara,Flamengo,Botafogo,1.0,0.0,Ended,2025-02-13 00:30:00,Botafogo,1,0,0
+13198221,Carioca Série A – Taça Guanabara,Boavista,Botafogo,1.0,1.0,Ended,2025-02-15 22:00:00,Botafogo,2,0,0
+13241238,CONMEBOL Recopa,Racing Club,Botafogo,2.0,0.0,Ended,2025-02-21 00:30:00,Botafogo,2,0,0
+13198226,Carioca Série A – Taça Guanabara,Vasco da Gama,Botafogo,1.0,0.0,Ended,2025-02-23 21:30:00,Botafogo,1,0,0
+13241282,CONMEBOL Recopa,Botafogo,Racing Club,0.0,2.0,Ended,2025-02-28 00:30:00,Botafogo,2,0,0
+13634672,Club Friendly Games,Botafogo,Novorizontino,3.0,1.0,Ended,2025-03-22 19:15:00,Botafogo,4,0,0
+13473340,Brasileirão Betano,Palmeiras,Botafogo,0.0,0.0,Ended,2025-03-30 19:00:00,Botafogo,0,0,0
+13640286,"CONMEBOL Libertadores, Group A",Universidad de Chile,Botafogo,1.0,0.0,Ended,2025-04-03 00:30:00,Botafogo,1,0,0
+13473349,Brasileirão Betano,Botafogo,Juventude,2.0,0.0,Ended,2025-04-06 00:00:00,Botafogo,2,0,0
+13640295,"CONMEBOL Libertadores, Group A",Botafogo,Carabobo,2.0,0.0,Ended,2025-04-08 22:00:00,Botafogo,2,0,0
+13473362,Brasileirão Betano,Red Bull Bragantino,Botafogo,1.0,0.0,Ended,2025-04-12 19:00:00,Botafogo,1,0,0
+13473369,Brasileirão Betano,Botafogo,São Paulo,2.0,2.0,Ended,2025-04-16 21:30:00,Botafogo,4,0,0
+13473383,Brasileirão Betano,Atlético Mineiro,Botafogo,1.0,0.0,Ended,2025-04-20 19:00:00,Botafogo,1,0,0
+13640320,"CONMEBOL Libertadores, Group A",Estudiantes de La Plata,Botafogo,1.0,0.0,Ended,2025-04-24 00:30:00,Botafogo,1,0,0
+13473389,Brasileirão Betano,Botafogo,Fluminense,2.0,0.0,Ended,2025-04-27 00:00:00,Botafogo,2,0,0
+13742592,Copa Betano do Brasil,Botafogo,Capital CF,4.0,0.0,Ended,2025-04-30 22:00:00,Botafogo,4,0,0
+13473405,Brasileirão Betano,Bahia,Botafogo,1.0,0.0,Ended,2025-05-04 00:00:00,Botafogo,1,0,0
+13640328,"CONMEBOL Libertadores, Group A",Carabobo,Botafogo,1.0,2.0,Ended,2025-05-06 22:00:00,Botafogo,3,0,0
+13473409,Brasileirão Betano,Botafogo,Internacional,4.0,0.0,Ended,2025-05-11 23:00:00,Botafogo,4,0,0
+13640352,"CONMEBOL Libertadores, Group A",Botafogo,Estudiantes de La Plata,3.0,2.0,Ended,2025-05-15 00:30:00,Botafogo,5,0,0
+13473418,Brasileirão Betano,Flamengo,Botafogo,0.0,0.0,Ended,2025-05-18 21:30:00,Botafogo,0,0,0
+13742603,Copa Betano do Brasil,Capital CF,Botafogo,1.0,0.0,Ended,2025-05-23 00:30:00,Botafogo,1,0,0
+13473429,Brasileirão Betano,Botafogo,Ceará,,,Postponed,2025-05-24 19:00:00,Botafogo,0,0,0
+13640364,"CONMEBOL Libertadores, Group A",Botafogo,Universidad de Chile,1.0,0.0,Ended,2025-05-28 00:30:00,Botafogo,1,0,0
+13472688,Brasileirão Betano,Santos,Botafogo,0.0,1.0,Ended,2025-06-01 19:00:00,Botafogo,1,0,0
+13788130,Brasileirão Betano,Botafogo,Ceará,3.0,2.0,Ended,2025-06-04 23:00:00,Botafogo,5,0,0
+13472720,Brasileirão Betano,Botafogo,Mirassol,,,Postponed,2025-06-11 18:00:00,Botafogo,0,0,0
+13200234,"FIFA Club World Cup, Group B",Botafogo,Seattle Sounders FC,2.0,1.0,Ended,2025-06-16 02:00:00,Botafogo,3,0,0
+13200235,"FIFA Club World Cup, Group B",Paris Saint-Germain,Botafogo,0.0,1.0,Ended,2025-06-20 01:00:00,Botafogo,1,0,0
+13200236,"FIFA Club World Cup, Group B",Atlético Madrid,Botafogo,1.0,0.0,Ended,2025-06-23 19:00:00,Botafogo,1,0,0
+13340642,Mineiro Módulo I ,Athletic Club,Cruzeiro,1.0,0.0,Ended,2025-01-22 22:00:00,Cruzeiro,1,0,0
+13241293,Mineiro Módulo I ,Cruzeiro,Betim Futebol,1.0,1.0,Ended,2025-01-25 19:30:00,Cruzeiro,2,0,0
+13241254,Mineiro Módulo I ,Itabirito FC,Cruzeiro,1.0,4.0,Ended,2025-01-30 22:00:00,Cruzeiro,5,0,0
+13241303,Mineiro Módulo I ,Cruzeiro,Uberlândia EC,3.0,1.0,Ended,2025-02-02 21:30:00,Cruzeiro,4,0,0
+13241262,Mineiro Módulo I ,América Mineiro,Cruzeiro,1.0,1.0,Ended,2025-02-06 01:00:00,Cruzeiro,2,0,0
+13241270,Mineiro Módulo I ,Cruzeiro,Atlético Mineiro,0.0,2.0,Ended,2025-02-09 19:00:00,Cruzeiro,2,0,0
+13241272,Mineiro Módulo I ,EC Democrata,Cruzeiro,2.0,1.0,Ended,2025-02-12 22:45:00,Cruzeiro,3,0,0
+13473673,Mineiro Módulo I - Playoffs,Cruzeiro,América Mineiro,1.0,1.0,Ended,2025-02-16 19:00:00,Cruzeiro,2,0,0
+13473675,Mineiro Módulo I - Playoffs,América Mineiro,Cruzeiro,5.0,3.0,AP,2025-02-22 19:30:00,Cruzeiro,2,0,0
+13633331,Club Friendly Games,Red Bull Bragantino,Cruzeiro,1.0,1.0,Ended,2025-03-22 21:30:00,Cruzeiro,2,0,0
+13473343,Brasileirão Betano,Cruzeiro,Mirassol,2.0,1.0,Ended,2025-03-29 21:30:00,Cruzeiro,3,0,0
+13640387,"CONMEBOL Sudamericana, Group E",Club Atlético Unión de Santa Fe,Cruzeiro,1.0,0.0,Ended,2025-04-01 22:00:00,Cruzeiro,1,0,0
+13473354,Brasileirão Betano,Internacional,Cruzeiro,3.0,0.0,Ended,2025-04-06 21:30:00,Cruzeiro,3,0,0
+13640409,"CONMEBOL Sudamericana, Group E",Cruzeiro,Mushuc Runa,1.0,2.0,Ended,2025-04-10 00:30:00,Cruzeiro,3,0,0
+13473361,Brasileirão Betano,São Paulo,Cruzeiro,1.0,1.0,Ended,2025-04-13 20:30:00,Cruzeiro,2,0,0
+13473373,Brasileirão Betano,Cruzeiro,Bahia,3.0,0.0,Ended,2025-04-18 00:30:00,Cruzeiro,3,0,0
+13473382,Brasileirão Betano,Red Bull Bragantino,Cruzeiro,1.0,0.0,Ended,2025-04-20 23:30:00,Cruzeiro,1,0,0
+13640432,"CONMEBOL Sudamericana, Group E",Palestino,Cruzeiro,2.0,1.0,Ended,2025-04-25 00:30:00,Cruzeiro,3,0,0
+13473393,Brasileirão Betano,Cruzeiro,Vasco da Gama,1.0,0.0,Ended,2025-04-27 21:30:00,Cruzeiro,1,0,0
+13742589,Copa Betano do Brasil,Cruzeiro,Vila Nova FC,2.0,0.0,Ended,2025-05-02 00:30:00,Cruzeiro,2,0,0
+13473403,Brasileirão Betano,Cruzeiro,Flamengo,2.0,1.0,Ended,2025-05-04 21:30:00,Cruzeiro,3,0,0
+13640445,"CONMEBOL Sudamericana, Group E",Mushuc Runa,Cruzeiro,1.0,1.0,Ended,2025-05-08 00:30:00,Cruzeiro,2,0,0
+13473417,Brasileirão Betano,Sport Recife,Cruzeiro,0.0,4.0,Ended,2025-05-11 19:00:00,Cruzeiro,4,0,0
+13640460,"CONMEBOL Sudamericana, Group E",Cruzeiro,Palestino,2.0,1.0,Ended,2025-05-15 00:30:00,Cruzeiro,3,0,0
+13473423,Brasileirão Betano,Cruzeiro,Atlético Mineiro,0.0,0.0,Ended,2025-05-18 23:30:00,Cruzeiro,0,0,0
+13742611,Copa Betano do Brasil,Vila Nova FC,Cruzeiro,0.0,3.0,Ended,2025-05-22 22:00:00,Cruzeiro,3,0,0
+13473437,Brasileirão Betano,Fortaleza,Cruzeiro,0.0,2.0,Ended,2025-05-25 23:30:00,Cruzeiro,2,0,0
+13640476,"CONMEBOL Sudamericana, Group E",Cruzeiro,Club Atlético Unión de Santa Fe,0.0,0.0,Ended,2025-05-29 00:30:00,Cruzeiro,0,0,0
+13472696,Brasileirão Betano,Cruzeiro,Palmeiras,2.0,1.0,Ended,2025-06-01 22:30:00,Cruzeiro,3,0,0
+13472746,Brasileirão Betano,Vitória,Cruzeiro,0.0,0.0,Ended,2025-06-12 22:00:00,Cruzeiro,0,0,0
+13217766,"Pernambucano, Serie A1",Central SC,Sport Recife,0.0,1.0,Ended,2025-01-26 19:00:00,Sport Recife,1,0,0
+13217739,"Pernambucano, Serie A1",Sport Recife,AD Jaguar,4.0,1.0,Ended,2025-01-29 23:00:00,Sport Recife,5,0,0
+13217771,"Pernambucano, Serie A1",Santa Cruz,Sport Recife,1.0,0.0,Ended,2025-02-01 19:30:00,Sport Recife,1,0,0
+13350553,"Copa do Nordeste, Group A",Sport Recife,Fortaleza,0.0,2.0,Ended,2025-02-05 00:30:00,Sport Recife,2,0,0
+13217753,"Pernambucano, Serie A1",Sport Recife,Maguary,5.0,0.0,Ended,2025-02-08 19:30:00,Sport Recife,5,0,0
+13350517,"Copa do Nordeste, Group A",Sousa EC,Sport Recife,1.0,2.0,Ended,2025-02-12 00:30:00,Sport Recife,3,0,0
+13217755,"Pernambucano, Serie A1",Sport Recife,Náutico,1.0,2.0,Ended,2025-02-15 19:30:00,Sport Recife,3,0,0
+13350520,"Copa do Nordeste, Group A",Sport Recife,Moto Club,5.0,0.0,Ended,2025-02-19 22:00:00,Sport Recife,5,0,0
+13217761,"Pernambucano, Serie A1",Petrolina SFC,Sport Recife,1.0,3.0,Ended,2025-02-22 19:30:00,Sport Recife,4,0,0
+13458066,Copa Betano do Brasil,Operário-MT,Sport Recife,4.0,2.0,AP,2025-02-26 00:30:00,Sport Recife,0,0,0
+13532463,"Pernambucano, Serie A1, Playoffs",Sport Recife,Decisão Sertânia,3.0,0.0,Ended,2025-03-02 19:00:00,Sport Recife,3,0,0
+13350513,"Copa do Nordeste, Group A",Sport Recife,CRB,2.0,1.0,Ended,2025-03-06 00:30:00,Sport Recife,3,0,0
+13559181,"Pernambucano, Serie A1, Playoffs",Sport Recife,Santa Cruz,2.0,0.0,Ended,2025-03-08 19:30:00,Sport Recife,2,0,0
+13559183,"Pernambucano, Serie A1, Playoffs",Santa Cruz,Sport Recife,0.0,1.0,Ended,2025-03-15 19:30:00,Sport Recife,1,0,0
+13350526,"Copa do Nordeste, Group A",Vitória,Sport Recife,1.0,0.0,Ended,2025-03-20 00:30:00,Sport Recife,1,0,0
+13623233,"Pernambucano, Serie A1, Playoffs",Retrô,Sport Recife,2.0,3.0,Ended,2025-03-22 19:30:00,Sport Recife,5,0,0
+13350525,"Copa do Nordeste, Group A",Sport Recife,AA Altos,0.0,1.0,Ended,2025-03-27 00:30:00,Sport Recife,1,0,0
+13473341,Brasileirão Betano,São Paulo,Sport Recife,0.0,0.0,Ended,2025-03-29 21:30:00,Sport Recife,0,0,0
+13623234,"Pernambucano, Serie A1, Playoffs",Sport Recife,Retrô,5.0,4.0,AP,2025-04-03 00:30:00,Sport Recife,3,0,0
+13473357,Brasileirão Betano,Sport Recife,Palmeiras,1.0,2.0,Ended,2025-04-06 21:30:00,Sport Recife,3,0,0
+13473359,Brasileirão Betano,Vasco da Gama,Sport Recife,3.0,1.0,Ended,2025-04-13 00:00:00,Sport Recife,4,0,0
+13473377,Brasileirão Betano,Sport Recife,Red Bull Bragantino,0.0,1.0,Ended,2025-04-16 22:00:00,Sport Recife,1,0,0
+13473380,Brasileirão Betano,Corinthians,Sport Recife,2.0,1.0,Ended,2025-04-19 19:00:00,Sport Recife,3,0,0
+13473397,Brasileirão Betano,Sport Recife,Fortaleza,0.0,0.0,Ended,2025-04-26 23:00:00,Sport Recife,0,0,0
+13473398,Brasileirão Betano,Fluminense,Sport Recife,2.0,1.0,Ended,2025-05-03 21:30:00,Sport Recife,3,0,0
+13473417,Brasileirão Betano,Sport Recife,Cruzeiro,0.0,4.0,Ended,2025-05-11 19:00:00,Sport Recife,4,0,0
+13473426,Brasileirão Betano,Ceará,Sport Recife,2.0,0.0,Ended,2025-05-17 19:00:00,Sport Recife,2,0,0
+13473438,Brasileirão Betano,Sport Recife,Internacional,1.0,1.0,Ended,2025-05-25 19:00:00,Sport Recife,2,0,0
+13472692,Brasileirão Betano,Mirassol,Sport Recife,1.0,0.0,Ended,2025-06-01 14:00:00,Sport Recife,1,0,0
+13472754,Brasileirão Betano,Sport Recife,Flamengo,,,Postponed,2025-06-11 18:00:00,Sport Recife,0,0,0
