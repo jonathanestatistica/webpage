@@ -685,96 +685,97 @@ def calculate_hypothesis_mean_unknown_variance():
 
 @app.route('/calculate/difference_means', methods=['POST'])
 def calculate_difference_means():
-    try:
-        file = request.files['file']
-        test_type = request.form['test_type']
-        independent = request.form['independent'] == 'true'
-        alpha = float(request.form['alpha'])
+    import traceback
 
-        df = pd.read_excel(file)
-        if len(df.columns) != 2:
-            return jsonify({"error": "O arquivo deve conter exatamente duas colunas."}), 400
+    try:
+        # ===== RECEBER DADOS =====
+        file = request.files.get('file')
+        if not file:
+            return jsonify({"error": "Arquivo não enviado."}), 400
+
+        filename = file.filename.lower()
+        if filename == '':
+            return jsonify({"error": "Nenhum arquivo selecionado."}), 400
+
+        test_type = request.form.get('test_type', 'bilateral')
+        independent = request.form.get('independent') == 'on'
+        alpha = float(request.form.get('alpha', 0.05))
+
+        # ===== LER ARQUIVO =====
+        if filename.endswith('.xlsx'):
+            df = pd.read_excel(file)
+        elif filename.endswith('.csv'):
+            df = pd.read_csv(file)
+        else:
+            return jsonify({"error": "Formato inválido. Use CSV ou XLSX."}), 400
+
+        # ===== VALIDAR COLUNAS =====
+        if df.shape[1] != 2:
+            return jsonify({"error": "O arquivo deve ter exatamente 2 colunas."}), 400
 
         col1, col2 = df.columns
-        data1 = df[col1].dropna()
-        data2 = df[col2].dropna()
 
+        # ===== LIMPAR DADOS =====
+        data1 = pd.to_numeric(df[col1], errors='coerce').dropna().reset_index(drop=True)
+        data2 = pd.to_numeric(df[col2], errors='coerce').dropna().reset_index(drop=True)
+
+        if len(data1) < 2 or len(data2) < 2:
+            return jsonify({"error": "Dados insuficientes."}), 400
+
+        # ===== TESTE =====
         if independent:
-            t_stat, p_value = stats.ttest_ind(data1, data2)
+            t_stat, p_value = stats.ttest_ind(data1, data2, equal_var=False)
         else:
+            if len(data1) != len(data2):
+                return jsonify({"error": "Para teste pareado, os vetores devem ter o mesmo tamanho."}), 400
             t_stat, p_value = stats.ttest_rel(data1, data2)
 
-        # Ajustar p-valor para testes unilaterais
+        # ===== AJUSTE P-VALOR =====
         if test_type == 'left':
             p_value = p_value / 2 if t_stat < 0 else 1 - (p_value / 2)
         elif test_type == 'right':
             p_value = p_value / 2 if t_stat > 0 else 1 - (p_value / 2)
 
-        reject_h0 = p_value < alpha
+        reject = p_value < alpha
 
-        # Definir hipóteses e conclusão
-        if test_type == 'bilateral':
-            h0 = f"H₀: μ₁ = μ₂"
-            h1 = f"H₁: μ₁ ≠ μ₂"
-            explanation_h1 = f"média de {col1} é diferente da média de {col2}"
-        elif test_type == 'left':
-            h0 = f"H₀: μ₁ - μ₂ ≥ 0"
-            h1 = f"H₁: μ₁ - μ₂ < 0"
-            explanation_h1 = f"média de {col1} é menor que a média de {col2}"
-        elif test_type == 'right':
-            h0 = f"H₀: μ₁ - μ₂ ≤ 0"
-            h1 = f"H₁: μ₁ - μ₂ > 0"
-            explanation_h1 = f"média de {col1} é maior que a média de {col2}"
-
+        # ===== CONCLUSÃO =====
         conclusion = (
-            f"Como o p-valor = {p_value:.4f}, rejeita-se H₀. Logo, há evidência para aceitar a hipótese alternativa."
-            if reject_h0
-            else f"Como o p-valor = {p_value:.4f}, não se rejeita H₀. Logo, não há evidência suficiente para aceitar a hipótese alternativa."
+            f"p-valor = {p_value:.4f} → rejeita-se H0"
+            if reject else
+            f"p-valor = {p_value:.4f} → não se rejeita H0"
         )
 
         result_data = {
-            "z_score": t_stat,
-            "p_value": p_value,
-            "conclusion": conclusion,
-            "col1_name": col1,
-            "col2_name": col2
+            "z_score": float(t_stat),
+            "p_value": float(p_value),
+            "conclusion": conclusion
         }
 
-        # Salvar resultados no Excel
+        # ===== GERAR EXCEL =====
         output = io.BytesIO()
-        workbook = openpyxl.Workbook()
-        sheet = workbook.active
-        sheet.title = "Resultados"
+        wb = openpyxl.Workbook()
+        ws = wb.active
 
-        # Escrever cabeçalho
-        sheet.append(["Teste de diferença de médias"])
-        sheet.append([])
+        ws.append(["Teste de Diferença de Médias"])
+        ws.append([])
+        ws.append(["t-stat", t_stat])
+        ws.append(["p-valor", p_value])
+        ws.append(["Conclusão", conclusion])
 
-        # Z-score e p-valor
-        sheet.append(["Z-score", "p-valor"])
-        sheet.append([t_stat, p_value])
-        sheet.append([])
-
-        # Hipóteses
-        sheet.append(["Hipótese Nula", "Explicação"])
-        sheet.append([h0, f"média de {col1} é igual à média de {col2}"])
-        sheet.append([])
-        sheet.append(["Hipótese Alternativa", "Explicação"])
-        sheet.append([h1, explanation_h1])
-        sheet.append([])
-
-        # Conclusão
-        sheet.append(["Conclusão:"])
-        sheet.append([conclusion])
-
-        workbook.save(output)
+        wb.save(output)
         output.seek(0)
         app.config['last_result'] = output.read()
 
-        return jsonify({"result": result_data, "download_url": "/download/difference_means"})
+        return jsonify({
+            "result": result_data,
+            "download_url": "/download/difference_means"
+        })
 
     except Exception as e:
-        return jsonify({"error": f"Erro interno: {str(e)}"}), 500
+        print("\n===== ERRO =====")
+        traceback.print_exc()
+        print("================\n")
+        return jsonify({"error": str(e)}), 500
 
 @app.route('/download/difference_means', methods=['GET'])
 def download_difference_means():
