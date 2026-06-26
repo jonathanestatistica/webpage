@@ -5,7 +5,6 @@
 {% block content %}
 <h1>Painel Estatístico</h1>
 
-<!-- Distribuições de Probabilidade -->
 <h2>Distribuições de Probabilidade</h2>
 
 <hr style="border: 3px solid #3CDACF; margin: 40px 0;">
@@ -87,7 +86,6 @@
 
 <hr style="border: 3px solid #3CDACF; margin: 40px 0;">
 
-<!-- Teorema da Probabilidade Total e de Bayes -->
 <h2>Teorema da Probabilidade Total e Teorema de Bayes</h2>
 <div>
     <form id="bayes-form">
@@ -102,21 +100,57 @@
 <hr style="border: 3px solid #3CDACF; margin: 40px 0;">
 
 <div>
-    <h2>Distribuição de Frequências (Upload de Arquivo)</h2>
+    <h2>Distribuição de Frequências</h2>
+    <p>Faça o upload de um arquivo .csv contendo apenas uma coluna com título.</p>
     <form id="upload-form" enctype="multipart/form-data">
         <label for="file">Selecione um arquivo CSV:</label>
         <input type="file" id="file" name="file" accept=".csv" required><br><br>
-        <button type="button" onclick="uploadFrequencyTable()">Carregar e Gerar Tabela</button>
+        
+        <label for="cor_grafico">Cor do Histograma:</label>
+        <select id="cor_grafico" name="cor_grafico">
+            <option value="aqua" selected>Aqua</option>
+            <option value="black">Black</option>
+            <option value="blue">Blue</option>
+            <option value="brown">Brown</option>
+            <option value="cyan">Cyan</option>
+            <option value="gray">Gray</option>
+            <option value="green">Green</option>
+            <option value="lime">Lime</option>
+            <option value="magenta">Magenta</option>
+            <option value="maroon">Maroon</option>
+            <option value="navy">Navy</option>
+            <option value="olive">Olive</option>
+            <option value="orange">Orange</option>
+            <option value="pink">Pink</option>
+            <option value="purple">Purple</option>
+            <option value="red">Red</option>
+            <option value="silver">Silver</option>
+            <option value="teal">Teal</option>
+            <option value="white">White</option>
+            <option value="yellow">Yellow</option>
+        </select><br><br>
+
+        <button type="button" onclick="gerarTabelaFrequencia()">Gerar Tabela e Gráfico</button>
     </form>
 
-    <div id="frequency-table-result" style="margin-top: 20px;"></div>
+    <div id="frequency-results" style="margin-top: 20px;"></div>
 </div>
 
+<hr style="border: 3px solid #3CDACF; margin: 40px 0;">
+
 <script>
-    function uploadFrequencyTable() {
+    function gerarTabelaFrequencia() {
         const fileInput = document.getElementById("file");
+        const corGrafico = document.getElementById("cor_grafico").value;
+
+        if(fileInput.files.length === 0){
+            alert("Por favor, selecione um arquivo CSV.");
+            return;
+        }
+
         const formData = new FormData();
         formData.append("file", fileInput.files[0]);
+        formData.append("cor", corGrafico);
 
         fetch("/upload", {
             method: "POST",
@@ -125,32 +159,93 @@
         .then(response => response.json())
         .then(data => {
             if (data.error) {
-                document.getElementById("frequency-table-result").innerHTML =
-                    `<p style="color: red;">Erro: ${data.error}</p>`;
+                document.getElementById("frequency-results").innerHTML = `<p style="color: red;">Erro: ${data.error}</p>`;
                 return;
             }
 
-            const imgUrl = data.img_url;
-            document.getElementById("frequency-table-result").innerHTML = `
-                <h3>Resultado - Tabela de Frequência</h3>
-                <img src="${imgUrl}" alt="Tabela de Frequências" style="max-width: 100%; border: 1px solid #ccc;">
-                <br><br>
-                <a href="${imgUrl}" download="tabela_frequencia.jpg">
-                    <button>Baixar Tabela (.jpg)</button>
-                </a>
-            `;
+            let resultHtml = `<h3>Tabela de Distribuição de Frequências</h3>
+                <div style="background-color: #ffffff; color: #000000; padding: 15px; border-radius: 5px; overflow-x: auto;">
+                    <table border="1" cellpadding="5" cellspacing="0" style="text-align: center; width: 100%; border-collapse: collapse; border-color: #dddddd;">
+                        <tr style="background-color: #f2f2f2;">
+                            <th>${data.col_name}</th>
+                            <th>LI</th>
+                            <th>LS</th>
+                            <th>fi</th>
+                            <th>fri</th>
+                            <th>FAC</th>
+                            <th>FAD</th>
+                            <th>X_Mi</th>
+                            <th>X_Mi * fri</th>
+                            <th>((X_Mi - Média)²) * fi</th>
+                        </tr>`;
+
+            data.table.forEach(row => {
+                resultHtml += `<tr>
+                    <td>${row.classes}</td>
+                    <td>${parseFloat(row.LI).toFixed(2)}</td>
+                    <td>${parseFloat(row.LS).toFixed(2)}</td>
+                    <td>${row.f_i}</td>
+                    <td>${parseFloat(row.f_ri).toFixed(4)}</td>
+                    <td>${parseFloat(row.FAC).toFixed(4)}</td>
+                    <td>${parseFloat(row.FAD).toFixed(4)}</td>
+                    <td>${parseFloat(row.X_Mi).toFixed(2)}</td>
+                    <td>${parseFloat(row['X_Mi*f_ri']).toFixed(4)}</td>
+                    <td>${parseFloat(row['((X_Mi - media)^2)*f_i']).toFixed(4)}</td>
+                </tr>`;
+            });
+            resultHtml += `</table>
+                <p style="text-align: left; font-size: 12px; margin-top: 10px;">Fonte: elaborado pelo autor usando https://jonathanestatistica.com.br</p>
+            </div><br>`;
+
+            resultHtml += `<a href="${data.excel_url}" download>
+                <button type="button">Baixar Tabela em Excel (.xlsx)</button>
+            </a><br><br>`;
+
+            resultHtml += `<h3>Medidas Resumo</h3>
+                <div style="background-color: #ffffff; color: #000000; padding: 15px; border-radius: 5px; overflow-x: auto; width: 50%;">
+                    <table border="1" cellpadding="5" cellspacing="0" style="text-align: left; width: 100%; border-collapse: collapse; border-color: #dddddd;">
+                        <tr style="background-color: #f2f2f2;"><th>Medida</th><th>Valor</th></tr>
+                        <tr><td>n</td><td>${data.stats.n}</td></tr>
+                        <tr><td>k</td><td>${data.stats.k}</td></tr>
+                        <tr><td>Máximo</td><td>${parseFloat(data.stats.maximo).toFixed(2)}</td></tr>
+                        <tr><td>Mínimo</td><td>${parseFloat(data.stats.minimo).toFixed(2)}</td></tr>
+                        <tr><td>Amplitude (At)</td><td>${parseFloat(data.stats.amplitude).toFixed(2)}</td></tr>
+                        <tr><td>h (Largura da Classe)</td><td>${parseFloat(data.stats.h).toFixed(2)}</td></tr>
+                        <tr><td>Média</td><td>${parseFloat(data.stats.media).toFixed(4)}</td></tr>
+                        <tr><td>Mediana</td><td>${parseFloat(data.stats.mediana).toFixed(4)}</td></tr>
+                        <tr><td>Moda</td><td>${data.stats.moda}</td></tr>
+                        <tr><td>Variância Amostral</td><td>${parseFloat(data.stats.variancia).toFixed(4)}</td></tr>
+                        <tr><td>Desvio Padrão</td><td>${parseFloat(data.stats.desvio_padrao).toFixed(4)}</td></tr>
+                    </table>
+                    <p style="text-align: left; font-size: 12px; margin-top: 10px;">Fonte: elaborado pelo autor usando https://jonathanestatistica.com.br</p>
+                </div><br>`;
+
+            resultHtml += `<a href="${data.metrics_url}" download>
+                <button type="button">Baixar Medidas em Excel (.xlsx)</button>
+            </a><br><br>`;
+
+            resultHtml += `<p>Abaixo, apresentamos o histograma das frequências relativas. A análise gráfica permite visualizar a distribuição dos dados ao longo das classes estipuladas, destacando concentrações e a forma geral da distribuição.</p>`;
+
+            resultHtml += `<h3>Histograma</h3>`;
+            
+            // Truque de cache-busting para o navegador forçar o reload da imagem com a nova cor
+            const timestamp = new Date().getTime();
+            const urlImagemSemCache = `${data.img_url}?v=${timestamp}`;
+
+            resultHtml += `<img src="${urlImagemSemCache}" alt="Histograma" style="max-width: 100%; border: 1px solid #ccc;"><br><br>`;
+            
+            resultHtml += `<a href="${urlImagemSemCache}" download="histograma.png">
+                <button type="button">Baixar Imagem do Histograma</button>
+            </a>`;
+
+            document.getElementById("frequency-results").innerHTML = resultHtml;
         })
         .catch(error => {
             console.error("Erro:", error);
-            document.getElementById("frequency-table-result").innerHTML =
-                `<p style="color: red;">Erro ao processar o arquivo.</p>`;
+            document.getElementById("frequency-results").innerHTML = `<p style="color: red;">Erro ao processar o arquivo. Verifique o console do navegador e do terminal.</p>`;
         });
     }
-</script>
 
-<hr style="border: 3px solid #3CDACF; margin: 40px 0;">
-
-<script>
     function calculateBinomial() {
         const n = document.getElementById("n").value;
         const p = document.getElementById("p").value;
@@ -307,62 +402,7 @@
                 console.error(error);
             });
     }
-
-    function uploadFile() {
-        const fileInput = document.getElementById("file");
-        const formData = new FormData();
-        formData.append("file", fileInput.files[0]);
-
-        fetch("/upload", {
-            method: "POST",
-            body: formData
-        })
-        .then(response => response.json())
-        .then(data => {
-            if (data.error) {
-                document.getElementById("frequency-results").innerHTML = `<p style="color: red;">Erro: ${data.error}</p>`;
-                return;
-            }
-
-            document.getElementById("frequency-results").innerHTML = `
-                <h3>Tabela de Distribuição de Frequências</h3>
-                <table border="1" cellpadding="5" cellspacing="0">
-                    <tr><th>Intervalo</th><th>fi</th><th>fr (%)</th><th>FAC</th><th>FAD</th></tr>
-                    ${data.table.Intervalo.map((intervalo, i) => `
-                        <tr>
-                            <td>${intervalo}</td>
-                            <td>${data.table.fi[i]}</td>
-                            <td>${(data.table.fr[i] * 100).toFixed(2)}</td>
-                            <td>${data.table.FAC[i]}</td>
-                            <td>${data.table.FAD[i]}</td>
-                        </tr>`).join("")}
-                </table>
-                <h3>Métricas</h3>
-                <p><b>Média:</b> ${data.metrics.mean.toFixed(2)}</p>
-                <p><b>Média Geométrica:</b> ${data.metrics.geometric_mean.toFixed(2)}</p>
-                <p><b>Média Harmônica:</b> ${data.metrics.harmonic_mean.toFixed(2)}</p>
-                <p><b>Moda:</b> ${data.metrics.mode.toFixed(2)}</p>
-                <p><b>Mediana:</b> ${data.metrics.median.toFixed(2)}</p>
-                <p><b>Variância:</b> ${data.metrics.variance.toFixed(2)}</p>
-                <p><b>Desvio Padrão:</b> ${data.metrics.std_dev.toFixed(2)}</p>
-                <p><b>Desvio Médio:</b> ${data.metrics.mean_dev.toFixed(2)}</p>
-            `;
-
-            document.getElementById("charts").innerHTML = `
-                <h3>Gráficos</h3>
-                <h4>Histograma</h4>
-                <img src="${data.histogram}" alt="Histograma">
-                <h4>Gráfico de Pizza</h4>
-                <img src="${data.pie_chart}" alt="Gráfico de Pizza">
-            `;
-        })
-        .catch(error => {
-            document.getElementById("frequency-results").innerHTML = `<p style="color: red;">Erro ao processar o arquivo.</p>`;
-            console.error(error);
-        });
-    }
 </script>
-
 
 <div>
     <h3>Intervalo de Confiança para a Média</h3>
@@ -883,7 +923,3 @@ document.getElementById("form-regressao").addEventListener("submit", function(e)
 
 
 {% endblock %}
-
-
-
-
