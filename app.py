@@ -261,7 +261,6 @@ def calculate_normal():
         std_dev = np.sqrt(variance)
         calculation_type = data['calculation_type']
 
-        # Calcular a probabilidade com base no tipo
         if calculation_type == 'above':
             value = float(data['value'])
             probability = 1 - norm.cdf(value, loc=mean, scale=std_dev)
@@ -279,7 +278,6 @@ def calculate_normal():
         else:
             return jsonify({'error': 'Tipo de cálculo inválido'}), 400
 
-        # Gerar gráfico
         x = np.linspace(mean - 4*std_dev, mean + 4*std_dev, 500)
         y = norm.pdf(x, loc=mean, scale=std_dev)
 
@@ -299,7 +297,6 @@ def calculate_normal():
         plt.ylabel('Densidade')
         plt.legend()
 
-        # Salvar gráfico como base64
         buf = io.BytesIO()
         plt.savefig(buf, format='png')
         buf.seek(0)
@@ -319,10 +316,8 @@ def calculate_bayes():
         n = data['n']
         probabilities = data['probabilities']
 
-        # Calculando P(B) usando o teorema da probabilidade total
         p_b = sum(p['P(Ai)'] * p['P(B|Ai)'] for p in probabilities)
 
-        # Calculando P(Ai|B) para cada partição
         p_a_given_b = []
         for i, p in enumerate(probabilities, start=1):
             p_ai_given_b = (p['P(Ai)'] * p['P(B|Ai)']) / p_b
@@ -332,7 +327,6 @@ def calculate_bayes():
             )
             p_a_given_b.append({'P(Ai|B)': p_ai_given_b, 'details': details})
 
-        # Retornando resultados
         return jsonify({'P(B)': p_b, 'P(Ai|B)': p_a_given_b})
     except Exception as e:
         return jsonify({'error': str(e)})
@@ -351,93 +345,158 @@ def upload():
         filepath = os.path.join(app.config['UPLOAD_FOLDER'], filename)
         file.save(filepath)
 
+        cor_grafico = request.form.get('cor', 'aqua')
+
         try:
-            data = pd.read_csv(filepath, header=None).iloc[:, 0]
-            if data.empty or not np.issubdtype(data.dtype, np.number):
-                return jsonify({'error': 'O arquivo deve conter apenas dados numéricos em uma coluna.'}), 400
+            df_csv = pd.read_csv(filepath)
+            col_name = df_csv.columns[0]
+            data = pd.to_numeric(df_csv[col_name], errors='coerce').dropna()
 
-            n = len(data)
-            k = ceil(sqrt(n))
-            a_t = data.max() - data.min()
+            if data.empty:
+                return jsonify({'error': 'O arquivo deve conter dados numéricos na primeira coluna.'}), 400
 
-            decimal_places = max(len(str(x).split('.')[-1]) if '.' in str(x) else 0 for x in data)
-            h = round(a_t / k, decimal_places)
+            n = float(data.count())
+            
+            # ATENÇÃO: Voltando à fórmula exata original com log natural (base e)
+            k = int(1 + 3.33 * np.log(n))
 
-            bins = np.arange(data.min(), data.max() + h, h)
-            if bins[-1] < data.max():
-                bins = np.append(bins, bins[-1] + h)
+            minimo = float(data.min())
+            maximo = float(data.max())
+            At = float(maximo - minimo)
+            h = float(At / k)
 
-            freq, intervals = np.histogram(data, bins=bins)
-            intervals = [(round(intervals[i], decimal_places), round(intervals[i + 1], decimal_places)) for i in range(len(intervals) - 1)]
-            midpoints = [(interval[0] + interval[1]) / 2 for interval in intervals]
-            relative_freq = freq / n
-            fac_vals = np.cumsum(relative_freq)
-            fad_vals = np.cumsum(relative_freq[::-1])[::-1]
+            limites = [minimo + i * h for i in range(k + 1)]
 
-            fr_decimal = [f"{r:.4f}" for r in relative_freq]
-            fac = [f"{v:.4f}" for v in fac_vals]
-            fad = [f"{v:.4f}" for v in fad_vals]
+            classes = pd.cut(data, bins=limites, right=False, include_lowest=True)
+            f_i = classes.value_counts().sort_index().values
 
-            xmi_times_fr = [round(m * r, 4) for m, r in zip(midpoints, relative_freq)]
-            mean = sum(xmi_times_fr)  # soma(xmi * fr) é a média
+            tab = pd.DataFrame()
+            tab['LI'] = limites[:-1]
+            tab['LS'] = limites[1:]
+            tab['classes'] = [f"[{li:.2f} |- {ls:.2f})" for li, ls in zip(tab['LI'], tab['LS'])]
+            
+            tab['f_i'] = f_i
+            tab['f_ri'] = tab['f_i'] / n
 
-            mid_rounded = [round(m, 2) for m in midpoints]
-            fr_div_xmi = [round(r / m, 4) if m != 0 else 0 for m, r in zip(midpoints, relative_freq)]
-            xmi_pow_fr = [round(m ** r, 4) if m > 0 else 0 for m, r in zip(midpoints, relative_freq)]
-            variance_terms = [round(((m - mean) ** 2) * f, 4) for m, f in zip(midpoints, freq)]
-            mean_dev_terms = [round(abs(m - mean) * f, 4) for m, f in zip(midpoints, freq)]
+            tab['FAC'] = tab['f_ri'].cumsum()
+            tab['FAD'] = tab['f_ri'][::-1].cumsum()[::-1]
 
-            total_fi = sum(freq)
-            total_fr = f"{sum(relative_freq):.4f}"
-            total_xmi_times_fr = round(sum(xmi_times_fr), 4)
-            total_fr_div_xmi = round(sum(fr_div_xmi), 4)
-            prod_xmi_pow_fr = round(np.prod(xmi_pow_fr), 4)
-            total_var_term = round(sum(variance_terms), 4)
-            total_dev_term = round(sum(mean_dev_terms), 4)
+            tab['X_Mi'] = (tab['LI'] + tab['LS']) / 2
+            tab['X_Mi*f_ri'] = tab['X_Mi'] * tab['f_ri']
 
-            data_rows = list(zip(
-                [f"{i[0]} - {i[1]}" for i in intervals], freq, fr_decimal, fac, fad,
-                mid_rounded, xmi_times_fr, fr_div_xmi, xmi_pow_fr, variance_terms, mean_dev_terms
-            ))
+            media = float(tab['X_Mi*f_ri'].sum())
+            tab['((X_Mi - media)^2)*f_i'] = ((tab['X_Mi'] - media) ** 2) * tab['f_i']
 
-            data_rows.append([
-                "Total", total_fi, total_fr, "-", "-", "-", total_xmi_times_fr, total_fr_div_xmi,
-                prod_xmi_pow_fr, total_var_term, total_dev_term
-            ])
+            if n > 1:
+                variancia = float(tab['((X_Mi - media)^2)*f_i'].sum()) / (n - 1)
+            else:
+                variancia = 0.0
+            
+            desvio_padrao = float(variancia ** 0.5)
 
-            columns = [
-                "Intervalo", "$f_i$", "$fr_i$", "$FAC(fr)$", "$FAD(fr)$",
-                "$\\overline{x}_{M_i}$", "$\\overline{x}_{M_i} \\cdot fr_i$",
-                "$fr_i / \\overline{x}_{M_i}$", "$\\overline{x}_{M_i}^{fr_i}$",
-                "$((\\overline{x}_{M_i} - \\overline{x})^2) \\cdot f_i$",
-                "$|\\overline{x}_{M_i} - \\overline{x}| \\cdot f_i$"
-            ]
+            max_fi = tab['f_i'].max()
+            modas = tab[tab['f_i'] == max_fi]['X_Mi'].tolist()
+            if len(modas) == 1:
+                moda_str = f"{modas[0]:.4f}"
+            else:
+                moda_str = "{" + ", ".join([f"{m:.4f}" for m in modas]) + "}"
 
-            df = pd.DataFrame(data_rows, columns=columns)
+            try:
+                classe_mediana_idx = tab[tab['FAC'] >= 0.5].index[0]
+                LI_md = float(tab.loc[classe_mediana_idx, 'LI'])
+                fi_md = float(tab.loc[classe_mediana_idx, 'f_i'])
+                
+                if classe_mediana_idx == 0:
+                    Fant = 0.0
+                else:
+                    Fant = float(tab.loc[:classe_mediana_idx - 1, 'f_i'].sum())
 
-            fig, ax = plt.subplots(figsize=(18, 5))
-            ax.axis('off')
-            table = ax.table(cellText=df.values, colLabels=df.columns, cellLoc='center', loc='center')
-            table.auto_set_font_size(False)
-            table.set_fontsize(8)
-            table.scale(1, 1.6)
+                if fi_md > 0:
+                    mediana = float(LI_md + (((n / 2) - Fant) / fi_md) * h)
+                else:
+                    mediana = 0.0
+            except IndexError:
+                mediana = 0.0
 
-            for (row, col), cell in table.get_celld().items():
-                if row == 0:
-                    cell.get_text().set_weight('bold')
-                if col == 0 or col == len(columns) - 1:
-                    cell.visible_edges = 'horizontal'
+            # Gerando a tabela de frequencias para excel com a fonte obrigatoria
+            tab_excel = tab.copy()
+            tab_excel.loc[len(tab_excel)] = ["Fonte: elaborado pelo autor usando https://jonathanestatistica.com.br"] + [""] * (len(tab_excel.columns) - 1)
+            excel_filename = 'tabela_frequencias.xlsx'
+            excel_path = os.path.join(app.config['UPLOAD_FOLDER'], excel_filename)
+            tab_excel.to_excel(excel_path, index=False)
 
-            plt.subplots_adjust(bottom=0.15)
-            plt.figtext(0.125, 0.02, "Fonte: elaborado pelo autor usando https://jonathanestatistica.com.br",
-                        wrap=True, horizontalalignment='left', fontsize=10)
+            # Gerando a tabela de medidas de resumo para excel com a fonte obrigatoria
+            stats_dict = {
+                'n': n,
+                'k': k,
+                'Máximo': maximo,
+                'Mínimo': minimo,
+                'Amplitude (At)': At,
+                'h (Largura da Classe)': h,
+                'Média': media,
+                'Mediana': mediana,
+                'Moda': moda_str,
+                'Variância Amostral': variancia,
+                'Desvio Padrão': desvio_padrao
+            }
+            
+            df_metrics = pd.DataFrame(list(stats_dict.items()), columns=['Medida', 'Valor'])
+            df_metrics.loc[len(df_metrics)] = ["Fonte: elaborado pelo autor usando https://jonathanestatistica.com.br", ""]
+            metrics_filename = 'medidas_resumo.xlsx'
+            metrics_path = os.path.join(app.config['UPLOAD_FOLDER'], metrics_filename)
+            df_metrics.to_excel(metrics_path, index=False)
 
-            img_path = os.path.join("static", "uploads", 'tabela_frequencia.jpg')
-            os.makedirs(os.path.dirname(img_path), exist_ok=True)
-            plt.savefig(img_path, dpi=300, bbox_inches='tight')
+            # Histograma ajustado sem as classes fantasmas
+            plt.figure(figsize=(10, 6))
+            plt.bar(
+                x=tab['LI'],
+                height=tab['f_ri'],
+                width=h,
+                align='edge',
+                color=cor_grafico,
+                edgecolor='black',
+                linewidth=1.2
+            )
+
+            limites_x = tab['LI'].tolist() + [tab['LS'].iloc[-1]]
+            plt.title(f'Histograma das Frequências de {col_name}')
+            plt.xlabel(col_name)
+            plt.ylabel('Frequência Relativa')
+            plt.xticks(limites_x, rotation=45)
+            plt.grid(axis='y', linestyle='--', alpha=0.7)
+            plt.tight_layout()
+            
+            plt.subplots_adjust(bottom=0.25)
+            plt.figtext(0.125, 0.02, "Fonte: elaborado pelo autor usando https://jonathanestatistica.com.br", wrap=True, horizontalalignment='left', fontsize=10)
+
+            img_filename = 'histograma.png'
+            img_path = os.path.join(app.config['UPLOAD_FOLDER'], img_filename)
+            plt.savefig(img_path, dpi=300)
             plt.close()
 
-            return jsonify({"img_url": f"/{img_path}"})
+            tab = tab.replace({np.nan: None})
+            tab_json = tab.to_dict(orient='records')
+
+            return jsonify({
+                'col_name': col_name,
+                'table': tab_json,
+                'stats': {
+                    'n': n,
+                    'k': k,
+                    'maximo': maximo,
+                    'minimo': minimo,
+                    'amplitude': At,
+                    'h': h,
+                    'media': media,
+                    'mediana': mediana,
+                    'moda': moda_str,
+                    'variancia': variancia,
+                    'desvio_padrao': desvio_padrao
+                },
+                'img_url': f'/download_file/{img_filename}',
+                'excel_url': f'/download_file/{excel_filename}',
+                'metrics_url': f'/download_file/{metrics_filename}'
+            })
 
         except Exception as e:
             return jsonify({'error': f'Erro ao processar o arquivo: {str(e)}'}), 500
@@ -445,7 +504,14 @@ def upload():
     else:
         return jsonify({'error': 'Apenas arquivos .csv são permitidos.'}), 400
 
-    
+@app.route('/download_file/<filename>', methods=['GET'])
+def download_file(filename):
+    try:
+        filepath = os.path.join(app.config['UPLOAD_FOLDER'], filename)
+        return send_file(filepath, as_attachment=True)
+    except Exception as e:
+        return jsonify({'error': f'Erro ao baixar o arquivo: {str(e)}'}), 500
+
 @app.route('/calculate/ci_mean', methods=['POST'])
 def calculate_ci_mean():
     try:
@@ -455,15 +521,11 @@ def calculate_ci_mean():
         std_dev = float(data['std_dev'])
         sample_size = int(data['sample_size'])
 
-        # Cálculo do z-score
         z_score = norm.ppf(1 - alpha / 2)
-
-        # Cálculo do intervalo de confiança
         margin_error = z_score * (std_dev / np.sqrt(sample_size))
         lower_limit = sample_mean - margin_error
         upper_limit = sample_mean + margin_error
 
-        # Ajustar o intervalo do eixo x para focar na área do intervalo de confiança
         x_min = sample_mean - 4 * (std_dev / np.sqrt(sample_size))
         x_max = sample_mean + 4 * (std_dev / np.sqrt(sample_size))
         x = np.linspace(x_min, x_max, 1000)
@@ -480,7 +542,6 @@ def calculate_ci_mean():
         plt.ylabel('Densidade')
         plt.legend()
 
-        # Salvar gráfico como base64
         buf = io.BytesIO()
         plt.savefig(buf, format='png')
         buf.seek(0)
@@ -503,18 +564,12 @@ def calculate_ci_proportion():
         population_proportion = float(data['population_proportion'])
         sample_size = int(data['sample_size'])
 
-        # Cálculo do z-score
         z_score = norm.ppf(1 - alpha / 2)
-
-        # Variância da proporção
         variance = population_proportion * (1 - population_proportion) / sample_size
-
-        # Cálculo do intervalo de confiança
         margin_error = z_score * np.sqrt(variance)
         lower_limit = sample_proportion - margin_error
         upper_limit = sample_proportion + margin_error
 
-        # Gerar gráfico
         x = np.linspace(sample_proportion - 4 * np.sqrt(variance), sample_proportion + 4 * np.sqrt(variance), 500)
         y = norm.pdf(x, loc=sample_proportion, scale=np.sqrt(variance))
 
@@ -529,7 +584,6 @@ def calculate_ci_proportion():
         plt.ylabel('Densidade')
         plt.legend()
 
-        # Salvar gráfico como base64
         buf = io.BytesIO()
         plt.savefig(buf, format='png')
         buf.seek(0)
@@ -633,13 +687,11 @@ def calculate_hypothesis_mean_unknown_variance():
     try:
         data = request.json
 
-        # Verificar campos obrigatórios
         required_fields = ['test_type', 'h0', 'alpha', 'sample_size', 'sample_mean', 'sample_variance']
         for field in required_fields:
             if field not in data:
                 return jsonify({"error": f"O campo '{field}' é obrigatório."}), 400
 
-        # Obter os parâmetros
         test_type = data['test_type']
         h0 = float(data['h0'])
         alpha = float(data['alpha'])
@@ -647,27 +699,22 @@ def calculate_hypothesis_mean_unknown_variance():
         sample_mean = float(data['sample_mean'])
         sample_variance = float(data['sample_variance'])
 
-        # Verificar validade de alpha
         if not (0 < alpha < 1):
             return jsonify({"error": "O nível de significância (alpha) deve estar entre 0 e 1."}), 400
 
-        # Calcular t-score
         std_error = np.sqrt(sample_variance / sample_size)
         t_score = (sample_mean - h0) / std_error
         degrees_of_freedom = sample_size - 1
 
-        # Calcular p-valor
         if test_type == "bilateral":
             p_value = 2 * (1 - t.cdf(abs(t_score), df=degrees_of_freedom))
         elif test_type == "left":
             p_value = t.cdf(t_score, df=degrees_of_freedom)
-        else:  # "right"
+        else:
             p_value = 1 - t.cdf(t_score, df=degrees_of_freedom)
 
-        # Decisão
         reject_h0 = p_value < alpha
 
-        # Gerar conclusão
         conclusion = (
             f"A probabilidade de errar é {p_value:.4f} e como ela é baixa (< {alpha}), "
             f"rejeita-se H₀ com {100 * (1 - alpha):.2f}% de confiança."
@@ -688,7 +735,6 @@ def calculate_difference_means():
     import traceback
 
     try:
-        # ===== RECEBER DADOS =====
         file = request.files.get('file')
         if not file:
             return jsonify({"error": "Arquivo não enviado."}), 400
@@ -701,7 +747,6 @@ def calculate_difference_means():
         independent = request.form.get('independent') == 'on'
         alpha = float(request.form.get('alpha', 0.05))
 
-        # ===== LER ARQUIVO =====
         if filename.endswith('.xlsx'):
             df = pd.read_excel(file)
         elif filename.endswith('.csv'):
@@ -709,20 +754,17 @@ def calculate_difference_means():
         else:
             return jsonify({"error": "Formato inválido. Use CSV ou XLSX."}), 400
 
-        # ===== VALIDAR COLUNAS =====
         if df.shape[1] != 2:
             return jsonify({"error": "O arquivo deve ter exatamente 2 colunas."}), 400
 
         col1, col2 = df.columns
 
-        # ===== LIMPAR DADOS =====
         data1 = pd.to_numeric(df[col1], errors='coerce').dropna().reset_index(drop=True)
         data2 = pd.to_numeric(df[col2], errors='coerce').dropna().reset_index(drop=True)
 
         if len(data1) < 2 or len(data2) < 2:
             return jsonify({"error": "Dados insuficientes."}), 400
 
-        # ===== TESTE =====
         if independent:
             t_stat, p_value = stats.ttest_ind(data1, data2, equal_var=False)
         else:
@@ -730,7 +772,6 @@ def calculate_difference_means():
                 return jsonify({"error": "Para teste pareado, os vetores devem ter o mesmo tamanho."}), 400
             t_stat, p_value = stats.ttest_rel(data1, data2)
 
-        # ===== AJUSTE P-VALOR =====
         if test_type == 'left':
             p_value = p_value / 2 if t_stat < 0 else 1 - (p_value / 2)
         elif test_type == 'right':
@@ -738,7 +779,6 @@ def calculate_difference_means():
 
         reject = p_value < alpha
 
-        # ===== CONCLUSÃO =====
         conclusion = (
             f"p-valor = {p_value:.4f} → rejeita-se H0"
             if reject else
@@ -751,7 +791,6 @@ def calculate_difference_means():
             "conclusion": conclusion
         }
 
-        # ===== GERAR EXCEL =====
         output = io.BytesIO()
         wb = openpyxl.Workbook()
         ws = wb.active
@@ -801,7 +840,6 @@ def download_difference_means():
 # ================================
 df_path = os.path.join("data", "brasileirao_serieA_2025_completo.csv")
 
-# Verifica e baixa os dados automaticamente se necessário
 if not os.path.exists(df_path):
     print("🔁 Arquivo CSV da Série A não encontrado. Baixando...")
     try:
@@ -811,14 +849,11 @@ if not os.path.exists(df_path):
     except Exception as e:
         raise FileNotFoundError("❌ Falha ao baixar os dados automaticamente: " + str(e))
 
-# Carregamento seguro dos dados
 df = pd.read_csv(df_path)
 
-# Converte a coluna de data
 if "Data e Hora" in df.columns and not np.issubdtype(df["Data e Hora"].dtype, np.datetime64):
     df["Data e Hora"] = pd.to_datetime(df["Data e Hora"])
 
-# Cria coluna 'Time' a partir de jogos em casa e fora (modelo multilinha)
 df_casa = df.copy()
 if "Home Team" in df_casa.columns:
     df_casa["Time"] = df_casa["Home Team"]
@@ -833,7 +868,6 @@ else:
 
 df = pd.concat([df_casa, df_fora], ignore_index=True)
 
-# Classifica resultado por time principal
 def classificar_resultado(row, time):
     if row["Time Casa"] == time:
         saldo = row["Gols Casa"] - row["Gols Visitante"]
@@ -848,7 +882,6 @@ def classificar_resultado(row, time):
     else:
         return "Empate"
 
-# Adiciona função para calcular gols sofridos
 def calcular_gols_sofridos(row, time):
     if row["Time Casa"] == time:
         return row["Gols Visitante"]
@@ -857,14 +890,6 @@ def calcular_gols_sofridos(row, time):
     else:
         return 0
 
-# 🔁 Geração de colunas auxiliares e resumo por time (será usada nos gráficos)
-# ➤ Essa lógica pode ser usada em callbacks para atualizar os gráficos
-# ➤ Exemplos de visualizações a gerar:
-# - Frequência de Vitórias, Empates, Derrotas
-# - Gols marcados e sofridos por jogo
-# - Cartões amarelos e vermelhos por partida
-
-# Armazena o DataFrame original para uso em callbacks
 df_original = df.copy()
 
 @app.route('/calculate/regressao', methods=['POST'])
@@ -881,7 +906,6 @@ def calcular_regressao():
 
     resumo = model.summary().as_text()
 
-    # Salvar como imagem
     fig, ax = plt.subplots(figsize=(10, 6))
     ax.text(0, 1, resumo, fontsize=8, va='top', family='monospace')
     ax.axis('off')
@@ -889,7 +913,6 @@ def calcular_regressao():
     fig.savefig(jpg_path, bbox_inches='tight')
     plt.close(fig)
 
-    # Salvar como Excel
     xlsx_path = os.path.join('static', 'regressao_resultados.xlsx')
     with pd.ExcelWriter(xlsx_path, engine='openpyxl') as writer:
         df.to_excel(writer, index=False, sheet_name='Dados')
@@ -917,38 +940,31 @@ def calculate_difference_proportions():
         alpha = data["alpha"]
         test_type = data["test_type"]
 
-        # Proporção combinada sob H0
         p_pool = ((p1_hat * n1) + (p2_hat * n2)) / (n1 + n2)
         q_pool = 1 - p_pool
 
-        # Estatística de teste Z
         se = (p_pool * q_pool * (1/n1 + 1/n2)) ** 0.5
         z_score = (p1_hat - p2_hat) / se
 
-        # P-valor
         if test_type == "bilateral":
             p_value = 2 * (1 - norm.cdf(abs(z_score)))
         elif test_type == "left":
             p_value = norm.cdf(z_score)
-        else:  # "right"
+        else: 
             p_value = 1 - norm.cdf(z_score)
 
-        # Conclusão
         if p_value < alpha:
             conclusion = "Rejeita-se H₀: há evidência de diferença entre as proporções."
         else:
             conclusion = "Não se rejeita H₀: não há evidência de diferença entre as proporções."
 
-        # Geração do gráfico com região crítica adaptada
         x = np.linspace(-4, 4, 1000)
         y = norm.pdf(x)
         fig, ax = plt.subplots()
         ax.plot(x, y, label='Distribuição N(0,1)')
 
-        # Linha do valor observado de Z
         ax.axvline(z_score, color='red', linestyle='--', label=f'Z = {z_score:.2f}')
 
-        # Região crítica e linhas limiares
         if test_type == "bilateral":
             z_alpha = norm.ppf(1 - alpha / 2)
             ax.fill_between(x, y, where=(x < -z_alpha) | (x > z_alpha), color='orange', alpha=0.3)
@@ -967,7 +983,6 @@ def calculate_difference_proportions():
         ax.legend()
         ax.grid(True)
 
-
         buf = io.BytesIO()
         plt.savefig(buf, format="png", bbox_inches="tight")
         plt.close()
@@ -984,8 +999,6 @@ def calculate_difference_proportions():
     except Exception as e:
         return jsonify({"error": str(e)})
 
-
-# ROTA: Página com os 3 cards principais (Estatísticas do Futebol)
 @app.route("/estatisticasdofutebol")
 def estatisticas_futebol_home():
     return render_template("ciga.html")
@@ -994,7 +1007,6 @@ def estatisticas_futebol_home():
 def estatisticas_2025():
     df = pd.read_csv("data/brasileirao_serieA_2025_completo.csv")
 
-    # Criar coluna 'Resultado' com base no time referência
     def classificar_resultado(row):
         if row["Time Referência"] == row["Time Casa"]:
             if row["Gols Casa"] > row["Gols Visitante"]:
@@ -1025,29 +1037,23 @@ def estatisticas_2025():
         dados_jogos=df.to_dict(orient='records')
     )
 
-
-# ROTA: Página Mercado de Jogadores
 @app.route("/mercadojogadores")
 def mercado_jogadores():
     return render_template("mercado_jogadores.html")
 
-# ROTA: Página Análise da Base Sub-20
 @app.route("/analisabase")
 def analise_base():
     return render_template("analise_base.html")
 
-# ROTA: Inicia o scraping com barra de progresso
 @app.route("/atualizar-dados", methods=["POST"])
 def atualizar_dados():
     thread = threading.Thread(target=scraper.rodar_scraper_com_progresso)
     thread.start()
     return jsonify({"mensagem": "⏳ Scraping iniciado. Isso pode levar alguns minutos. Acompanhe a barra de progresso abaixo."})
 
-# ROTA: Retorna progresso atual
 @app.route("/progresso", methods=["GET"])
 def progresso_status():
     return jsonify({"progresso": scraper.progresso_atual})
-
 
 if __name__ == '__main__':
     app.run(debug=True)
