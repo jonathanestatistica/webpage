@@ -348,7 +348,7 @@ def upload():
         cor_grafico = request.form.get('cor', 'aqua')
 
         try:
-            df_csv = pd.read_csv(filepath)
+            df_csv = pd.read_csv(filepath, sep=';', decimal=',')
             col_name = df_csv.columns[0]
             data = pd.to_numeric(df_csv[col_name], errors='coerce').dropna()
 
@@ -358,7 +358,7 @@ def upload():
             n = float(data.count())
             
             # ATENÇÃO: Voltando à fórmula exata original com log natural (base e)
-            k = int(1 + 3.33 * np.log(n))
+            k = ceil(1 + 3.33 * np.log10(n))
 
             minimo = float(data.min())
             maximo = float(data.max())
@@ -367,7 +367,10 @@ def upload():
 
             limites = [minimo + i * h for i in range(k + 1)]
 
-            classes = pd.cut(data, bins=limites, right=False, include_lowest=True)
+            limites_cut = limites.copy()
+            limites_cut[-1] += 1e-9
+
+            classes = pd.cut(data, bins=limites_cut, right=False, include_lowest=True)
             f_i = classes.value_counts().sort_index().values
 
             tab = pd.DataFrame()
